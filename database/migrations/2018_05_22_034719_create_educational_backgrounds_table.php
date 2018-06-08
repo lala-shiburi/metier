@@ -15,8 +15,7 @@ class CreateEducationalBackgroundsTable extends Migration
     {
         Schema::create('educational_backgrounds', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('school_id')->nullable();
+            $table->integer('school_id');
             $table->string('school_name');
             $table->string('school_address');
             $table->string('school_email');

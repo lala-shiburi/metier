@@ -13,7 +13,7 @@ class CreateLanguagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('programming_languages', function (Blueprint $table) {
+        Schema::create('languages', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->timestamps();
@@ -37,7 +37,7 @@ class CreateLanguagesTable extends Migration
         ];
 
         foreach($languages as $language){
-            \DB::table('programming_languages')->insert([
+            \DB::table('languages')->insert([
                 'name'=>$language,
                 "created_at" =>  \Carbon\Carbon::now(), # \Datetime()
                 "updated_at" => \Carbon\Carbon::now(),  # \Datetime()
@@ -52,6 +52,6 @@ class CreateLanguagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('programming_languages');
+        Schema::dropIfExists('languages');
     }
 }
