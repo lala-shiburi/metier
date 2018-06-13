@@ -2,13 +2,12 @@
 
 namespace App;
 
+use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Carbon\Carbon;
-use \App\WorkExperience;
-use \App\EducationalBackground;
+use App\Notifications\ResetPassword as ResetPasswordNotification;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
@@ -30,6 +29,68 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'photo_url',
+    ];
+
+    /**
+     * Get the profile photo URL attribute.
+     *
+     * @return string
+     */
+    public function getPhotoUrlAttribute()
+    {
+        return 'https://www.gravatar.com/avatar/'.md5(strtolower($this->email)).'.jpg?s=200&d=mm';
+    }
+
+    /**
+     * Get the oauth providers.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function oauthProviders()
+    {
+        return $this->hasMany(OAuthProvider::class);
+    }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
+    }
+
+    /**
+     * @return int
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+    
+    /**
+     * Save image to public/storage/photos
+     * 
+     * @param string | image converted to base64
+     * @return \App\User
+     */
     public function saveProfilePhoto($data){
         $fileName = generateFileName($this->attributes['id'],'profile','.png');
         saveBase64Photo($data,$fileName);
@@ -39,6 +100,12 @@ class User extends Authenticatable
         return $this;
     }
 
+    /**
+     * Save image to public/storage/photos
+     * 
+     * @param string | image converted to base64
+     * @return \App\User
+     */
     public function saveCoverPhoto($data){
         $fileName = generateFileName($this->attributes['id'],'cover','.png');
         saveBase64Photo($data,$fileName);
@@ -48,6 +115,13 @@ class User extends Authenticatable
         return $this;
     }
 
+    /**
+     * Save or Update contact information
+     * 
+     * @param array
+     * @param integer nullable id
+     * @return \App\User
+     */
     public function addUpdateContactNumber($data, $id=null){
         if($id)
         {
@@ -60,7 +134,14 @@ class User extends Authenticatable
 
         return $this;
     }
-
+    
+    /**
+     * Save or Update address information
+     * 
+     * @param array
+     * @param integer nullable
+     * @return \App\User
+     */
     public function addUpdateAddress($data, $id=null){
         if($id){
             \DB::table('address_users')->where('id',$id)->update(['address_text'=>$data['address_text'],'province'=>$data['province'],'updated_at'=>Carbon::now()]);
@@ -73,10 +154,16 @@ class User extends Authenticatable
         return $this;
     }
 
+    /**
+     * Save or Update programming language skill
+     * 
+     * @param array
+     * @param integer nullable
+     * @return \App\User
+     */
     public function addUpdateProgrammingLanguage($data, $id=null){
         if($id){
-            $language = \App\UserProgrammingLanguage::find($id);
-            $language->update(['expertise_level'=>$data['expertise_level']]);
+            $this->programmingLanguages()->updateExistingPivot($id,["expertise_level"=>$data['expertise_level']]);
         }
         else
         {
@@ -85,10 +172,16 @@ class User extends Authenticatable
         return $this;
     }
 
+    /**
+     * Save or Update technology skill
+     * 
+     * @param array
+     * @param integer nullable
+     * @return \App\User
+     */
     public function addUpdateTechnology($data, $id=null){
         if($id){
-            $technology = \App\UserTechnology::find($id);
-            $technology->update(['expertise_level'=>$data->expertise_level]);
+            $this->userTechnologies()->updateExistingPivot($id,["expertise_level"=>$data['expertise_level']]);
         }
         else
         {
@@ -97,6 +190,13 @@ class User extends Authenticatable
         return $this;
     }
 
+    /**
+     * Save or Update work experience
+     * 
+     * @param array
+     * @param integer nullable
+     * @return \App\User
+     */
     public function addUpdateWorkExperience($data, $id=null){
         $workExperience = $id ? WorkExperience::find($id) : new WorkExperience;
         $workExperience->user_id = $this->attributes['id'];
@@ -109,6 +209,13 @@ class User extends Authenticatable
         $workExperience->save();
     }
 
+    /**
+     * Save or Update educational background
+     * 
+     * @param array
+     * @param integer nullable
+     * @return \App\User
+     */
     public function addUpdateEducationalBackground($data, $id=null){
         $educationalBackground = $id ? EducationalBackground::find($id) : new EducationalBackground;
         $educationalBackground->user_id = $this->attributes['id'];
@@ -122,49 +229,93 @@ class User extends Authenticatable
         $educationalBackground->save();
     }
 
+    /**
+     * Save resume file
+     * 
+     * @param file
+     * @return \App\User
+     */
     public function saveResumeFile($file){
         $fileName = generateFileName($this->attributes['id'],'resume','');
         saveDocument($file,$fileName);
+        return $this;
     }
 
+    /**
+     * Save dynamic fields
+     * 
+     * @param array
+     * @return \App\User
+     */
     public function updateFields($data){
-        foreach($data->field_data as $key => $value){
+        foreach($data as $key => $value){
             $this[$key] = $value;
         }
 
         $this->save();
+
+        return $this;
     }
 
 
-    // relationships
+    /**
+     * Get programming languages skills
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function programmingLanguages(){
-        return $this->belongsToMany('\App\ProgrammingLanguage','user_languages','user_id','language_id');
+        return $this->belongsToMany('\App\ProgrammingLanguage','user_languages','user_id','language_id')->withPivot('expertise_level')->withTimeStamps();
     }
 
+    /**
+     * Get technology skills
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function userTechnologies(){
-        return $this->belongsToMany('\App\Technology','user_technologies','user_id','technology_id');
+        return $this->belongsToMany('\App\Technology','user_technologies','user_id','technology_id')->withPivot('expertise_level')->withTimeStamps();
     }
 
+    /**
+     * Get work experiences
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function workExperiences(){
         return $this->hasMany('\App\WorkExperience');
     }
 
+    /**
+     * Get educational backgrounds
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function educationalBackgrounds(){
         return $this->hasMany('\App\EducationalBackground');
     }
 
+
+    /**
+     * Detect model events
+     * 
+     */
     public static function boot()
     {
         parent::boot();
 
+        /**
+         * Detect model events
+         * 
+         * Model delete event then truncate relationships
+         */
         static::deleting(function($model){
-            $this->programmingLanguages()->delete();
-            $this->userTechnologies()->delete();
-            $this->workExperiences()->delete();
-            $this->educationalBackgrounds()->delete();
+            $model->programmingLanguages()->detach();
+            $model->userTechnologies()->detach();
+            $model->workExperiences()->delete();
+            $model->educationalBackgrounds()->delete();
             
-            \DB::table('contact_infos')->where('user_id',$this->attributes['id'])->delete();
-            \DB::table('address_users')->where('user_id',$this->attributes['id'])->delete();
+            \DB::table('contact_infos')->where('user_id',$model->attributes['id'])->delete();
+            \DB::table('address_users')->where('user_id',$model->attributes['id'])->delete();
         });
     }
 }
