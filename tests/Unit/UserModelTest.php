@@ -89,7 +89,7 @@ class UserModelTest extends TestCase
     public function testUpdateFunctions(){
         $faker = Faker::create('en_US');
 
-        $user = User::first();
+        $user = User::latest()->first();
 
         print("Testing update functions... || ");
 
@@ -99,19 +99,23 @@ class UserModelTest extends TestCase
             "last_name"=>$faker->lastName,
             "birth_date"=>$faker->dateTimeThisCentury->format('Y-m-d'),
             "citizenship"=>"Filipino",
-            "password"=>"$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm",
+            "password"=>'$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm',
         ]);
         print("Basic info success || ");
-
+        
+        $language_id = $user->programmingLanguages()->first()->pivot->language_id;
         $user->addUpdateProgrammingLanguage([
-            "expertise_level"=>1
-        ],$user->programmingLanguages()->first()->id);
+            "expertise_level"=>2
+        ],$language_id);
         print("User programming language success || ");
-
-        $user->userTechnologies([
-            "expertise_level"=>1
-        ],$user->programmingLanguages()->first()->id);
-        print("User technology success || ");
+        $this->assertEquals($user->programmingLanguages()->first()->pivot->expertise_level,2);
+        
+        $technology_id = $user->userTechnologies()->first()->pivot->technology_id;
+        $user->addUpdateTechnology([
+            "expertise_level"=>2
+        ],$technology_id);
+        print("User technology success || ".$technology_id."|||");
+        $this->assertEquals($user->userTechnologies()->first()->pivot->expertise_level,2);
 
         $user->addUpdateWorkExperience([
             'company_name'=>$faker->name,
@@ -131,11 +135,16 @@ class UserModelTest extends TestCase
             'to'=>"2018-06-04",
         ], $user->educationalBackgrounds()->first()->id);
         print('educational background success || ');
+
+        $this->assertTrue(true);
     }
 
-    public function deleteFunctions(){
-        print('Deleting User Model Instance');
-        $user = User::first();
-        print("success user delete");
+    public function testDeleteFunctions(){
+        print('Deleting User Model Instance || ');
+        $user = User::latest()->get()[0];
+        $user->delete();
+        print("success user delete || ");
+
+        $this->assertTrue(true);
     }
 }
