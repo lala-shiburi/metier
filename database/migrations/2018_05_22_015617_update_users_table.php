@@ -16,13 +16,15 @@ class UpdateUsersTable extends Migration
         //
         Schema::table('users', function(Blueprint $table){
             $table->dropColumn('name');
-            $table->date('birth_date')->after('id');
+            $table->date('birth_date')->after('id')->nullable();
             $table->string('first_name')->after('id');
             $table->string('last_name')->after('first_name');
-            $table->string('gender')->after('last_name');
-            $table->string('citizenship')->after('gender');
-            $table->integer('photo')->after('citizenship');
-            $table->integer('cover_photo')->after('photo');
+            $table->string('middle_name')->after('first_name')->nullable();
+            $table->string('gender')->after('last_name')->nullable();
+            $table->string('citizenship')->after('gender')->nullable();
+            $table->string('photo')->after('citizenship')->nullable();
+            $table->string('cover_photo')->after('photo')->nullable();
+            $table->integer('resume_file')->after('cover_photo')->nullable();
         });
     }
 

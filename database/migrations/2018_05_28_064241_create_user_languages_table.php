@@ -16,7 +16,7 @@ class CreateUserLanguagesTable extends Migration
         Schema::create('user_languages', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->integer('languages_id');
+            $table->integer('language_id');
             $table->integer('expertise_level');
             $table->timestamps();
         });
