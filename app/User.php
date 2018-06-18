@@ -4,6 +4,7 @@ namespace App;
 
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Notifications\ResetPassword as ResetPasswordNotification;
 
@@ -167,7 +168,10 @@ class User extends Authenticatable implements JWTSubject
         }
         else
         {
-            $this->programmingLanguages()->attach($data['id'],['expertise_level'=>$data['expertise_level']]);
+            if(!$this->programmingLanguages()->where("programming_languages.id",$data['id'])->count())
+            {
+                $this->programmingLanguages()->attach($data['id'],['expertise_level'=>$data['expertise_level']]);
+            }
         }
         return $this;
     }
@@ -185,7 +189,10 @@ class User extends Authenticatable implements JWTSubject
         }
         else
         {
-            $this->userTechnologies()->attach($data['id'],['expertise_level'=>$data['expertise_level']]);
+            if(!$this->userTechnologies()->where("technologies.id",$data['id'])->count())
+            {
+                $this->userTechnologies()->attach($data['id'],['expertise_level'=>$data['expertise_level']]);
+            }
         }
         return $this;
     }
@@ -242,7 +249,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * Save dynamic fields
+     * Update dynamic fields
      * 
      * @param array
      * @return \App\User
@@ -255,6 +262,10 @@ class User extends Authenticatable implements JWTSubject
         $this->save();
 
         return $this;
+    }
+
+    public static function searchKeyword($keyword){
+        return User::whereRaw('concat(users.first_name," ",users.last_name) like "%'.$keyword.'%"');
     }
 
 
