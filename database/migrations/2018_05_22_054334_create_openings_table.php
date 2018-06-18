@@ -17,10 +17,11 @@ class CreateOpeningsTable extends Migration
             $table->increments('id');
             $table->integer('company_id');
             $table->integer('hiring _step_group_id');
-            $table->string('text');
-            $table->string('picture');
+            $table->string('title');
+            $table->string('picture')->nullable();
             $table->string('details');
-            $table->string('salary_range');
+            $table->string('salary_range')->nullable();
+            $table->string('youtube_video')->nullable();
             $table->timestamps();
         });
     }

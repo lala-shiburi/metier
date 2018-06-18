@@ -17,7 +17,7 @@ class CreateOpeningTechnologiesTable extends Migration
             $table->increments('id');
             $table->integer('opening_id');
             $table->integer('technology_id');
-            $table->integer('expertise_level');
+            $table->integer('expertise_level')->nullable();
             $table->timestamps();
         });
     }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOpeningLanguagesTable extends Migration
+class CreateSavedOpeningsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateOpeningLanguagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('opening_languages', function (Blueprint $table) {
+        Schema::create('saved_openings', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id');
             $table->integer('opening_id');
-            $table->integer('language_id');
-            $table->integer('expertise_level')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateOpeningLanguagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('opening_languages');
+        Schema::dropIfExists('saved_openings');
     }
 }
