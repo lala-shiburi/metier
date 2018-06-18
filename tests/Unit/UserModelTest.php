@@ -84,13 +84,6 @@ class UserModelTest extends TestCase
 
         $this->assertTrue(true);
 
-    }
-
-    public function testUpdateFunctions(){
-        $faker = Faker::create('en_US');
-
-        $user = User::latest()->first();
-
         print("Testing update functions... || ");
 
         $user->updateFields([
@@ -137,11 +130,12 @@ class UserModelTest extends TestCase
         print('educational background success || ');
 
         $this->assertTrue(true);
+
     }
 
     public function testDeleteFunctions(){
         print('Deleting User Model Instance || ');
-        $user = User::latest()->get()[0];
+        $user = factory(User::class)->create();
         $user->delete();
         print("success user delete || ");
 
