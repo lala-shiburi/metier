@@ -50,6 +50,32 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
+     * Make follow company
+     * 
+     * @param integer
+     * @return \App\User
+     */
+    public function followCompany($company_id){
+        if(!$this->followedCompanies()->where("companies.id",$company_id)->count()){
+            $this->followedCompanies()->attach($company_id);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Un-follow Company
+     * 
+     * @param integer
+     * @return App\User
+     */
+    public function unFollowCompany($company_id){
+        $this->followedCompanies()->detach($company_id);
+
+        return $this;
+    }
+
+    /**
      * Get the oauth providers.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -263,7 +289,13 @@ class User extends Authenticatable implements JWTSubject
 
         return $this;
     }
-
+    
+    /**
+     * Search user through name keyword
+     * 
+     * @param string
+     * @return \App\User
+     */
     public static function searchKeyword($keyword){
         return User::whereRaw('concat(users.first_name," ",users.last_name) like "%'.$keyword.'%"');
     }
@@ -303,6 +335,15 @@ class User extends Authenticatable implements JWTSubject
      */
     public function educationalBackgrounds(){
         return $this->hasMany('\App\EducationalBackground');
+    }
+
+    /**
+     * Get Followed Companies
+     * 
+     * @return App\Company
+     */
+    public function followedCompanies(){
+        return $this->belongsToMany("\App\Company","company_follows","user_id","company_id");
     }
 
 

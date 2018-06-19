@@ -7,6 +7,79 @@ use Illuminate\Database\Eloquent\Model;
 class Opening extends Model
 {
     /**
+     * Search opening using salary
+     * 
+     * @param String
+     * @return App\Opening
+     */
+    public static function searchSalaryRange($salary_range){
+        return Opening::where("salary_range",$salary_range);
+    }
+
+    /**
+     * Search opening using province
+     * 
+     * @param String
+     * @return App\Opening
+     */
+    public static function searchProvince($province){
+        return Opening::join("companies","companies.id","=","openings.company_id")
+        ->where("province",$province);
+    }
+
+    /**
+     * Search opening using programming languages
+     * 
+     * @param Array
+     * @return App\Opening
+     */
+    public static function searchProgrammingLanguages($programming_language_ids){
+        return Opening::join("opening_languages","opening_languages.opening_id","=","openings.id")
+        ->whereIn("opening_languages.language_id",$programming_language_ids);
+    }
+
+    /**
+     * Search opening using technology
+     * 
+     * @param Array
+     * @return App\Opening
+     */
+    public static function searchTechnology($technology_ids){
+        return Opening::join("opening_technologies","opening_technologies.opening_id","=","openings.id")
+        ->whereIn("opening_technologies.technology_id",$technology_ids);
+    }
+
+    /**
+     * Search opening using professional years
+     * 
+     * @param Integer
+     * @return App\Opening
+     */
+    public static function searchProfYears($years){
+        return Opening::where('openings.professional_years',$years);
+    }
+
+    /**
+     * Search opening using job title
+     * 
+     * @param string
+     * @return \App\Opening
+     */
+    public static function searchJobTitle($keyword){
+        return Opening::whereRaw('openings.title like "%'.$keyword.'%"');
+    }
+
+    /**
+     * Search opening using company name
+     * 
+     * @param string
+     * @return App\Opening
+     */
+    public static function searchCompanyName($keyword){
+        return Opening::join("companies","companies.id","=","openings.company_id")->whereRaw("companies.name like '%".$keyword."%'");
+    }
+
+    /**
      * Save or Update programming language skill
      * 
      * @param array
