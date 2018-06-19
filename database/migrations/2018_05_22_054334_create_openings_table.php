@@ -16,12 +16,13 @@ class CreateOpeningsTable extends Migration
         Schema::create('openings', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('company_id');
-            $table->integer('hiring _step_group_id');
+            $table->integer('hiring_step_group_id')->nullable();
             $table->string('title');
             $table->string('picture')->nullable();
             $table->string('details');
             $table->string('salary_range')->nullable();
             $table->string('youtube_video')->nullable();
+            $table->integer('professional_years')->nullable();
             $table->timestamps();
         });
     }

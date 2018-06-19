@@ -15,9 +15,9 @@ class CreateTrainingBatchesTable extends Migration
     {
         Schema::create('training_batches', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('author_id');
-            $table->string('photo');
-            $table->string('cover');
+            $table->integer('author_id')->nullable();
+            $table->string('photo')->nullable();
+            $table->string('cover')->nullable();
             $table->string('title');
             $table->text('description');
             $table->date('start_date');
