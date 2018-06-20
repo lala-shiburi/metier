@@ -9,6 +9,38 @@ use App\Opening;
 class Company extends Model
 {
     /**
+     * Set user collaborator
+     * 
+     * @param Integer
+     * @param Integer
+     * @return App\Company
+     */
+    public function addCollaborator($id,$privilege){
+        if($this->collaborators()->where("company_users.user_id",$id)->count() < 1){
+            $this->collaborators()->attach($id,["privilege"=>$privilege]);
+        }
+        return $this;
+    }
+
+    /**
+     * Update user collaborator privilege
+     * 
+     * @param Integer
+     * @param Integer
+     * 
+     * @return App\Company
+     */
+    public function updateCollaboratorPrivilege($id,$privilege){
+        $this->collaborators()->updateExistingPivot($id, ["privilege"=>$privilege]);
+        return $this;
+    }
+
+    public function removeCollaborator($id){
+        $this->collaborators()->detach($id);
+        return $this;
+    }
+
+    /**
      * Save Applicant/User
      * 
      * @param Integer
@@ -97,6 +129,15 @@ class Company extends Model
      */
     public function savedApplicants(){
         return $this->BelongsToMany(User::class,"user_bookmarks","user_id","company_id");
+    }
+
+    /**
+     * Relationship of company to owner
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function owner(){
+        return $this->belongsTo("\App\User","owner_id");
     }
 
     /**
