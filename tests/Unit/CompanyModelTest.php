@@ -24,15 +24,20 @@ class CompanyModelTest extends TestCase
         //factory random user Basic Info
         $company = factory(Company::class)->create();
         print('Basic Info success || ');
-        // $user = factory(User::class)->create(); 
-
-        // $company->collaborators()->attach($user->id,['privilege'=>1]);
-
-        // $user->followCompany($company);
-        // $this->assertTrue($company->collaborators()->where('users.id',$user->id)->first());
         $this->assertTrue(true);
         print('success!');
 
+    }
+
+    public function testCollaboratorEditFunction(){
+        $company = factory(Company::class)->create();
+        $user = factory(User::class)->create();
+
+        $company->addCollaborator($user->id,1);
+
+        $this->assertEquals($company->collaborators()->where("company_users.user_id",$user->id)->count(), 1);
+        $company->removeCollaborator($user->id);
+        $this->assertEquals($company->collaborators()->where("company_users.user_id",$user->id)->count(), 0);
     }
 
     public function testDelete(){
