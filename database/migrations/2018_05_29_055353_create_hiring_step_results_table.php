@@ -15,9 +15,8 @@ class CreateHiringStepResultsTable extends Migration
     {
         Schema::create('hiring_step_results', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
             $table->integer('hiring_step_id');
-            $table->integer('application_id');
+            $table->integer('hiring_application_id');
             $table->string('result');
             $table->timestamps();
         });

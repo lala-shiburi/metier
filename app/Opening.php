@@ -66,7 +66,7 @@ class Opening extends Model
      * @return \App\Opening
      */
     public static function searchJobTitle($keyword){
-        return Opening::whereRaw('openings.title like "%'.$keyword.'%"');
+        return Opening::whereRaw('openings.title like "%'.addslashes($keyword).'%"');
     }
 
     /**
@@ -76,7 +76,7 @@ class Opening extends Model
      * @return App\Opening
      */
     public static function searchCompanyName($keyword){
-        return Opening::join("companies","companies.id","=","openings.company_id")->whereRaw("companies.name like '%".$keyword."%'");
+        return Opening::join("companies","companies.id","=","openings.company_id")->whereRaw("companies.name like '%".addslashes($keyword)."%'");
     }
 
     /**

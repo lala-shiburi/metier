@@ -19,7 +19,7 @@ class CreateOpeningsTable extends Migration
             $table->integer('hiring_step_group_id')->nullable();
             $table->string('title');
             $table->string('picture')->nullable();
-            $table->string('details');
+            $table->text('details');
             $table->string('salary_range')->nullable();
             $table->string('youtube_video')->nullable();
             $table->integer('professional_years')->nullable();

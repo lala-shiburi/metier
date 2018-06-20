@@ -13,7 +13,7 @@ class CreateHiringStepsGroupsTable extends Migration
      */
     public function up()
     {
-        Schema::create('hiring_steps_groups', function (Blueprint $table) {
+        Schema::create('hiring_step_groups', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('company_id');
             $table->string('name');
@@ -29,6 +29,6 @@ class CreateHiringStepsGroupsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hiring_steps_groups');
+        Schema::dropIfExists('hiring_step_groups');
     }
 }

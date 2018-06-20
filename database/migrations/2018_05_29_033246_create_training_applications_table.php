@@ -17,7 +17,8 @@ class CreateTrainingApplicationsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('training_batch_id');
-            $table->string('application_status');
+            $table->text('application_letter');
+            $table->string('application_status')->default("submitted");
             $table->timestamps();
         });
     }

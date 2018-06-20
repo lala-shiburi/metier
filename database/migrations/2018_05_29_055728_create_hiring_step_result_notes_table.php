@@ -15,7 +15,7 @@ class CreateHiringStepResultNotesTable extends Migration
     {
         Schema::create('hiring_step_result_notes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('hiring_result_notes');
+            $table->integer('hiring_step_result_id');
             $table->string('title');
             $table->text('note');
             $table->timestamps();
