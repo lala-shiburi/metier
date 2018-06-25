@@ -1,5 +1,5 @@
 <template>
-  <div class="custom-control custom-checkbox d-flex">
+  <span style="padding-left:25px;">
     <input
       :name="name"
       :checked="internalValue"
@@ -10,7 +10,7 @@
     <label :for="id || name" class="custom-control-label my-auto">
       <slot/>
     </label>
-  </div>
+  </span>
 </template>
 
 <script>

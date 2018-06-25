@@ -1,54 +1,38 @@
 <template>
-  <div class="row">
-    <div class="col-lg-8 m-auto">
-      <card :title="$t('login')">
+  <div class="row m-0 w-100">
+      <div class="col-md-6 p-0 overflow-hidden">
+        <img :src="public_path+'/images/Group 244.png'" style="width:100%;" class="absolute-center">
+      </div>
+      <div class="col-md-6 p-0 m-auto" style="height:100vh; background:white;">
         <form @submit.prevent="login" @keydown="form.onKeydown($event)">
-          <!-- Email -->
-          <div class="form-group row">
-            <label class="col-md-3 col-form-label text-md-right">{{ $t('email') }}</label>
-            <div class="col-md-7">
-              <input v-model="form.email" :class="{ 'is-invalid': form.errors.has('email') }" class="form-control" type="email" name="email">
-              <has-error :form="form" field="email"/>
+          <div class="absolute-center w-100 p-3" style="max-width:400px;">
+            <div class="text-center">
+              <router-link :to="{ name: 'welcome' }">
+                <img :src="public_path+'/images/logo_brand.png'">
+              </router-link>
+              <blockquote style="font-size:12px; margin-top:10px;">Welcome back! Please login to your account.</blockquote>
             </div>
-          </div>
-
-          <!-- Password -->
-          <div class="form-group row">
-            <label class="col-md-3 col-form-label text-md-right">{{ $t('password') }}</label>
-            <div class="col-md-7">
-              <input v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }" class="form-control" type="password" name="password">
-              <has-error :form="form" field="password"/>
-            </div>
-          </div>
-
-          <!-- Remember Me -->
-          <div class="form-group row">
-            <div class="col-md-3"/>
-            <div class="col-md-7 d-flex">
+            <v-line-input :form="form" field="email">
+              Email
+            </v-line-input>
+            <v-line-input :form="form" field="password" type="password">
+              Password
+            </v-line-input>
+            <div style="margin:20px 0;">
               <checkbox v-model="remember" name="remember">
                 {{ $t('remember_me') }}
               </checkbox>
 
-              <router-link :to="{ name: 'password.request' }" class="small ml-auto my-auto">
+              <router-link :to="{ name: 'password.request' }" style="display:block; float:right;" class="small ml-auto my-auto">
                 {{ $t('forgot_password') }}
               </router-link>
             </div>
-          </div>
-
-          <div class="form-group row">
-            <div class="col-md-7 offset-md-3 d-flex">
-              <!-- Submit Button -->
-              <v-button :loading="form.busy">
-                {{ $t('login') }}
-              </v-button>
-
-              <!-- GitHub Login Button -->
-              <login-with-github/>
-            </div>
+            <v-button :loading="form.busy">
+              {{ $t('login') }}
+            </v-button>
           </div>
         </form>
-      </card>
-    </div>
+      </div>
   </div>
 </template>
 
@@ -58,6 +42,7 @@ import LoginWithGithub from '~/components/LoginWithGithub'
 
 export default {
   middleware: 'guest',
+  layout: 'basic',
 
   components: {
     LoginWithGithub
@@ -72,7 +57,8 @@ export default {
       email: '',
       password: ''
     }),
-    remember: false
+    remember: false,
+    public_path: location.origin,
   }),
 
   methods: {
@@ -91,7 +77,7 @@ export default {
 
       // Redirect home.
       this.$router.push({ name: 'home' })
-    }
+    },
   }
 }
 </script>

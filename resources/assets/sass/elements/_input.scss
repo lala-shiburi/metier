@@ -1,0 +1,104 @@
+@mixin input-is-error-mixin($bol){
+  @if $bol{
+    border-color: #ff3b3b;
+  }
+  @else{
+    border-color:#979797;
+  }
+}
+
+.line-input{
+  position: relative;
+  font-size: 12px;
+  padding-top: 15px;
+  margin:10px 0;
+
+  *{
+    transition:200ms ease all;
+  }
+
+  &.dp{
+    .value{
+      padding:5px 0;
+      border-bottom: 1px solid #ccc;
+    }
+
+    & select{
+      opacity: 0;
+      z-index: -1000;
+      position: absolute;
+      bottom:0px;
+    }
+    
+    & .fa-angle-down{
+      position: absolute;
+      right:5px;
+    }
+    & ul{
+      list-style: none;
+      display: none;
+      padding: 0;
+      background: white;
+      box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+      position:absolute;
+      width:100%;
+      z-index: 10;
+      li{
+        padding:5px;
+        cursor: pointer;
+      }
+      & li:hover{
+        background:#fafafa;
+      }
+    }
+
+    & select:focus{
+      ~.value{
+        @include input-is-error-mixin(false);
+      }
+      ~ul{
+        display: block;
+      }
+    }
+  }
+
+  & input{
+    background: none;
+    padding: 5px 0;
+    border:none;
+    outline: none;
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+  }
+
+  & input:focus{
+    @include input-is-error-mixin(false);
+  }
+
+  & .is-invalid{
+    border-color: #e57f7f!important;
+  }
+
+  & .is-invalid:focus{
+    @include input-is-error-mixin(true);
+  }
+
+  & label{
+    position: absolute;
+    top:10px;
+    left:4px;
+    z-index:-1;
+  }
+
+  & .has-error{
+    color:#e57f7f;
+  }
+}
+
+.line-input.focused{
+  label{
+    top: 0px;
+    left: 0px;
+    font-size: 10px;
+  }
+}
