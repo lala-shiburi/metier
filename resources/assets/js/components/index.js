@@ -3,9 +3,11 @@ import Card from './Card'
 import Child from './Child'
 import Button from './Button'
 import Checkbox from './Checkbox'
-import HasError from './HasError'
 import LineInput from './LineInput'
-import { AlertError, AlertSuccess } from 'vform'
+import EllipsisText from './EllipsisText'
+import SkillIcon from './SkillIcon'
+import InfoPreview from './InfoPreview'
+import { HasError, AlertError, AlertSuccess } from 'vform'
 
 // Components that are registered globaly.
 [
@@ -15,7 +17,10 @@ import { AlertError, AlertSuccess } from 'vform'
   Checkbox,
   HasError,
   LineInput,
+  EllipsisText,
   AlertError,
+  SkillIcon,
+  InfoPreview,
   AlertSuccess
 ].forEach(Component => {
   Vue.component(Component.name, Component)
