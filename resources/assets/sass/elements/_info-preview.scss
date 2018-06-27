@@ -1,0 +1,12 @@
+.info-preview{
+  position:relative;
+  .photo{
+    position:relative;
+    .bg-holder{
+      opacity: 0;
+    }
+    & img{
+      width: 100%;
+    }
+  }
+}

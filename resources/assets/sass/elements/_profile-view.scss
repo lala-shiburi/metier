@@ -1,0 +1,36 @@
+.profile-tile-view{
+  background: white;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  margin:10px 0;
+
+  .profile-cover{
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    img{
+      width: 100%;
+    }
+  }
+
+  .profile-photo{
+    position: relative;
+    width: 100%;
+    padding:5px;
+    margin-top:-50%;
+    .scaffold-div{
+      overflow: hidden;
+      position: relative;
+      -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+      border:2px solid white;
+      .bg-holder{
+        opacity: 0;
+        width: 100%;
+      }
+      img{
+        width: 100%;
+      }
+    }
+  }
+}

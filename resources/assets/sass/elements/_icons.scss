@@ -1,0 +1,62 @@
+.skill-icon{
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  & .bg-color{
+    content:' ';
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top:0px;
+    left:0px;
+    border-radius: 50%;
+  }
+  &.x-small-icon{
+    height: 20px;
+  }
+  &.small-icon{
+    height: 30px;
+    padding:5px;
+    img{
+      margin-top: -8px;
+    }
+  }
+
+  & img{
+    height:100%;
+    position:relative;
+  }
+}
+
+.php-bg{
+  background: $php;
+}
+
+.ruby-bg{
+  background: $ruby;
+}
+
+.swift-bg{
+  background: $swift;
+}
+
+.go-bg{
+  background: $go;
+}
+
+.csharp-bg{
+  background: $csharp;
+}
+
+.javascript-bg{
+  background: $javascript;
+}
+
+.python-bg{
+  background: $python;
+}
+
+.typescript{
+  background: $typescript;
+}
+

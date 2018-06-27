@@ -3,6 +3,7 @@ $config = [
     'appName' => config('app.name'),
     'locale' => $locale = app()->getLocale(),
     'locales' => config('app.locales'),
+    'public_location' => asset("/"),
     'githubAuth' => config('services.github.client_id'),
 ];
 
