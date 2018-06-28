@@ -51,8 +51,8 @@ export default {
     }
   },
   mounted(){
-    $(function () {
-      $('[data-toggle="tooltip"]').tooltip()
+    jQuery(function () {
+      jQuery('[data-toggle="tooltip"]').tooltip()
     })
   }
 }
