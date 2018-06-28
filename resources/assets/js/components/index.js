@@ -7,6 +7,7 @@ import LineInput from './LineInput'
 import EllipsisText from './EllipsisText'
 import SkillIcon from './SkillIcon'
 import InfoPreview from './InfoPreview'
+import PhotoViewer from './PhotoViewer'
 import { HasError, AlertError, AlertSuccess } from 'vform'
 
 // Components that are registered globaly.
@@ -21,6 +22,7 @@ import { HasError, AlertError, AlertSuccess } from 'vform'
   AlertError,
   SkillIcon,
   InfoPreview,
+  PhotoViewer,
   AlertSuccess
 ].forEach(Component => {
   Vue.component(Component.name, Component)
