@@ -38,36 +38,23 @@
                 </ellipsis-text>
               </li>
               <li>
-                <ellipsis-text label="Birth Date">
-                  July 18, 1995
+                <ellipsis-text label="Address">
+                  Business Park Mabolo Cebu City Cebu
                 </ellipsis-text>
-              </li>
-              <li>
-                <ellipsis-text label="Gender">
-                  Male
-                </ellipsis-text>
-              </li>
-            </ul>
-          </card>
-          <card class="m-tb-10" title="Resume File">
-            <a href="#" class="btn btn-primary">
-              Download
-            </a>
-          </card>
-          <card class="m-tb-10" title="Address">
-            <ul class="simple-list">
-              <li>
-                <ellipsis-text>
-                  Shokay Lapu-Lapu City Cebu
+                <ellipsis-text label="Contact #">
+                  09123123212
                 </ellipsis-text>
               </li>
             </ul>
           </card>
-          <card class="m-tb-10" title="Contact Number">
+          <card class="m-tb-10" title="Photo">
+            <photo-viewer></photo-viewer>
+          </card>
+          <card class="m-tb-10" title="Website">
             <ul class="simple-list">
               <li>
                 <ellipsis-text>
-                  09678687823
+                  <a href="http://job-seed.com" target="blank">http://job-seed.com</a>
                 </ellipsis-text>
               </li>
             </ul>
@@ -87,16 +74,6 @@
               <br>
               <skill-icon icon="angular"></skill-icon>
             </div>
-          </card>
-          <card class="m-tb-10" title="Work Experience">
-            <info-preview icon="company" title="Nexseed Inc." subtitle="Engineer">
-              8 months
-            </info-preview>
-          </card>
-          <card class="m-tb-10" title="Educational Background">
-            <info-preview icon="school" title="DMCCFI Inc." subtitle="Bachelor of Science in Information Technology">
-              Major in Web Development
-            </info-preview>
           </card>
         </div>
       </div>
