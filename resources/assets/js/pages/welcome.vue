@@ -16,16 +16,6 @@
       </template>
     </div>
 
-    <div class="jumbotron">
-      <h1 class="display-3">Jobseed!</h1>
-      <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-      <hr class="my-4">
-      <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-      <p class="lead">
-        <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-      </p>
-    </div>
-
     <div class="text-center">
       <div class="title mb-4">
         {{ title }}
@@ -43,39 +33,33 @@
 </template>
 
 <script>
-  import {
-    mapGetters
-  } from 'vuex'
+import { mapGetters } from 'vuex'
 
-  export default {
-    layout: 'basic',
+export default {
+  layout: 'basic',
 
-    metaInfo() {
-      return {
-        title: this.$t('home')
-      }
-    },
+  metaInfo () {
+    return { title: this.$t('home') }
+  },
 
-    data: () => ({
-      title: window.config.appName
-    }),
+  data: () => ({
+    title: window.config.appName
+  }),
 
-    computed: mapGetters({
-      authenticated: 'auth/check'
-    })
-  }
-
+  computed: mapGetters({
+    authenticated: 'auth/check'
+  })
+}
 </script>
 
 <style scoped>
-  .top-right {
-    position: absolute;
-    right: 10px;
-    top: 18px;
-  }
+.top-right {
+  position: absolute;
+  right: 10px;
+  top: 18px;
+}
 
-  .title {
-    font-size: 85px;
-  }
-
+.title {
+  font-size: 85px;
+}
 </style>

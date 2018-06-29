@@ -15,8 +15,8 @@
             </div>
           </div>
           <div class="col-lg-10 col-7">
-            <h3>Uelmar Ortega</h3>
-            <label>Software Developer</label>
+            <h3>Nexseed Inc.</h3>
+            <!-- <label>Software Developer</label> -->
           </div>
         </div>
       </div>
@@ -48,7 +48,14 @@
             </ul>
           </card>
           <card class="m-tb-10" title="Photo">
-            <photo-viewer></photo-viewer>
+            <photo-viewer>
+              <img class="absolute-center" :src="public_path+'/images/Group 244.png'">
+              <img class="absolute-center" :src="public_path+'/images/register-background.png'">
+              <img class="absolute-center" :src="public_path+'/images/bg-img.png'">
+              <img class="absolute-center" :src="public_path+'/images/angular.png'">
+              <img class="absolute-center" :src="public_path+'/images/register-background.png'">
+              <img class="absolute-center" :src="public_path+'/images/register-background.png'">
+            </photo-viewer>
           </card>
           <card class="m-tb-10" title="Website">
             <ul class="simple-list">
@@ -75,6 +82,7 @@
               <skill-icon icon="angular"></skill-icon>
             </div>
           </card>
+          <opening-card></opening-card>
         </div>
       </div>
     </div>
