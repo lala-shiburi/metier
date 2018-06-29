@@ -1,6 +1,9 @@
 <template>
   <div class="dominant-label" :title="title">
-    <div class="label"><span v-if="label">{{label}}  : </span>&nbsp;</div>
+    <div class="label">
+      <slot name="icon"/>
+      <span v-if="label">{{label}} :</span>&nbsp;
+    </div>
     <div class="submissive">
       <div class="text text-ellipsis">
         <slot/>
