@@ -1,0 +1,163 @@
+.photo-previewer{
+  position: relative;
+  margin:0px!important;
+  .photo-item{
+    cursor: pointer;
+    padding:0px!important;
+    width: initial!important;
+    .over-photo{
+      color: white;
+      .background{
+        background: black;
+        opacity: 0.5;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0px;
+        left: 0px;
+      }
+      & .text{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateY(-50%) translateX(-50%);
+      }
+    }
+  }
+}
+
+.profile-view-modal{
+  animation-name: opacity-animation;
+  animation-duration: 400ms;
+  position:fixed;
+  top:0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  .back-drop{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    background: rgb(17, 14, 14);
+    opacity: 0.5;
+  }
+  & .close-bttn{
+    position: absolute;
+    right: 10px;
+    top:10px;
+    color: white;
+    cursor:pointer;
+    z-index: 10;
+  }
+  & .modal-visible{
+    height: 100%;
+    animation-name: scale-animation;
+    animation-duration: 400ms;
+    .image{
+      position: absolute;
+      top: 5px;
+      bottom: 5px;
+      left: 40px;
+      right: 40px;
+    }
+  }
+
+  & .button-right{
+    right:20px;
+    top:50%;
+    transform:translateY(-50%);
+    position: absolute;
+    color: white;
+    cursor: pointer;
+  }
+
+  & .button-left{
+    left:20px;
+    position: absolute;
+    top:50%;
+    transform:translateY(-50%);
+    color: white;
+    cursor: pointer;
+  }
+}
+
+.photo-preview-container{
+  position: relative;
+  width: 100%;
+  padding:5px;
+  .scaffold-div{
+    overflow: hidden;
+    position: relative;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    border:2px solid white;
+    .bg-holder{
+      opacity: 0;
+      width: 100%;
+    }
+    img{
+      width: 100%;
+    }
+    & .upload-button{
+      cursor: pointer;
+      color: white;
+      font-weight: bold;
+      position: absolute;
+      width: 100%;
+      bottom: 0px;
+      left: 0px;
+      padding: 10px 0px;
+      height: 40px;
+      .bg{
+        position: absolute;
+        top:0px;
+        opacity: 0.8;
+        height:100%;
+        width: 100%;
+        left:0px;
+        background: rgb(217, 217, 217);
+      }
+      &:hover{
+        .bg{
+          opacity: 1;
+        }
+      }
+      & [type=file]{
+        display: none;
+      }
+      & .text{
+        font-weight: bold;
+        position: relative;
+      }
+    }
+  }
+  &.round .scaffold-div{
+    border-radius: 50%;
+  }
+}
+
+@keyframes scale-animation{
+  0%{
+    opacity: 0;
+    transform: scale(0.3) translate3d(0,0,0);
+  }
+  50%{
+    opacity: 0.9;
+    transform: scale(1.1);
+  }
+  80%{
+    opacity: 1;
+    transform: scale(0.89);
+  }
+  100%{
+    opacity: 1;
+    transform: scale(1) translate3d(0,0,0);
+  }
+}
+
+@keyframes opacity-animation{
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
