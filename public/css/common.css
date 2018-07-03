@@ -1,0 +1,59 @@
+.overflow-hidden{
+  overflow: hidden
+}
+
+.absolute-center{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.simple-list{
+  list-style: none;
+  padding: 0px;
+}
+
+.simple-list li{
+  border-bottom:1px solid #f0f0f0;
+  padding: 5px 0;
+}
+
+.dominant-label{
+  position:relative;
+}
+
+.dominant-label .label{
+  display: table-cell;
+  width: 0px;
+  white-space: nowrap;
+}
+
+.dominant-label .submissive{
+  display: table-cell;
+  position:relative;
+  width:100%;
+}
+
+.dominant-label .submissive .text{
+  position: absolute;
+  overflow: hidden;
+  width: 100%;
+  white-space: nowrap;
+  padding-left: 5px;
+}
+
+.text-ellipsis{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.m-tb-10{
+  margin:10px 0;
+}
+
+.border-bottom{
+  border-bottom: 1px solid #f0f0f0;
+}
