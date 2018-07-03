@@ -9,6 +9,7 @@ import SkillIcon from './SkillIcon'
 import InfoPreview from './InfoPreview'
 import PhotoViewer from './PhotoViewer'
 import OpeningCard from './OpeningCard'
+import PhotoConverter from './PhotoConverter'
 import { HasError, AlertError, AlertSuccess } from 'vform'
 
 // Components that are registered globaly.
@@ -25,6 +26,7 @@ import { HasError, AlertError, AlertSuccess } from 'vform'
   InfoPreview,
   PhotoViewer,
   OpeningCard,
+  PhotoConverter,
   AlertSuccess
 ].forEach(Component => {
   Vue.component(Component.name, Component)
