@@ -22,6 +22,10 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::patch('settings/profile', 'Settings\ProfileController@update');
     Route::patch('settings/password', 'Settings\PasswordController@update');
+
+    Route::group(['prefix' => "company"], function(){
+        Route::post('create', 'CompanyController@create');
+    });
 });
 
 Route::group(['middleware' => 'guest:api'], function () {
