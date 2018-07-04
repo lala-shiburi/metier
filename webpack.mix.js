@@ -1,5 +1,6 @@
 const path = require('path')
 const mix = require('laravel-mix')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 mix.config.vue.esModule = true
@@ -35,7 +36,8 @@ if (mix.inProduction()) {
 
 mix.webpackConfig({
   plugins: [
-    // new BundleAnalyzerPlugin()
+    // make sure to include the plugin!
+    new VueLoaderPlugin()
   ],
   resolve: {
     extensions: ['.js', '.json', '.vue'],
