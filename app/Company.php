@@ -8,6 +8,8 @@ use App\Opening;
 
 class Company extends Model
 {
+    protected $fillable = ['name', 'address', 'email', 'website_url'];
+
     /**
      * Set user collaborator
      * 
