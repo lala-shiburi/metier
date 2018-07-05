@@ -1,3 +1,26 @@
+.x-small-icon{
+  height: 20px;
+  padding:3px;
+  img{
+    margin-top: -8px;
+  }
+}
+.small-icon{
+  height: 30px;
+  padding:5px;
+  img{
+    margin-top: -8px;
+  }
+}
+
+.medium-icon{
+  height: 50px;
+  padding:5px;
+  img{
+    margin-top: -8px;
+  }
+}
+
 .skill-icon{
   position: relative;
   display: inline-block;
@@ -11,24 +34,20 @@
     left:0px;
     border-radius: 50%;
   }
-  &.x-small-icon{
-    height: 20px;
-    padding:3px;
-    img{
-      margin-top: -8px;
-    }
-  }
-  &.small-icon{
-    height: 30px;
-    padding:5px;
-    img{
-      margin-top: -8px;
-    }
-  }
 
   & img{
     height:100%;
     position:relative;
+  }
+}
+
+.iconized-photo{
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  padding:0px!important;
+  img{
+    margin:0px;
   }
 }
 

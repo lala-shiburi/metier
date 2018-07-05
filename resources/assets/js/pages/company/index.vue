@@ -3,19 +3,19 @@
     <div class="col-md-12">
       <div class="profile-tile-view">
         <div class="profile-cover">
-          <img class="absolute-center" :src="public_path+'/images/register-background.png'">
+          <img class="absolute-center" :src="company.cover">
         </div>
         <div class="row">
-          <div class="col-lg-2 col-5">
+          <div class="col-md-2 col-5">
             <div class="profile-photo">
-              <div class="scaffold-div">
+              <div class="scaffold-div" style="background: #e5e5e5;">
                 <img class="bg-holder" :src="public_path+'/images/bg-img.png'">
-                <img class="absolute-center" :src="public_path+'/images/Group 244.png'">
+                <img class="absolute-center" :src="company.photo">
               </div>
             </div>
           </div>
-          <div class="col-lg-10 col-7">
-            <h3>Nexseed Inc.</h3>
+          <div class="col-md-10 col-7">
+            <h3>{{company.name}}</h3>
             <!-- <label>Software Developer</label> -->
           </div>
         </div>
@@ -90,6 +90,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   middleware: 'auth',
 
@@ -110,8 +112,25 @@ export default {
     }
   },
   data : () =>({
-    public_path: location.origin
-  })
+    public_path: location.origin,
+    company_id: null,
+    company: {}
+  }),
+  methods: {
+    fetch_company: async function(){
+      this.company_id = this.$route.params.id;
+      const { data } = await axios({
+          method: 'get',
+          url: '/api/company/fetch',
+          params: { company_id: this.company_id }
+        })
+      this.company = data.data;
+      console.log(data);
+    }
+  },
+  mounted(){
+    this.fetch_company();
+  }
 }
 </script>
 

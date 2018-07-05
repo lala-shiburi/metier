@@ -10,6 +10,8 @@ import InfoPreview from './InfoPreview'
 import PhotoViewer from './PhotoViewer'
 import OpeningCard from './OpeningCard'
 import PhotoConverter from './PhotoConverter'
+import IconizedPhoto from './IconizedPhoto'
+import CompanySearchTable from './company/CompanySearchTable'
 import { HasError, AlertError, AlertSuccess } from 'vform'
 
 // Components that are registered globaly.
@@ -23,10 +25,12 @@ import { HasError, AlertError, AlertSuccess } from 'vform'
   EllipsisText,
   AlertError,
   SkillIcon,
+  IconizedPhoto,
   InfoPreview,
   PhotoViewer,
   OpeningCard,
   PhotoConverter,
+  CompanySearchTable,
   AlertSuccess
 ].forEach(Component => {
   Vue.component(Component.name, Component)

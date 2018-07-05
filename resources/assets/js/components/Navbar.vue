@@ -36,7 +36,7 @@
                 {{ $t('settings') }}
               </router-link>
               <router-link :to="{ name: 'user.companies' }" class="dropdown-item pl-3">
-                Companies
+                <i class="fa fa-building" style="padding: 0 3px;"></i> Companies
               </router-link>
               <div class="dropdown-divider"/>
               <a href="#" class="dropdown-item pl-3" @click.prevent="logout">

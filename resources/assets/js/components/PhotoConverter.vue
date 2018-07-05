@@ -3,12 +3,13 @@
     <div class="scaffold-div">
       <div class="scaffold-div">
         <img class="bg-holder" :src="public_path+'/images/bg-img.png'">
-        <img ref="photo" class="absolute-center" :src="public_path+'/images/Group 244.png'">
+        <img ref="photo" class="absolute-center" :src="public_path+'/images/company.png'">
       </div>
       <div class="upload-button" v-on:click="prompFile">
         <div class="bg"></div>
         <div class="text">Upload Company Logo</div>
         <input type="file" ref="file_input">
+        <input v-model="form[field]" :name="field">
       </div>
     </div>
   </div>
@@ -50,14 +51,14 @@ export default {
 			if (FileReader && files && files.length) {
 				var fr = new FileReader();
 				fr.onload = function () {
-					$this.$refs.photo.src = fr.result;
+          $this.$refs.photo.src = fr.result;
+          $this.form[$this.field] = fr.result;
 				}
 				fr.readAsDataURL(files[0]);
 			}
 		}
   },
   mounted(){
-    console.log(this.$refs.file_input);
     var $this = this;
     jQuery(this.$refs.file_input).change(function(evt){
       var tgt = evt.target || window.event.srcElement,

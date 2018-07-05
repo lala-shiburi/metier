@@ -1,10 +1,10 @@
 <template>
   <card title="Create Company">
-    <form @submit.prevent="update" @keydown="form.onKeydown($event)">
+    <form @submit.prevent="create" @keydown="form.onKeydown($event)">
       <alert-success :form="form" message="Registration Successful"/>
 
       <div style="text-align:center">
-        <photo-converter style="width:200px; display:inline-block; background:#d9d9d9;" :form="form" :field="form.photo"></photo-converter>
+        <photo-converter style="width:200px; display:inline-block; background:#d9d9d9;" :form="form" field="photo"></photo-converter>
       </div>
       <br>
       <!-- Name -->
@@ -56,15 +56,17 @@
 <script>
 import Form from 'vform'
 export default {
+  middleware: 'auth',
   scrollToTop: false,
 
   metaInfo () {
-    return { title: this.$t('settings') }
+    return { title: 'Create Company' }
   },
 
   data: () => ({
     form: new Form({
       name: '',
+      photo: '',
       address: '',
       email: '',
       website_url: ''
@@ -72,10 +74,9 @@ export default {
   }),
 
   methods: {
-    async update () {
-      await this.form.post('/api/company/create')
-
-      this.form.reset()
+    async create () {
+      const {data} = await this.form.post('/api/company/create')
+      this.$router.push("/company/profile/"+data.company_id);
     }
   }
 }
