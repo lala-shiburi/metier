@@ -8,7 +8,8 @@ use App\Opening;
 
 class Company extends Model
 {
-    protected $fillable = ['name', 'address', 'email', 'website_url'];
+    protected $fillable = ['name', 'owner_id', 'address', 'email', 'website_url'];
+    protected $appends = ['photo'];
 
     /**
      * Set user collaborator
@@ -158,6 +159,32 @@ class Company extends Model
      */
     public function openings(){
         return $this->hasMany(Opening::class);
+    }
+
+    /**
+     * update photo attribute
+     * 
+     * @return String
+     */
+    public function getPhotoAttribute(){
+        if(!file_exists('storage/photos/'.$this->attributes['photo']) || str_replace(' ','',$this->attributes['photo']) == ''){
+            return asset('images/company.png');
+        }
+
+        return asset('storage/photos/'.$this->attributes['photo']);
+    }
+
+    /**
+     * update photo attribute
+     * 
+     * @return String
+     */
+    public function getCoverAttribute(){
+        if(!file_exists('storage/photos/'.$this->attributes['cover']) || str_replace(' ','',$this->attributes['cover']) == ''){
+            return asset('images/default-opening.png');
+        }
+
+        return asset('storage/photos/'.$this->attributes['cover']);
     }
     
 

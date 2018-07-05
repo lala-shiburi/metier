@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Company;
+use App\Http\Resources\CompanyResource;
 
 class CompanyController extends Controller
 {
@@ -17,14 +18,16 @@ class CompanyController extends Controller
 
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'required',
+            'email' => 'required|email',
             'address' => 'required',
             'website_url' => 'required',
         ]);
 
+
         $company = Company::create([
             "name" => $request->name,
             "email" => $request->email,
+            "owner_id" => \Auth::user()->id,
             "address" => $request->address,
             "website_url" => $request->website_url
         ]);
@@ -32,7 +35,31 @@ class CompanyController extends Controller
         $company->owner_id = \Auth::user()->id;
         $company->save();
 
-        return ["status" => "success"];
+        if($request->photo){
+            $company->saveProfilePhoto($request->photo);
+        }
 
+        return ["status" => "success", "company_id" => $company->id];
+
+    }
+
+    /**
+     * Return a filtered list of companies
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @return Illuminate\Http\Resources\JsonResource
+     */
+    public function fetch_datatable(Request $request){
+        return CompanyResource::collection(Company::paginate());
+    }
+
+    /**
+     * Return a filtered list of companies
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @return Illuminate\Http\Resources\JsonResource
+     */
+    public function fetch(Request $request){
+        return new CompanyResource(Company::findOrFail($request->company_id));
     }
 }

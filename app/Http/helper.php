@@ -9,7 +9,7 @@ function saveBase64Photo($base64data,$name){
         mkdir(public_path('/storage/photos'));
     }
     
-    file_put_contents(public_path('/storage/photos/s').$name, $data);
+    file_put_contents(public_path('/storage/photos/').$name, $data);
 }
 
 function saveDocument($file,$name){
