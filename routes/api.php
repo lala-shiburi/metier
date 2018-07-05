@@ -25,6 +25,8 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::group(['prefix' => "company"], function(){
         Route::post('create', 'CompanyController@create');
+        Route::get('fetch','CompanyController@fetch');
+        Route::get('datatable','CompanyController@fetch_datatable');
     });
 });
 
