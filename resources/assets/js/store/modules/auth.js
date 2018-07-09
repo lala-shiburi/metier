@@ -5,12 +5,14 @@ import * as types from '../mutation-types'
 // state
 export const state = {
   user: null,
+  expired_url: null,
   token: Cookies.get('token')
 }
 
 // getters
 export const getters = {
   user: state => state.user,
+  expired_url: state => state.expired_url,
   token: state => state.token,
   check: state => state.user !== null
 }
@@ -40,6 +42,10 @@ export const mutations = {
 
   [types.UPDATE_USER] (state, { user }) {
     state.user = user
+  },
+
+  [types.SAVE_EXPIRED_URL] (state, { url }) {
+    state.expired_url = url
   }
 }
 
