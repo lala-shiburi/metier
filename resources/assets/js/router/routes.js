@@ -10,6 +10,7 @@ const UserProfile = () => import('~/pages/user/index').then(m => m.default || m)
 const CompanyProfile = () => import('~/pages/company/index').then(m => m.default || m)
 const UserCompanies = () => import('~/pages/user/companies').then(m => m.default || m)
 const CompanyCreate = () => import('~/pages/company/create').then(m => m.default || m)
+const OpeningCreate = () => import('~/pages/opening/create').then(m => m.default || m)
 const Settings = () => import('~/pages/settings/index').then(m => m.default || m)
 const SettingsProfile = () => import('~/pages/settings/profile').then(m => m.default || m)
 const SettingsPassword = () => import('~/pages/settings/password').then(m => m.default || m)
@@ -38,6 +39,10 @@ export default [
   // user routes
   { path: '/profile/:id?', name: 'user.profile', component: UserProfile },
   { path: '/user/companies', name: 'user.companies', component: UserCompanies },
+
+  // opening routes
+  { path: '/opening/profile/:id', name: 'user.profile', component: UserProfile },
+  { path: '/opening/create', name: 'opening.create', component: OpeningCreate },
   
 
   { path: '*', component: NotFound }
