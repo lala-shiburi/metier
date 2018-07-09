@@ -46,7 +46,7 @@ axios.interceptors.response.use(response => response, error => {
       cancelButtonText: i18n.t('cancel')
     }).then(() => {
       store.commit('auth/LOGOUT')
-
+      store.commit('auth/SAVE_EXPIRED_URL',{ url: location.pathname })
       router.push({ name: 'login' })
     })
   }

@@ -76,7 +76,7 @@ export default {
       await this.$store.dispatch('auth/fetchUser')
 
       // Redirect home.
-      this.$router.push({ name: 'home' })
+      this.$router.push({ path: this.$store.getters['auth/expired_url']?this.$store.getters['auth/expired_url']:'home' })
     },
   }
 }

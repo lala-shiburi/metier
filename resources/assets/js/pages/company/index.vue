@@ -14,9 +14,16 @@
               </div>
             </div>
           </div>
-          <div class="col-md-10 col-7">
+          <div class="col-md-5 col-7">
             <h3>{{company.name}}</h3>
             <!-- <label>Software Developer</label> -->
+          </div>
+          <div class="col-md-5 col-12">
+            <div class="btn-group pull-right">
+              <router-link :to="{ name: 'opening.create' }" class="btn btn-light">Create Opening</router-link>
+              <span class="dvder"/>
+              <button type="button" class="btn btn-light">...</button>
+            </div>
           </div>
         </div>
       </div>
