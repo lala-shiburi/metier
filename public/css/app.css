@@ -12237,6 +12237,7 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-right {
 .simple-card .simple-card-header {
   font-size: 18px;
   font-weight: 500;
+  padding: 10px;
 }
 
 .profile-tile-view {
@@ -12462,6 +12463,33 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-right {
   font-size: 10px;
 }
 
+.x-small-icon {
+  height: 20px;
+  padding: 3px;
+}
+
+.x-small-icon img {
+  margin-top: -8px;
+}
+
+.small-icon {
+  height: 30px;
+  padding: 5px;
+}
+
+.small-icon img {
+  margin-top: -8px;
+}
+
+.medium-icon {
+  height: 50px;
+  padding: 5px;
+}
+
+.medium-icon img {
+  margin-top: -8px;
+}
+
 .skill-icon {
   position: relative;
   display: inline-block;
@@ -12478,27 +12506,20 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-right {
   border-radius: 50%;
 }
 
-.skill-icon.x-small-icon {
-  height: 20px;
-  padding: 3px;
-}
-
-.skill-icon.x-small-icon img {
-  margin-top: -8px;
-}
-
-.skill-icon.small-icon {
-  height: 30px;
-  padding: 5px;
-}
-
-.skill-icon.small-icon img {
-  margin-top: -8px;
-}
-
 .skill-icon img {
   height: 100%;
   position: relative;
+}
+
+.iconized-photo {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0px !important;
+}
+
+.iconized-photo img {
+  margin: 0px;
 }
 
 .php-bg {
@@ -12825,5 +12846,71 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-right {
 
 .opening-card .skill-icon img {
   margin-top: 0px !important;
+}
+
+.simple-table {
+  border: 0px;
+}
+
+.simple-table tbody td {
+  padding: 0px;
+}
+
+.wizard .steps {
+  position: relative;
+  border-top: 3px solid #d5d5d5;
+}
+
+.wizard .steps .step-container {
+  position: absolute;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+          transform: translateX(-50%) translateY(-50%);
+}
+
+.wizard .steps .step-container .step {
+  background: white;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 5px solid #d5d5d5;
+  position: relative;
+}
+
+.wizard .steps .step-container .step .scaffold-div {
+  -webkit-box-shadow: initial;
+          box-shadow: initial;
+}
+
+.wizard .steps .step-container .text {
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  white-space: nowrap;
+  color: #b3b3b3;
+}
+
+.wizard .steps .step-container .line {
+  position: absolute;
+  width: 100%;
+  background: #1677a2;
+  height: 5px;
+  right: 0px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  z-index: -1;
+  display: none;
+}
+
+.wizard .steps .step-container.active .step {
+  border-color: #1677a2;
+}
+
+.wizard .steps .step-container.active .line {
+  display: block;
+}
+
+.wizard .steps .step-container.active .text {
+  color: #4a4a4a;
 }
 

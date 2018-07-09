@@ -9,6 +9,11 @@
   transform: translateX(-50%) translateY(-50%);
 }
 
+.n{
+  font-weight: 500;
+  color: inherit;
+}
+
 .simple-list{
   list-style: none;
   padding: 0px;
@@ -56,4 +61,10 @@
 
 .border-bottom{
   border-bottom: 1px solid #f0f0f0;
+}
+
+.dvder{
+  display: inline-block;
+  background: #f1f1f1;
+  width: 1px;
 }

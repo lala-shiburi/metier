@@ -28,6 +28,12 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('fetch','CompanyController@fetch');
         Route::get('datatable','CompanyController@fetch_datatable');
     });
+
+    Route::group([ "prefix" => "opening" ], function(){
+        Route::group(["prefix" => "validate"],function(){
+            Route::post('basicInfo','OpeningController@validateBasicInfo');
+        });
+    });
 });
 
 Route::group(['middleware' => 'guest:api'], function () {
