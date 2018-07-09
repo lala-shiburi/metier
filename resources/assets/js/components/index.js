@@ -12,9 +12,10 @@ import OpeningCard from './OpeningCard'
 import PhotoConverter from './PhotoConverter'
 import IconizedPhoto from './IconizedPhoto'
 import CompanySearchTable from './company/CompanySearchTable'
+import Wizard from './Wizard'
 import { HasError, AlertError, AlertSuccess } from 'vform'
 
-// Components that are registered globaly.
+// Components that are registered globally.
 [
   Card,
   Child,
@@ -31,6 +32,7 @@ import { HasError, AlertError, AlertSuccess } from 'vform'
   OpeningCard,
   PhotoConverter,
   CompanySearchTable,
+  Wizard,
   AlertSuccess
 ].forEach(Component => {
   Vue.component(Component.name, Component)

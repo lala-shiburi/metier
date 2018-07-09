@@ -1,0 +1,54 @@
+.wizard{
+  .steps{
+    position: relative;
+    border-top:3px solid #d5d5d5;
+    .step-container{
+      position: absolute;
+      transform: translateX(-50%) translateY(-50%);
+      .step{
+        background: white;
+        overflow: hidden;
+        border-radius: 50%;
+        border: 5px solid #d5d5d5;
+        position: relative;
+        .scaffold-div{
+          box-shadow: initial;
+        }
+      }
+
+      & .text{
+        position: absolute;
+        left: 50%;
+        transform:translateX(-50%);
+        white-space: nowrap;
+        color: #b3b3b3;
+      }
+
+      & .line{
+        position: absolute;
+        width: 100%;
+        background: #1677a2;
+        height: 5px;
+        right: 0px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: -1;
+        display: none;
+      }
+
+      &.active{
+        .step{
+          border-color: #1677a2;
+        }
+
+        .line{
+          display: block;
+        }
+
+        & .text{
+          color: #4a4a4a;
+        }
+      }
+    }
+  }
+}

@@ -5,6 +5,26 @@ $config = [
     'locales' => config('app.locales'),
     'public_location' => asset("/"),
     'githubAuth' => config('services.github.client_id'),
+
+    'salary_ranges'=> [
+      "less than or Php 9,000",
+      "Php 10,000 ~ Php 14,999",
+      "Php 15,000 ~ Php 19,999",
+      "Php 20,000 ~ Php 24,999",
+      "Php 25,000 ~ Php 29,999",
+      "Php 30,000 ~ Php 39,999",
+      "Php 40,000 ~ Php 49,999",
+      "Php 50,000 ~ Php 70,999",
+      "Php 70,000 ~ Php 99,999",
+      "Php 100,000 and above",
+      ],
+
+    'work_experiences'=> [
+      "No Experience",
+      "Less or 1 yr. Experience",
+      "2 to 4 yrs.",
+      "5+ yrs."
+      ]
 ];
 
 $polyfills = [
