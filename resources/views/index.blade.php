@@ -24,6 +24,26 @@ $config = [
       "Less or 1 yr. Experience",
       "2 to 4 yrs.",
       "5+ yrs."
+      ],
+
+      'programming_languages' => [
+        ['php', 'Php'],
+        ['ruby','Ruby'],
+        ['javascript','Javascript'],
+        ['cPlusPlus','C++'],
+        ['csharp','C#'],
+        ['swift','Swift'],
+        ['go','Go'],
+        ['typeScript','TypeScript'],
+        ['python','Python']
+      ],
+
+      'technologies' => [
+        ['angular','Angular JS'],
+        ['node','Node JS'],
+        ['vue','Vue JS'],
+        ['asp','ASP.NET'],
+        ['react','React JS']
       ]
 ];
 

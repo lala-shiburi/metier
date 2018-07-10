@@ -12,12 +12,12 @@
             <iconized-photo size="medium-icon" :photo="public_path+'/images/opening-description.png'"></iconized-photo>
           </div>
         </div>
-        <div class="step-container" name="Description">
+        <div class="step-container" name="Skills">
           <div class="step">
             <iconized-photo size="medium-icon" :photo="public_path+'/images/code.png'"></iconized-photo>
           </div>
         </div>
-        <div class="step-container" name="Skills">
+        <div class="step-container" name="Complete">
           <div class="step">
             <iconized-photo size="medium-icon" :photo="public_path+'/images/check.png'"></iconized-photo>
           </div>
@@ -75,53 +75,30 @@
             </div>
           </div>
         </form>
-        <form @submit.prevent="create" @keydown="form.onKeydown($event)">
-          <alert-success :form="form" message="Registration Successful"/>
-
-          <div style="text-align:center">
-            <photo-converter style="width:200px; display:inline-block; background:#d9d9d9;" :form="form" field="photo"></photo-converter>
-          </div>
-          <br>
-          <!-- Name -->
+        <form @submit.prevent="validateForm2" @keydown="form2.onKeydown($event)">
           <div class="form-group row">
-            <label class="col-md-3 col-form-label text-md-right">Name</label>
+            <label class="col-md-3 col-form-label text-md-right">Details</label>
             <div class="col-md-7">
-              <input v-model="form.name" :class="{ 'is-invalid': form.errors.has('name') }" class="form-control" name="name">
-              <has-error :form="form" field="name"/>
-            </div>
-          </div>
-
-          <!-- Address -->
-          <div class="form-group row">
-            <label class="col-md-3 col-form-label text-md-right">Address</label>
-            <div class="col-md-7">
-              <input v-model="form.address" :class="{ 'is-invalid': form.errors.has('address') }" class="form-control" name="address">
-              <has-error :form="form" field="address"/>
-            </div>
-          </div>
-
-          <!-- Email -->
-          <div class="form-group row">
-            <label class="col-md-3 col-form-label text-md-right">Email</label>
-            <div class="col-md-7">
-              <input v-model="form.email" :class="{ 'is-invalid': form.errors.has('email') }" class="form-control" name="email">
-              <has-error :form="form" field="email"/>
-            </div>
-          </div>
-
-          <!-- Website Url -->
-          <div class="form-group row">
-            <label class="col-md-3 col-form-label text-md-right">Company Website Url</label>
-            <div class="col-md-7">
-              <input v-model="form.website_url" :class="{ 'is-invalid': form.errors.has('website_url') }" class="form-control" name="website_url">
-              <has-error :form="form" field="website_url"/>
+              <textarea rows="5" v-model="form2.details" :class="{ 'is-invalid': form2.errors.has('details') }" class="form-control" name="details">
+              </textarea>
+              <has-error :form="form2" field="details"/>
             </div>
           </div>
 
           <!-- Submit Button -->
           <div class="form-group row">
             <div class="col-md-9 ml-md-auto">
-              <v-button :loading="form.busy" type="success">Save</v-button>
+              <v-button :loading="form2.busy" type="success">Save</v-button>
+            </div>
+          </div>
+        </form>
+        <form @submit.prevent="validateForm3" @keydown="form3.onKeydown($event)">
+          <skill-selector></skill-selector>
+
+          <!-- Submit Button -->
+          <div class="form-group row" style="margin-top: 30px;">
+            <div class="col-md-9">
+              <v-button :loading="form3.busy" type="success">Save</v-button>
             </div>
           </div>
         </form>
@@ -146,10 +123,11 @@ export default {
       salary_range: '',
       professional_years: '',
     }),
-    form: new Form({
-      title: '',
-      salary_range: '',
-      professional_years: '',
+    form2: new Form({
+      details: ''
+    }),
+    form3: new Form({
+      skills: ''
     }),
     public_path: location.origin,
     salary_ranges: window.config.salary_ranges,
@@ -159,7 +137,11 @@ export default {
   methods: {
     async validateForm1 () {
       const {data} = await this.form1.post('/api/opening/validate/basicInfo')
-      // this.$router.push("/company/profile/"+data.company_id);
+      this.$refs.wizard.next();
+    },
+    async validateForm2 () {
+      const {data} = await this.form2.post('/api/opening/validate/basicInfo')
+      this.$refs.wizard.next();
     },
     right(){
       this.$refs.wizard.next();

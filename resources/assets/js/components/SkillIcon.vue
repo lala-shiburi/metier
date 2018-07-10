@@ -1,5 +1,5 @@
 <template>
-  <div data-toggle="tooltip" data-html="true" :title="'<b>'+upperCaseFirst(icon)+'</b>'" class="skill-icon" :class="size? size: 'small-icon'">
+  <div data-toggle="tooltip" data-html="true" :data-placement="pos?pos:''" :title="'<b>'+upperCaseFirst(icon)+'</b>'" class="skill-icon" :class="size? size: 'small-icon'">
     <div class="bg-color" :style="icons[icon].background ? 'background:'+icons[icon].background : ''"></div>
     <img :src="icons[icon].img">
   </div>
@@ -12,6 +12,7 @@ export default {
   props: {
     icon: { type: String, required: true },
     size: { type: String, default: null },
+    pos: { type: String, default: null },
   },
 
   data: () => ({
@@ -28,6 +29,10 @@ export default {
 
       // frameworks
       angular: { img: window.config.public_location + "images/angular.png", background: "#4766cc"},
+      node: { img: window.config.public_location + "images/node.png", background: "white"},
+      vue: { img: window.config.public_location + "images/vue.png", background: "white"},
+      asp: { img: window.config.public_location + "images/asp.png", background: "white"},
+      react: { img: window.config.public_location + "images/react.png", background: "white"},
     }
   }),
   methods: {

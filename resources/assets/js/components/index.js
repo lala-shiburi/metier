@@ -13,6 +13,7 @@ import PhotoConverter from './PhotoConverter'
 import IconizedPhoto from './IconizedPhoto'
 import CompanySearchTable from './company/CompanySearchTable'
 import Wizard from './Wizard'
+import SkillSelector from './SkillSelector'
 import { HasError, AlertError, AlertSuccess } from 'vform'
 
 // Components that are registered globally.
@@ -23,6 +24,7 @@ import { HasError, AlertError, AlertSuccess } from 'vform'
   Checkbox,
   HasError,
   LineInput,
+  SkillSelector,
   EllipsisText,
   AlertError,
   SkillIcon,

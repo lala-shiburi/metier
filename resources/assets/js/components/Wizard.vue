@@ -1,12 +1,12 @@
 <template>
   <div class="wizard" style="position:relative;">
     <card title="Create Opening">
-      <div style="padding: 50px; margin-bottom: 50px;">
+      <div style="padding: 25px; margin-bottom: 50px;">
         <div class="steps" ref="steps">
           <slot name="steps"/>
         </div>
       </div>
-      <div ref="wizard">
+      <div ref="wizard" style="padding-top: 25px; border-top:1px solid #d5d5d5;">
         <slot name="panels"/>
       </div>
     </card>
@@ -91,7 +91,7 @@ export default {
       {
         var line = document.createElement('div');
         jQuery(line).addClass('line');
-        jQuery(line).css({width: length_unit * 2 * 0.75});
+        jQuery(line).css({width: length_unit * 2 * ((1 / steps.children.length) * (steps.children.length - 1))});
         jQuery(steps.children[i]).prepend(line);
         jQuery(steps.children[i]).css({ 
           left: ((length_unit * i) + ((length_unit / (steps.children.length - 1)) * (i) )),
@@ -104,8 +104,14 @@ export default {
 
       jQuery(steps.children[i]).css({ 'z-index' : steps.children.length - i });
 
-      this.show(0);
+      this.show(2);
     }
+
+    // remove error indecation when select changed
+    jQuery(this.$el).find('select').change(function(){
+      jQuery(this).removeClass('is-invalid');
+      jQuery(this).closest('.invalid-feedback').remove();
+    });
   }
 }
 </script>
