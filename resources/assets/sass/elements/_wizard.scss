@@ -52,3 +52,117 @@
     }
   }
 }
+
+.skill-multi-select{
+  position: relative;
+  background: #ebebeb;
+  padding: 10px;
+  .header{
+    background: white;
+    padding: 5px;
+  }
+
+  & .item-list{
+    margin-top: 10px;
+    .h{
+      color: #a5a5a5;
+      padding: 5px;
+      border-bottom: 1px solid #a5a5a5;
+      margin-bottom: 10px;
+      font-size: 12px;
+    }
+    & .items{
+      padding: 0px;
+      list-style: none;
+      & .item{
+        cursor: pointer;
+        padding: 5px;
+        background: white;
+        color: black;
+        position: relative;
+        padding-right: 50px;
+        .box-check{
+          position: absolute;
+          right: 5px;
+          top:5px;
+          height: 20px;
+          width: 20px;
+          background: #ebebeb;
+          .check{
+            color: green;
+            position: absolute;
+            top: 50%;
+            left:50%;
+            transform: translateX(-50%) translateY(-50%);
+            display: none;
+          }
+        }
+        &.active{
+          background: #11739f;
+          color: white;
+          .box-check{
+            background: white;
+            .check{
+              display: block;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.selected-round-item{
+  position: relative;
+  display: none;
+  border-radius: 50%;
+  margin: 5px;
+  border: 5px solid #cecece;
+  .close-bttn{
+    cursor: pointer;
+    position: absolute;
+    right: 50%;
+    top: 50%;
+    opacity: 0;
+    background: #db5752;
+    border-radius: 50%;
+    color: white;
+    height: 20px;
+    width: 20px;
+    transition: 200ms ease all;
+    .fa{
+      position: absolute;
+      left:50%;
+      top:50%;
+      transform: translateX(-50%) translateY(-50%);
+    }
+  }
+
+  &:hover{
+    .close-bttn{
+      right: -10px;
+      top: -10px;
+      opacity: 1;
+    }
+  }
+
+  &.active{
+    display: inline-block;
+    animation: display-scale-opacity-animate 200ms both;
+  }
+}
+
+@keyframes display-scale-opacity-animate{
+  0%{
+    opacity: 1;
+    transform: scale(0);
+  }
+  10%{
+    opacity: 1;
+    transform: scale(0.75);
+  }
+  100%{
+    opacity: 1;
+    transform: scale(1);
+  }
+}

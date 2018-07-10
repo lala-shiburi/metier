@@ -2,7 +2,10 @@
   height: 20px;
   padding:3px;
   img{
-    margin-top: -8px;
+    margin-top: -15px;
+  }
+  & .bg-color{
+    border: 1px solid white;
   }
 }
 .small-icon{
@@ -16,9 +19,6 @@
 .medium-icon{
   height: 50px;
   padding:5px;
-  img{
-    margin-top: -8px;
-  }
 }
 
 .skill-icon{
