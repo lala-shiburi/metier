@@ -62,4 +62,15 @@ class CompanyController extends Controller
     public function fetch(Request $request){
         return new CompanyResource(Company::findOrFail($request->company_id));
     }
+
+    /**
+     * Return openings
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @return Illuminate\Http\Resources\JsonResource
+     */
+    public function fetch_openings(Request $request){
+        $company = Company::find($request->company_id);
+        return ['openings'=>$company->openings()->orderBy('openings.created_at','desc')->get()->load('company')->load('programmingLanguages')->load('technologies')];
+    }
 }

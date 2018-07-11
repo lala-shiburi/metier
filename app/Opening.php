@@ -6,6 +6,38 @@ use Illuminate\Database\Eloquent\Model;
 
 class Opening extends Model
 {
+    protected $fillable = ['title','details','company_id'];
+    protected $appends = ['picture'];
+
+
+    /**
+     * update photo attribute
+     * 
+     * @return String
+     */
+    public function getPictureAttribute(){
+        if(!file_exists('storage/photos/'.$this->attributes['picture']) || str_replace(' ','',$this->attributes['picture']) == ''){
+            return asset('images/job.png');
+        }
+
+        return asset('storage/photos/'.$this->attributes['picture']);
+    }
+
+    /**
+     * Save image to public/storage/photos
+     * 
+     * @param string | image converted to base64
+     * @return \App\User
+     */
+    public function savePicture($data){
+        $fileName = generateFileName($this->attributes['id'],'opening_picture','.png');
+        saveBase64Photo($data,$fileName);
+        $this->picture = $fileName;
+        $this->save();
+
+        return $this;
+    }
+
     /**
      * Search opening using salary
      * 
