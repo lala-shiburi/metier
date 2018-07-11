@@ -16,22 +16,24 @@ class CreateTechnologiesTable extends Migration
         Schema::create('technologies', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('tag_name');
             $table->timestamps();
         });
 
         $technologies = [
-            'AngularJS',
-            'ReachJS',
-            'NodeJS',
-            'Laravel',
-            'CodeIgniter',
-            'Vue',
-            'JQuery',
+            ['AngularJS','angular'],
+            ['ReactJS','react'],
+            ['NodeJS','node'],
+            ['Laravel','laravel'],
+            ['CodeIgniter','codeigniter'],
+            ['Vue','vue'],
+            ['JQuery','jquery'],
         ];
 
         foreach($technologies as $technology){
             \DB::table('technologies')->insert([
-                "name"=>$technology,
+                "name"=>$technology[0],
+                "tag_name"=>$technology[1],
                 "created_at" =>  \Carbon\Carbon::now(), # \Datetime()
                 "updated_at" => \Carbon\Carbon::now(),  # \Datetime()
             ]);

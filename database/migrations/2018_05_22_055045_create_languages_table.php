@@ -16,29 +16,30 @@ class CreateLanguagesTable extends Migration
         Schema::create('programming_languages', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('tag_name');
             $table->timestamps();
         });
 
         $languages = [
-            'Swift',
-            'Ruby',
-            'Python',
-            'PHP',
-            'Javascript',
-            'Java',
-            'Go',
-            'C++',
-            'C#',
-            'Perl',
-            'SQL',
-            'VB.NET',
-            'C',
-            'TypeScript',
+            ['Swift','swift'],
+            ['Ruby','ruby'],
+            ['Python','python'],
+            ['PHP','php'],
+            ['Javascript','javascript'],
+            ['Go','go'],
+            ['C++','cPlusPlus'],
+            ['C#','csharp'],
+            ['Perl','perl'],
+            ['SQL','sql'],
+            ['VB.NET','vb'],
+            ['C','c'],
+            ['TypeScript','typescript'],
         ];
 
         foreach($languages as $language){
             \DB::table('programming_languages')->insert([
-                'name'=>$language,
+                'name'=>$language[0],
+                'tag_name'=>$language[1],
                 "created_at" =>  \Carbon\Carbon::now(), # \Datetime()
                 "updated_at" => \Carbon\Carbon::now(),  # \Datetime()
             ]);

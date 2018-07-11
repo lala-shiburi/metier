@@ -26,13 +26,17 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::group(['prefix' => "company"], function(){
         Route::post('create', 'CompanyController@create');
         Route::get('fetch','CompanyController@fetch');
+        Route::get('fetch/openings','CompanyController@fetch_openings');
         Route::get('datatable','CompanyController@fetch_datatable');
     });
 
     Route::group([ "prefix" => "opening" ], function(){
         Route::group(["prefix" => "validate"],function(){
             Route::post('basicInfo','OpeningController@validateBasicInfo');
+            Route::post('description','OpeningController@validateDescription');
         });
+        
+        Route::post('create','OpeningController@create');
     });
 });
 
