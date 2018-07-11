@@ -1,8 +1,11 @@
 .opening-card{
+  margin-bottom: 10px;
   .opening-photo{
     position: relative;
     font-weight: bold;
     color: white;
+    
+    background: #f4f4f4;
     .company-logo{
       position: absolute;
       left: 5px;
@@ -33,6 +36,6 @@
     color: #838383;
   }
   & .skill-icon img{
-    margin-top:0px!important;
+    margin-top:-2px!important;
   }
 }

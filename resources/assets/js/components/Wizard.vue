@@ -104,7 +104,7 @@ export default {
 
       jQuery(steps.children[i]).css({ 'z-index' : steps.children.length - i });
 
-      this.show(2);
+      this.show(0);
     }
 
     // remove error indecation when select changed

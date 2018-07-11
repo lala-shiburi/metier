@@ -101,6 +101,7 @@
       width: 100%;
     }
     & .upload-button{
+      display: none;
       cursor: pointer;
       color: white;
       font-weight: bold;
@@ -117,12 +118,7 @@
         height:100%;
         width: 100%;
         left:0px;
-        background: rgb(217, 217, 217);
-      }
-      &:hover{
-        .bg{
-          opacity: 1;
-        }
+        background: black;
       }
       & [type=file]{
         display: none;
@@ -131,6 +127,10 @@
         font-weight: bold;
         position: relative;
       }
+    }
+
+    &:hover .upload-button{
+      display: block;
     }
   }
   &.round .scaffold-div{

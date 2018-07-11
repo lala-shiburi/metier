@@ -10,8 +10,8 @@
             Programming Language
           </div>
           <ul class="items">
-            <li class="item d-i" v-on:click="selectItem(lang[0])" :class="lang[0]" v-for="(lang, index) in programming_languages" v-bind:key="index">
-              <skill-icon :icon="lang[0]" size="x-small-icon"></skill-icon> {{lang[1]}}
+            <li class="item d-i" v-on:click="addLang(lang)" :class="lang.tag_name" v-for="(lang, index) in programming_languages" v-bind:key="index">
+              <skill-icon :icon="lang.tag_name" size="x-small-icon"></skill-icon> {{lang.name}}
               <div class="box-check">
                 <i class="fa fa-check check" aria-hidden="true"></i>
               </div>
@@ -21,8 +21,8 @@
             Technology
           </div>
           <ul class="items">
-            <li class="item d-i" v-on:click="selectItem(tech[0])" :class="tech[0]" v-for="(tech, index) in technologies" v-bind:key="index">
-              <skill-icon :icon="tech[0]" size="x-small-icon"></skill-icon> {{tech[1]}}
+            <li class="item d-i" v-on:click="addTech(tech)" :class="tech.tag_name" v-for="(tech, index) in technologies" v-bind:key="index">
+              <skill-icon :icon="tech.tag_name" size="x-small-icon"></skill-icon> {{tech.name}}
               <div class="box-check">
                 <i class="fa fa-check check" aria-hidden="true"></i>
               </div>
@@ -33,21 +33,27 @@
     </div>
     <div class="col-md-9">
       <div class="col-md-12">
-        <div class="selected-round-item d-i" v-on:click="unSelectItem(lang[0])" :class="lang[0]" v-for="(lang, index) in programming_languages" v-bind:key="index">
-          <div class="close-bttn">
+        <div class="selected-round-item d-i" :class="lang.tag_name" v-for="(lang, index) in programming_languages" v-bind:key="index">
+          <div class="close-bttn" v-on:click="removeLang(lang)">
             <i class="fa fa-close"></i>
           </div>
-          <skill-icon :icon="lang[0]" pos="left" size="medium-icon"></skill-icon>
+          <skill-icon :icon="lang.tag_name" pos="left" size="medium-icon"></skill-icon>
         </div>
       </div>
       <div class="col-md-12">
-        <div class="selected-round-item d-i" v-on:click="unSelectItem(tech[0])"  :class="tech[0]" v-for="(tech, index) in technologies" v-bind:key="index">
-          <div class="close-bttn">
+        <div class="selected-round-item d-i" :class="tech.tag_name" v-for="(tech, index) in technologies" v-bind:key="index">
+          <div class="close-bttn" v-on:click="removeTech(tech)">
             <i class="fa fa-close"></i>
           </div>
-          <skill-icon :icon="tech[0]" pos="left" size="medium-icon"></skill-icon>
+          <skill-icon :icon="tech.tag_name" pos="left" size="medium-icon"></skill-icon>
         </div>
       </div>
+      <div class="col-md-12" v-if="form.skills.programming_languages.length == 0 && form.skills.technologies.length == 0">
+        <div class="alert alert-light" role="alert">
+          Select skills from skill sidebar.
+        </div>
+      </div>
+      <slot/>
     </div>
   </div>
 </template>
@@ -56,29 +62,58 @@
 export default {
   name: 'SkillSelector',
 
-  props: {},
+  props: {
+    form: {
+      type: Object,
+      required: true
+    }
+  },
 
   data: () => ({
     programming_languages: window.config.programming_languages,
     technologies: window.config.technologies,
-    skills: []
   }),
   methods: {
     upperCaseFirst: function(string){
       return string.charAt(0).toUpperCase() + string.slice(1);
     },
-    selectItem: function(item){
-      this.skills.push(item);
+    addLang: function(item){
+      if(this.form.skills.programming_languages.indexOf(item.id) >= 0){
+        this.removeLang(item);
+      }
+      else
+      {
+        this.form.skills.programming_languages.push(item.id);
+        jQuery(this.$el).find('.d-i').each(function(){
+          if(jQuery(this).hasClass(item.tag_name))
+          jQuery(this).addClass('active');
+        });
+      }
+    },
+    removeLang: function(item){
+      this.form.skills.programming_languages.splice(this.form.skills.programming_languages.indexOf(item.id),1);
       jQuery(this.$el).find('.d-i').each(function(){
-        if(jQuery(this).hasClass(item))
-        jQuery(this).addClass('active');
+        if(jQuery(this).hasClass(item.tag_name))
+        jQuery(this).removeClass('active');
       });
     },
-    unSelectItem: function(item){
-      this.skills.splice(this.skills.indexOf(item),1);
-      console.log(this.skills);
+    addTech: function(item){
+      if(this.form.skills.technologies.indexOf(item.id) >= 0){
+        this.removeTech(item);
+      }
+      else
+      {
+        this.form.skills.technologies.push(item.id);
+        jQuery(this.$el).find('.d-i').each(function(){
+          if(jQuery(this).hasClass(item.tag_name))
+          jQuery(this).addClass('active');
+        });
+      }
+    },
+    removeTech: function(item){
+      this.form.skills.technologies.splice(this.form.skills.technologies.indexOf(item.id),1);
       jQuery(this.$el).find('.d-i').each(function(){
-        if(jQuery(this).hasClass(item))
+        if(jQuery(this).hasClass(item.tag_name))
         jQuery(this).removeClass('active');
       });
     }
