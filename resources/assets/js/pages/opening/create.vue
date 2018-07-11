@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="padding-bottom: 100px;">
     <wizard ref="wizard" :currentPanel="0">
       <template slot="steps">
         <div class="step-container" name="Basic Info">
@@ -25,10 +25,9 @@
       </template>
       <template slot="panels">
         <form @submit.prevent="validateForm1" @keydown="form1.onKeydown($event)">
-          <alert-success :form="form1" message="Registration Successful"/>
 
           <div style="text-align:center">
-            <photo-converter style="width:200px; display:inline-block; background:#d9d9d9;" :form="form1" field="photo"></photo-converter>
+            <photo-converter style="width:200px; display:inline-block; background:#d9d9d9;" placeholder="images/job.png" :form="form1" field="picture"></photo-converter>
           </div>
           <br>
           <!-- Name -->
@@ -88,17 +87,36 @@
           <!-- Submit Button -->
           <div class="form-group row">
             <div class="col-md-9 ml-md-auto">
+              <a href="JavaScript:void(0)" class="btn btn-secondary" v-on:click="left">Back</a>
               <v-button :loading="form2.busy" type="success">Save</v-button>
             </div>
           </div>
         </form>
         <form @submit.prevent="validateForm3" @keydown="form3.onKeydown($event)">
-          <skill-selector></skill-selector>
+          <skill-selector :form="form3">
+            <!-- Submit Button -->
+            <div class="col-md-12">
+              <div class="form-group" style="margin-top: 30px; border-top: 1px solid #d5d5d5; padding-top: 30px;">
+                <a href="JavaScript:void(0)" class="btn btn-secondary" v-on:click="left">Back</a>
+                <v-button :loading="form3.busy" type="success">Save</v-button>
+              </div>
+            </div>
+          </skill-selector>
+        </form>
+        <form @submit.prevent="validateForm4">
 
+          <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Well done!</h4>
+            <p>Your new Opening post is ready to be submitted.</p>
+            <hr>
+            <p class="mb-0">Click Submit button.</p>
+          </div>
+          
           <!-- Submit Button -->
           <div class="form-group row" style="margin-top: 30px;">
-            <div class="col-md-9">
-              <v-button :loading="form3.busy" type="success">Save</v-button>
+            <div class="col-md-12" style="text-align:center;">
+              <a href="JavaScript:void(0)" class="btn btn-secondary" v-on:click="left">Back</a>
+              <v-button :loading="form4.busy" type="success">Submit</v-button>
             </div>
           </div>
         </form>
@@ -119,6 +137,7 @@ export default {
 
   data: () => ({
     form1: new Form({
+      photo: '',
       title: '',
       salary_range: '',
       professional_years: '',
@@ -127,6 +146,17 @@ export default {
       details: ''
     }),
     form3: new Form({
+      skills : {
+        programming_languages : [],
+        technologies: []
+      }
+    }),
+    form4: new Form({
+      company_id: '',
+      title: '',
+      salary_range: '',
+      professional_years: '',
+      details: '',
       skills: ''
     }),
     public_path: location.origin,
@@ -136,12 +166,40 @@ export default {
 
   methods: {
     async validateForm1 () {
+      console.log(this.form1);
       const {data} = await this.form1.post('/api/opening/validate/basicInfo')
       this.$refs.wizard.next();
     },
     async validateForm2 () {
-      const {data} = await this.form2.post('/api/opening/validate/basicInfo')
+      const {data} = await this.form2.post('/api/opening/validate/description')
       this.$refs.wizard.next();
+    },
+    async validateForm3 () {
+      this.form3.busy = true;
+      var $this = this;
+      setTimeout(function(){
+        $this.form3.busy = false;
+        $this.$refs.wizard.next();
+      },100);
+    },
+    async validateForm4 () {
+      // 
+      this.form4.company_id = this.$route.params.company_id;
+      this.form4.picture = this.form1.picture;
+      this.form4.title = this.form1.title;
+      this.form4.salary_range = this.form1.salary_range;
+      this.form4.professional_years = this.form1.professional_years;
+      // 
+      this.form4.details = this.form2.details;
+      // 
+      this.form4.skills = this.form3.skills;
+
+      console.log(this.form3);
+      console.log(this.form4);
+      // 
+      this.form4.post('/api/opening/create');
+
+      this.$router.push("/company/profile/"+this.$route.params.company_id);
     },
     right(){
       this.$refs.wizard.next();

@@ -9,6 +9,9 @@
 <script>
 export default {
   middleware: 'auth',
+  metaInfo () {
+    return { title: 'Company List' }
+  },
 
   computed: {
     tabs () {

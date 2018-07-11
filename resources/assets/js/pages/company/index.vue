@@ -20,7 +20,7 @@
           </div>
           <div class="col-md-5 col-12">
             <div class="btn-group pull-right">
-              <router-link :to="{ name: 'opening.create' }" class="btn btn-light">Create Opening</router-link>
+              <router-link :to="{ name: 'opening.create', params: {company_id:company_id} }" class="btn btn-light">Create Opening</router-link>
               <span class="dvder"/>
               <button type="button" class="btn btn-light">...</button>
             </div>
@@ -75,21 +75,7 @@
           </card>
         </div>
         <div class="col-md-8">
-          <card class="m-tb-10" title="Skills">
-            <div>
-              <label>Programming Languages</label>
-              <br>
-              <skill-icon icon="php"></skill-icon>
-              <skill-icon icon="ruby"></skill-icon>
-              <skill-icon icon="go"></skill-icon>
-            </div>
-            <div>
-              <label>Frameworks</label>
-              <br>
-              <skill-icon icon="angular"></skill-icon>
-            </div>
-          </card>
-          <opening-card></opening-card>
+          <opening-card v-for="(opening,index) in openings" v-bind:key="index" :opening="opening"></opening-card>
         </div>
       </div>
     </div>
@@ -121,22 +107,33 @@ export default {
   data : () =>({
     public_path: location.origin,
     company_id: null,
-    company: {}
+    company: {},
+    openings: [],
   }),
   methods: {
     fetch_company: async function(){
-      this.company_id = this.$route.params.id;
       const { data } = await axios({
           method: 'get',
           url: '/api/company/fetch',
           params: { company_id: this.company_id }
         })
       this.company = data.data;
-      console.log(data);
+    },
+    fetch_openings: async function(){
+      const { data } = await axios({
+          method: 'get',
+          url: '/api/company/fetch/openings',
+          params: { company_id: this.company_id }
+        })
+      this.openings = data.openings;
     }
+  },
+  created: function(){
+    this.company_id = this.$route.params.id;
   },
   mounted(){
     this.fetch_company();
+    this.fetch_openings();
   }
 }
 </script>

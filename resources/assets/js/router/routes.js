@@ -42,8 +42,8 @@ export default [
 
   // opening routes
   { path: '/opening/profile/:id', name: 'user.profile', component: UserProfile },
-  { path: '/opening/create', name: 'opening.create', component: OpeningCreate },
-  
-
+  { path: '/company/:company_id/opening/create', name: 'opening.create', component: OpeningCreate },
   { path: '*', component: NotFound }
+
+  // Applicant Dashboard
 ]
