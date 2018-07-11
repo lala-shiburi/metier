@@ -26,25 +26,9 @@ $config = [
       "5+ yrs."
       ],
 
-      'programming_languages' => [
-        ['php', 'Php'],
-        ['ruby','Ruby'],
-        ['javascript','Javascript'],
-        ['cPlusPlus','C++'],
-        ['csharp','C#'],
-        ['swift','Swift'],
-        ['go','Go'],
-        ['typeScript','TypeScript'],
-        ['python','Python']
-      ],
+      'programming_languages' => \App\ProgrammingLanguage::all(),
 
-      'technologies' => [
-        ['angular','Angular JS'],
-        ['node','Node JS'],
-        ['vue','Vue JS'],
-        ['asp','ASP.NET'],
-        ['react','React JS']
-      ]
+      'technologies' => \App\Technology::all()
 ];
 
 $polyfills = [
