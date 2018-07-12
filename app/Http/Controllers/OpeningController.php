@@ -7,6 +7,10 @@ use \App\Opening;
 
 class OpeningController extends Controller
 {
+    public function fetch(Request $request){
+        return Opening::findOrFail($request->opening_id)->load('company')->load('programmingLanguages')->load('technologies');
+    }
+
     public function validateBasicInfo(Request $request){
         $this->validate($request, [
             'title' => 'required',
@@ -31,6 +35,10 @@ class OpeningController extends Controller
             'title' => $request->title,
             'details' => $request->details
         ]);
+
+        $opening->salary_range = $request->salary_range;
+        $opening->professional_years = $request->professional_years;
+        $opening->save();
         
         if($request->picture){
             $opening->savePicture($request->picture);

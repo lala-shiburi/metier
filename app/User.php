@@ -20,7 +20,7 @@ class User extends Authenticatable implements JWTSubject
     protected $fillable = [
         'email', 'password', 'role', 'first_name', 'middle_name', 'last_name', 'birth_date', 'gender', 'citizenship', 'photo', 'cover_photo'
     ];
-
+    
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -36,17 +36,45 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $appends = [
-        'photo_url',
+        'photo', 'name', 'cover_photo'
     ];
 
     /**
-     * Get the profile photo URL attribute.
+     * Get the profile photo attribute.
      *
      * @return string
      */
-    public function getPhotoUrlAttribute()
+    public function getPhotoAttribute()
     {
-        return 'https://www.gravatar.com/avatar/'.md5(strtolower($this->email)).'.jpg?s=200&d=mm';
+        if(!file_exists('storage/photos/'.$this->attributes['photo']) || str_replace(' ','',$this->attributes['photo']) == ''){
+            return asset('images/member-placeholder.png');
+        }
+
+        return asset('storage/photos/'.$this->attributes['photo']);
+    }
+
+    /**
+     * Get the profile cover attribute.
+     *
+     * @return string
+     */
+    public function getCoverPhotoAttribute()
+    {
+        if(!file_exists('storage/photos/'.$this->attributes['cover_photo']) || str_replace(' ','',$this->attributes['cover_photo']) == ''){
+            return asset('images/default-opening.png');
+        }
+
+        return asset('storage/photos/'.$this->attributes['cover_photo']);
+    }
+
+    /**
+     * Get name attribute.
+     *
+     * @return string
+     */
+    public function getNameAttribute()
+    {
+        return $this->attributes['first_name'].' '.$this->attributes['last_name'];
     }
 
     /**
