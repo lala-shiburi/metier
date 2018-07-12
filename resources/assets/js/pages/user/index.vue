@@ -3,19 +3,19 @@
     <div class="col-md-12">
       <div class="profile-tile-view">
         <div class="profile-cover">
-          <img class="absolute-center" :src="public_path+'/images/register-background.png'">
+          <img class="absolute-center" :src="user.cover_photo">
         </div>
         <div class="row">
           <div class="col-lg-2 col-5">
             <div class="profile-photo">
               <div class="scaffold-div">
                 <img class="bg-holder" :src="public_path+'/images/bg-img.png'">
-                <img class="absolute-center" :src="public_path+'/images/Group 244.png'">
+                <img class="absolute-center" :src="user.photo">
               </div>
             </div>
           </div>
           <div class="col-lg-10 col-7">
-            <h3>Uelmar Ortega</h3>
+            <h3>{{user.name}}</h3>
             <label>Software Developer</label>
           </div>
         </div>
@@ -34,17 +34,17 @@
             <ul class="simple-list">
               <li>
                 <ellipsis-text label="Email">
-                  uelmarortega@gmail.com
+                  {{user.email}}
                 </ellipsis-text>
               </li>
               <li>
                 <ellipsis-text label="Birth Date">
-                  July 18, 1995
+                  {{user.birth_date}}
                 </ellipsis-text>
               </li>
               <li>
                 <ellipsis-text label="Gender">
-                  Male
+                  {{user.gender}}
                 </ellipsis-text>
               </li>
             </ul>
@@ -78,9 +78,21 @@
             <div>
               <label>Programming Languages</label>
               <br>
-              <skill-icon icon="php"></skill-icon>
-              <skill-icon icon="ruby"></skill-icon>
-              <skill-icon icon="go"></skill-icon>
+              <div v-if="opening.programming_languages.length == 0 && opening.technologies.length == 0">
+                <label class="text-muted"> What skills do you have? </label>
+              </div>
+              <div v-if="opening.programming_languages.length > 0">
+                <label>Programming Languages</label>
+                <br>
+                <skill-icon v-for="(lang,index) in opening.programming_languages" v-bind:key="index" :icon="lang.tag_name"></skill-icon>
+              </div>
+              <div v-if="opening.technologies.length > 0">
+                <label>Frameworks</label>
+                <br>
+                <skill-icon v-for="(tech,index) in opening.technologies" v-bind:key="index" :icon="tech.tag_name"></skill-icon>
+                <!--  -->
+              </div>
+              
             </div>
             <div>
               <label>Frameworks</label>
@@ -105,6 +117,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   middleware: 'auth',
 
@@ -125,8 +138,33 @@ export default {
     }
   },
   data : () =>({
-    public_path: location.origin
-  })
+    public_path: location.origin,
+    user: {},
+    programmingLanguages:[],
+    userTechnologies: [],
+    workExperiences: [],
+    educationalBackgrounds: [],
+    followedCompanies: []
+  }),
+  methods: {
+    async fetch(fetch){
+      const { data } = await axios({
+          method: 'get',
+          url: '/api/userInfo/'+fetch,
+          params: { user_id: this.user_id }
+        })
+      this[fetch] = data;
+    }
+  },
+  mounted(){
+    this.user_id = this.$store.getters['auth/user'].id;
+    this.fetch('user');
+    this.fetch('programmingLanguages');
+    this.fetch('userTechnologies');
+    this.fetch('workExperiences');
+    this.fetch('educationalBackgrounds');
+    this.fetch('followedCompanies');
+  }
 }
 </script>
 

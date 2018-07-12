@@ -2,87 +2,43 @@
   <div class="row">
     <div class="col-md-12">
       <div class="profile-tile-view">
-        <div class="profile-cover">
+        <div class="profile-cover" style="height: 300px;">
           <img class="absolute-center" :src="public_path+'/images/register-background.png'">
         </div>
-        <div class="row">
-          <div class="col-lg-2 col-5">
-            <div class="profile-photo">
-              <div class="scaffold-div">
-                <img class="bg-holder" :src="public_path+'/images/bg-img.png'">
-                <img class="absolute-center" :src="public_path+'/images/Group 244.png'">
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-10 col-7">
-            <h3>Nexseed Inc.</h3>
-            <!-- <label>Software Developer</label> -->
+        <div class="row" style="margin-top: -25%;">
+          <div class="col-md-10 offset-md-1">
+            <opening-card v-if="opening.id" :opening="opening"></opening-card>
           </div>
         </div>
       </div>
       <card class="m-tb-10">
         <div>
           <h5>Description</h5>
-          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+          {{opening.details}}
         </div>
         <br>
       </card>
       
       <div class="row">
         <div class="col-md-4">
-          <card class="m-tb-10" title="Basic Info">
-            <ul class="simple-list">
-              <li>
-                <ellipsis-text label="Email">
-                  uelmarortega@gmail.com
-                </ellipsis-text>
-              </li>
-              <li>
-                <ellipsis-text label="Address">
-                  Business Park Mabolo Cebu City Cebu
-                </ellipsis-text>
-                <ellipsis-text label="Contact #">
-                  09123123212
-                </ellipsis-text>
-              </li>
-            </ul>
-          </card>
-          <card class="m-tb-10" title="Photo">
-            <photo-viewer>
-              <img class="absolute-center" :src="public_path+'/images/Group 244.png'">
-              <img class="absolute-center" :src="public_path+'/images/register-background.png'">
-              <img class="absolute-center" :src="public_path+'/images/bg-img.png'">
-              <img class="absolute-center" :src="public_path+'/images/angular.png'">
-              <img class="absolute-center" :src="public_path+'/images/register-background.png'">
-              <img class="absolute-center" :src="public_path+'/images/register-background.png'">
-            </photo-viewer>
-          </card>
-          <card class="m-tb-10" title="Website">
-            <ul class="simple-list">
-              <li>
-                <ellipsis-text>
-                  <a href="http://job-seed.com" target="blank">http://job-seed.com</a>
-                </ellipsis-text>
-              </li>
-            </ul>
-          </card>
+          <company-card title="Company" :company="opening.company"/>
         </div>
         <div class="col-md-8">
-          <card class="m-tb-10" title="Skills">
-            <div>
+          <card title="Skills Requirements">
+            <div v-if="opening.programming_languages.length > 0">
               <label>Programming Languages</label>
               <br>
-              <skill-icon icon="php"></skill-icon>
-              <skill-icon icon="ruby"></skill-icon>
-              <skill-icon icon="go"></skill-icon>
+              <skill-icon v-for="(lang,index) in opening.programming_languages" v-bind:key="index" :icon="lang.tag_name"></skill-icon>
             </div>
-            <div>
+            <div v-if="opening.technologies.length > 0">
               <label>Frameworks</label>
               <br>
-              <skill-icon icon="angular"></skill-icon>
+              <skill-icon v-for="(tech,index) in opening.technologies" v-bind:key="index" :icon="tech.tag_name"></skill-icon>
+            </div>
+            <div v-if="opening.programming_languages.length == 0 && opening.technologies.length == 0">
+              <label> No Skill Requirements </label>
             </div>
           </card>
-          <opening-card></opening-card>
         </div>
       </div>
     </div>
@@ -90,28 +46,31 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   middleware: 'auth',
 
-  computed: {
-    tabs () {
-      return [
-        {
-          icon: 'user',
-          name: this.$t('profile'),
-          route: 'settings.profile'
-        },
-        {
-          icon: 'lock',
-          name: this.$t('password'),
-          route: 'settings.password'
-        }
-      ]
+  data : () =>({
+    public_path: location.origin,
+    opening_id: null,
+    opening: {}
+  }),
+  methods: {
+    fetch_opening: async function(){
+      const { data } = await axios({
+          method: 'get',
+          url: '/api/opening/fetch',
+          params: { opening_id: this.opening_id }
+        })
+      this.opening = data;
     }
   },
-  data : () =>({
-    public_path: location.origin
-  })
+  created: function(){
+    this.opening_id = this.$route.params.id;
+  },
+  mounted(){
+    this.fetch_opening();
+  }
 }
 </script>
 
