@@ -1,0 +1,25 @@
+.small-round-bttn{
+  height: 20px;
+  &::before{
+    position: absolute;
+    top:0px;
+    left: 0px;
+    transform: translateX(-50%);
+    content: ' ';
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: inherit;
+  }
+  &::after{
+    position: absolute;
+    top:0px;
+    right: 0px;
+    transform: translateX(50%);
+    content: ' ';
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: inherit;
+  }
+}
