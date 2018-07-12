@@ -8,6 +8,7 @@ const NotFound = () => import('~/pages/errors/404').then(m => m.default || m)
 const Home = () => import('~/pages/home').then(m => m.default || m)
 const UserProfile = () => import('~/pages/user/index').then(m => m.default || m)
 const CompanyProfile = () => import('~/pages/company/index').then(m => m.default || m)
+const OpeningProfile = () => import('~/pages/opening/index').then(m => m.default || m)
 const UserCompanies = () => import('~/pages/user/companies').then(m => m.default || m)
 const CompanyCreate = () => import('~/pages/company/create').then(m => m.default || m)
 const OpeningCreate = () => import('~/pages/opening/create').then(m => m.default || m)
@@ -41,9 +42,9 @@ export default [
   { path: '/user/companies', name: 'user.companies', component: UserCompanies },
 
   // opening routes
-  { path: '/opening/profile/:id', name: 'user.profile', component: UserProfile },
+  { path: '/opening/profile/:id', name: 'opening.profile', component: OpeningProfile },
   { path: '/company/:company_id/opening/create', name: 'opening.create', component: OpeningCreate },
-  { path: '*', component: NotFound }
+  
 
-  // Applicant Dashboard
+  { path: '*', component: NotFound }
 ]

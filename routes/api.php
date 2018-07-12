@@ -23,6 +23,17 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::patch('settings/profile', 'Settings\ProfileController@update');
     Route::patch('settings/password', 'Settings\PasswordController@update');
 
+    // user
+    Route::group(['prefix' => 'userInfo'], function(){
+        Route::get('user','UserController@fetch_user');
+        Route::get('programmingLanguages','UserController@fetch_programming_languages');
+        Route::get('userTechnologies','UserController@fetch_technologies');
+        Route::get('workExperiences','UserController@fetch_work_experience');
+        Route::get('educationalBackgrounds','UserController@fetch_educational_background');
+        Route::get('followedCompanies','UserController@fetch_followed_companies');
+    });
+
+    // company
     Route::group(['prefix' => "company"], function(){
         Route::post('create', 'CompanyController@create');
         Route::get('fetch','CompanyController@fetch');
@@ -30,7 +41,11 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('datatable','CompanyController@fetch_datatable');
     });
 
+    // opening
     Route::group([ "prefix" => "opening" ], function(){
+        // fetch
+        Route::get('fetch', 'OpeningController@fetch');
+
         Route::group(["prefix" => "validate"],function(){
             Route::post('basicInfo','OpeningController@validateBasicInfo');
             Route::post('description','OpeningController@validateDescription');

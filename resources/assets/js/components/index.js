@@ -14,6 +14,7 @@ import IconizedPhoto from './IconizedPhoto'
 import CompanySearchTable from './company/CompanySearchTable'
 import Wizard from './Wizard'
 import SkillSelector from './SkillSelector'
+import CompanyCard from './CompanyCard'
 import { HasError, AlertError, AlertSuccess } from 'vform'
 
 // Components that are registered globally.
@@ -30,6 +31,7 @@ import { HasError, AlertError, AlertSuccess } from 'vform'
   SkillIcon,
   IconizedPhoto,
   InfoPreview,
+  CompanyCard,
   PhotoViewer,
   OpeningCard,
   PhotoConverter,
