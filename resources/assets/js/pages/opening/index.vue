@@ -5,7 +5,7 @@
         <div class="profile-cover" style="height: 300px;">
           <img class="absolute-center" :src="public_path+'/images/register-background.png'">
         </div>
-        <div class="row" style="margin-top: -25%;">
+        <div class="row" style="margin-top: -15%;">
           <div class="col-md-10 offset-md-1">
             <opening-card v-if="opening.id" :opening="opening"></opening-card>
           </div>

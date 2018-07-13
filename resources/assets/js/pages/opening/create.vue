@@ -30,7 +30,7 @@
             <photo-converter style="width:200px; display:inline-block; background:#d9d9d9;" placeholder="images/job.png" :form="form1" field="picture"></photo-converter>
           </div>
           <br>
-          <!-- Name -->
+          <!-- Title -->
           <div class="form-group row">
             <label class="col-md-3 col-form-label text-md-right">Position / Title</label>
             <div class="col-md-7">
@@ -39,7 +39,7 @@
             </div>
           </div>
 
-          <!-- Address -->
+          <!-- Salary Range -->
           <div class="form-group row">
             <label class="col-md-3 col-form-label text-md-right">Salary Range</label>
             <div class="col-md-7">
@@ -53,7 +53,7 @@
             </div>
           </div>
 
-          <!-- Email -->
+          <!-- Years of Experience -->
           <div class="form-group row">
             <label class="col-md-3 col-form-label text-md-right">Years of Experience</label>
             <div class="col-md-7">
