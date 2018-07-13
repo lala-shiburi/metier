@@ -36,5 +36,39 @@ class UserController extends Controller
         $user = User::find($request->user_id);
         return $user->followedCompanies()->orderBy('company_follows.created_at','desc')->get();
     }
+
+    public function update_skills(Request $request){
+        $user = User::findOrFail($request->user_id);
+        $user->programmingLanguages()->whereNotIn('programming_languages.id', $request->skills['programming_languages'])->detach();
+        $user->userTechnologies()->whereNotIn('technologies.id', $request->skills['technologies'])->detach();
+        foreach($request->skills['programming_languages'] as $skill){
+            $user->addUpdateProgrammingLanguage(['id' => $skill, 'expertise_level'=> 0]);
+        }
+        foreach($request->skills['technologies'] as $skill){
+            $user->addUpdateTechnology(['id' => $skill, 'expertise_level'=> 0]);
+        }
+
+        return [ 'programming_languages' => $user->programmingLanguages()->get(), 'technologies' => $user->userTechnologies()->get() ];
+    }
+
+    public function add_work_experience(Request $request){
+        $user = User::findOrFail($request->user_id);
+
+        $this->validate($request,[
+            'company_name' => 'required',
+            'position' => 'required',
+            'from' => 'required',
+            'to' => 'required',
+        ]);
+
+        $user->addUpdateWorkExperience([
+            'company_name' => $request->company_name,
+            'position' => $request->position,
+            'from' => $request->from,
+            'to' => $request->to,
+        ]);
+
+        return [ 'workExperiences' => $user->workExperiences()->get() ];
+    }
     
 }
