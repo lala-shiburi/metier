@@ -25,20 +25,32 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     // user
     Route::group(['prefix' => 'userInfo'], function(){
-        Route::get('user','UserController@fetch_user');
-        Route::get('programmingLanguages','UserController@fetch_programming_languages');
-        Route::get('userTechnologies','UserController@fetch_technologies');
-        Route::get('workExperiences','UserController@fetch_work_experience');
-        Route::get('educationalBackgrounds','UserController@fetch_educational_background');
-        Route::get('followedCompanies','UserController@fetch_followed_companies');
+        // fetch'
+        Route::group(['prefix' => 'fetch'], function(){
+            Route::get('user', 'UserController@fetch_user');
+            Route::get('programmingLanguages', 'UserController@fetch_programming_languages');
+            Route::get('userTechnologies', 'UserController@fetch_technologies');
+            Route::get('workExperiences', 'UserController@fetch_work_experience');
+            Route::get('educationalBackgrounds', 'UserController@fetch_educational_background');
+            Route::get('followedCompanies', 'UserController@fetch_followed_companies');
+        });
+        // update
+        Route::group(['prefix' => 'update'], function(){
+            Route::post('skills', 'UserController@update_skills');
+        });
+        // add
+        Route::group(['prefix' => 'add'], function(){
+            Route::post('work_experience', 'UserController@add_work_experience');
+        });
+        
     });
 
     // company
     Route::group(['prefix' => "company"], function(){
         Route::post('create', 'CompanyController@create');
-        Route::get('fetch','CompanyController@fetch');
-        Route::get('fetch/openings','CompanyController@fetch_openings');
-        Route::get('datatable','CompanyController@fetch_datatable');
+        Route::get('fetch', 'CompanyController@fetch');
+        Route::get('fetch/openings', 'CompanyController@fetch_openings');
+        Route::get('datatable', 'CompanyController@fetch_datatable');
     });
 
     // opening
@@ -47,11 +59,11 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('fetch', 'OpeningController@fetch');
 
         Route::group(["prefix" => "validate"],function(){
-            Route::post('basicInfo','OpeningController@validateBasicInfo');
-            Route::post('description','OpeningController@validateDescription');
+            Route::post('basicInfo', 'OpeningController@validateBasicInfo');
+            Route::post('description', 'OpeningController@validateDescription');
         });
         
-        Route::post('create','OpeningController@create');
+        Route::post('create', 'OpeningController@create');
     });
 });
 

@@ -15,10 +15,12 @@ import CompanySearchTable from './company/CompanySearchTable'
 import Wizard from './Wizard'
 import SkillSelector from './SkillSelector'
 import CompanyCard from './CompanyCard'
+import IconButton from './IconButton'
 import { HasError, AlertError, AlertSuccess } from 'vform'
 
 // Components that are registered globally.
 [
+  IconButton,
   Card,
   Child,
   Button,

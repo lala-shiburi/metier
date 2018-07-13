@@ -10,7 +10,7 @@
             Programming Language
           </div>
           <ul class="items">
-            <li class="item d-i" v-on:click="addLang(lang)" :class="lang.tag_name" v-for="(lang, index) in programming_languages" v-bind:key="index">
+            <li class="item d-i text-ellipsis" v-on:click="addLang(lang)" :class="lang.tag_name" v-for="(lang, index) in programming_languages" v-bind:key="index">
               <skill-icon :icon="lang.tag_name" size="x-small-icon"></skill-icon> {{lang.name}}
               <div class="box-check">
                 <i class="fa fa-check check" aria-hidden="true"></i>
@@ -21,7 +21,7 @@
             Technology
           </div>
           <ul class="items">
-            <li class="item d-i" v-on:click="addTech(tech)" :class="tech.tag_name" v-for="(tech, index) in technologies" v-bind:key="index">
+            <li class="item d-i text-ellipsis" v-on:click="addTech(tech)" :class="tech.tag_name" v-for="(tech, index) in technologies" v-bind:key="index">
               <skill-icon :icon="tech.tag_name" size="x-small-icon"></skill-icon> {{tech.name}}
               <div class="box-check">
                 <i class="fa fa-check check" aria-hidden="true"></i>
@@ -115,6 +115,18 @@ export default {
       jQuery(this.$el).find('.d-i').each(function(){
         if(jQuery(this).hasClass(item.tag_name))
         jQuery(this).removeClass('active');
+      });
+    },
+    updateProgrammingLanguages: function(array){
+      this.form.skills.programming_languages = [];
+      array.forEach(item => {
+        this.addLang(item);
+      });
+    },
+    updateTechnologies: function(array){
+      this.form.skills.technologies = [];
+      array.forEach(item => {
+        this.addTech(item);
       });
     }
   },

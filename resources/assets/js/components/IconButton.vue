@@ -1,32 +1,30 @@
 <template>
-  <button></button>
+  <div class="small-round-bttn btn-primary">
+    <div class="bttn-icon">
+      <p>+</p>
+    </div>
+    <slot/>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'PhotoModal',
+  name: 'IconButton',
 
   props: {
-    currentIndex: { type: Number, required: true },
-    images: { type: Array, required: true }
+    // 
   },
   data : () =>({
     public_path: location.origin+'/',
-    display: true,
-    index: this.currentIndex
   }),
   methods: {
     goRight: function(){
       if(this.index + 1 < this.images.length)
       this.index++
     },
-    goLeft: function(){
-      if(this.index != 0)
-      this.index--
-    }
   },
   created: function(){
-    this.index = this.currentIndex
+    // 
   }
 }
 </script>
