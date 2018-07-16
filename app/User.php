@@ -46,7 +46,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public function getPhotoAttribute()
     {
-        if(!file_exists('storage/photos/'.$this->attributes['photo']) || str_replace(' ','',$this->attributes['photo']) == ''){
+        if(!isset($this->attributes['photo']) ||!file_exists('storage/photos/'.$this->attributes['photo']) || str_replace(' ','',$this->attributes['photo']) == ''){
             return asset('images/member-placeholder.png');
         }
 
@@ -60,7 +60,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public function getCoverPhotoAttribute()
     {
-        if(!file_exists('storage/photos/'.$this->attributes['cover_photo']) || str_replace(' ','',$this->attributes['cover_photo']) == ''){
+        if(!isset($this->attributes['cover_photo']) || !file_exists('storage/photos/'.$this->attributes['cover_photo']) || str_replace(' ','',$this->attributes['cover_photo']) == ''){
             return asset('images/default-opening.png');
         }
 
@@ -268,6 +268,19 @@ class User extends Authenticatable implements JWTSubject
         $workExperience->to = $data['to'];
 
         $workExperience->save();
+
+        return $workExperience;
+    }
+
+    /**
+     * Update user current experience
+     * 
+     * @param \App\WorkExperience
+     */
+    public function setCurrentExperience($experience){
+
+        $this->workExperiences()->where('is_current',1)->update(['is_current' => 0, 'to' => date('Y-m-d')]);
+        $this->workExperiences()->where('work_experiences.id',$experience->id)->update(['is_current'=>1]);
     }
 
     /**
@@ -353,7 +366,7 @@ class User extends Authenticatable implements JWTSubject
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function workExperiences(){
-        return $this->hasMany('\App\WorkExperience');
+        return $this->hasMany('\App\WorkExperience')->orderBy('from','desc');
     }
 
     /**
@@ -362,7 +375,7 @@ class User extends Authenticatable implements JWTSubject
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function educationalBackgrounds(){
-        return $this->hasMany('\App\EducationalBackground');
+        return $this->hasMany('\App\EducationalBackground')->orderBy('from','desc');
     }
 
     /**
