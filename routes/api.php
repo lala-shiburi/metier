@@ -41,6 +41,12 @@ Route::group(['middleware' => 'auth:api'], function () {
         // add
         Route::group(['prefix' => 'add'], function(){
             Route::post('work_experience', 'UserController@add_work_experience');
+            Route::post('education_background', 'UserController@add_education_background');
+        });
+        // delete
+        Route::group(['prefix' => 'delete'],function(){
+            Route::delete('work_experience', 'UserController@delete_work_experience');
+            Route::delete('education_background', 'UserController@delete_education_background');
         });
         
     });

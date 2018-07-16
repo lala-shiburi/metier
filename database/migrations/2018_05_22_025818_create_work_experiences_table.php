@@ -19,8 +19,9 @@ class CreateWorkExperiencesTable extends Migration
             $table->integer('company_id');
             $table->string('company_name');
             $table->string('position');
+            $table->integer('is_current')->default(0);
             $table->date('from');
-            $table->date('to');
+            $table->date('to')->nullable();
             $table->timestamps();
         });
     }

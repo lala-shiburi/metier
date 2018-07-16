@@ -25,7 +25,8 @@ class UpdateUsersTable extends Migration
             $table->string('citizenship')->after('gender')->nullable();
             $table->string('photo')->after('citizenship')->nullable();
             $table->string('cover_photo')->after('photo')->nullable();
-            $table->integer('resume_file')->after('cover_photo')->nullable();
+            $table->string('resume_file')->after('cover_photo')->nullable();
+            $table->string('description')->after('role')->nullable();
         });
     }
 
@@ -47,6 +48,8 @@ class UpdateUsersTable extends Migration
             $table->dropColumn('citizenship');
             $table->dropColumn('photo');
             $table->dropColumn('cover_photo');
+            $table->dropColumn('resume_file');
+            $table->dropColumn('description');
         });
     }
 }
