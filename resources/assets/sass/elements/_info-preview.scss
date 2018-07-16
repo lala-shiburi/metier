@@ -1,5 +1,6 @@
 .info-preview{
   position:relative;
+  margin-bottom: 10px;
   .photo{
     position:relative;
     .bg-holder{
@@ -8,5 +9,24 @@
     & img{
       width: 100%;
     }
+  }
+
+  & .options{
+    position: absolute;
+    right: 15px;
+    top: 0px;
+    left: 0px;
+    text-align: right;
+    .option-btn{
+      opacity: 0;
+      transform: translateX(50%);
+      transition: 200ms ease all;
+      cursor: pointer;
+    }
+  }
+
+  &:hover .options .option-btn{
+    opacity: 1;
+    transform: initial;
   }
 }

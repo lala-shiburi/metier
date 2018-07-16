@@ -15,6 +15,9 @@
         </div>
       </div>
     </div>
+    <div class="options">
+      <slot name="options"/>
+    </div>
   </div>
 </template>
 
