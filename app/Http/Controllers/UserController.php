@@ -39,6 +39,12 @@ class UserController extends Controller
         return $user->followedCompanies()->orderBy('company_follows.created_at','desc')->get();
     }
 
+    public function fetch_user_addresses(Request $request){
+        $user = User::findOrFail($request->user_id);
+
+        return $user->userAddresses()->get();
+    }
+
     public function update_skills(Request $request){
         $user = User::findOrFail($request->user_id);
         $user->programmingLanguages()->whereNotIn('programming_languages.id', $request->skills['programming_languages'])->detach();
@@ -120,6 +126,46 @@ class UserController extends Controller
         $education_background = EducationalBackground::findOrFail($request->education_background_id);
         $education_background->delete();
         return 'deleted';
+    }
+
+    public function update_description(Request $request){
+        $user = User::findOrFail($request->user_id);
+        
+        $this->validate($request,[
+            'description' => 'required'
+        ]);
+
+        $user->updateFields([
+            'description' => $request->description
+        ]);
+
+        return [ 'user' => $user ];
+    }
+
+    public function update_basic_info(Request $request){
+        $user = User::findOrFail($request->user_id);
+        
+        $this->validate($request,[
+            'first_name' => 'required',
+            'last_name' => 'required',
+            // 'email' => 'required|email',
+            'birth_date' => 'required|date',
+            'gender' => 'required'
+        ]);
+        $fields = $request->all();
+        unset($fields['user_id']);
+        $user->updateFields($fields);
+        
+        return ['user' => $user];
+    }
+
+    public function add_address(Request $request){
+        $user = User::findOrFail($request->user_id);
+
+        $this->validate($request,[
+            'address_text' => 'required',
+            'province' => 'required'
+        ]);
     }
     
 }

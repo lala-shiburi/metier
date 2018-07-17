@@ -374,6 +374,15 @@ class User extends Authenticatable implements JWTSubject
      * 
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
+    public function userAddresses(){
+        return $this->hasMany('\App\UserAddress')->orderBy('created_at','desc');
+    }
+
+    /**
+     * Get user addresses
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function educationalBackgrounds(){
         return $this->hasMany('\App\EducationalBackground')->orderBy('from','desc');
     }
