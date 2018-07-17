@@ -33,15 +33,19 @@ Route::group(['middleware' => 'auth:api'], function () {
             Route::get('workExperiences', 'UserController@fetch_work_experience');
             Route::get('educationalBackgrounds', 'UserController@fetch_educational_background');
             Route::get('followedCompanies', 'UserController@fetch_followed_companies');
+            Route::get('userAddresses', 'UserController@fetch_user_addresses');
         });
         // update
         Route::group(['prefix' => 'update'], function(){
             Route::post('skills', 'UserController@update_skills');
+            Route::post('user_description', 'UserController@update_description');
+            Route::post('basic_info', 'UserController@update_basic_info');
         });
         // add
         Route::group(['prefix' => 'add'], function(){
             Route::post('work_experience', 'UserController@add_work_experience');
             Route::post('education_background', 'UserController@add_education_background');
+            Route::post('address', 'UserController@add_address');
         });
         // delete
         Route::group(['prefix' => 'delete'],function(){
