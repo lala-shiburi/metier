@@ -24,13 +24,14 @@
         <card class="m-tb-10">
           <div>
             <h5>Description</h5>
-            <label class="text-muted"> How do you describe yourself? </label>
+            <label class="text-muted" v-if="!user.description"> How do you describe yourself? </label>
+            {{user.description}}
             <br>
-            <icon-button v-if="!user.description">
+            <icon-button v-if="!user.description"  data-toggle="modal" data-target="#description-modal">
               ADD DESCRIPTION
             </icon-button>
             <div v-else style="position: absolute; top: 15px; left: 0px; text-align: right; right: 15px;">
-              <i class="small-option-btn fa fa-edit"></i>
+              <i class="small-option-btn fa fa-edit" data-toggle="modal" data-target="#description-modal"></i>
             </div>
           </div>
           <br>
@@ -39,6 +40,9 @@
         <div class="row">
           <div class="col-md-4">
             <card class="m-tb-10" title="Basic Info">
+              <div style="position: absolute; top: 10px; left: 0px; text-align: right; right: 15px;">
+                <i class="small-option-btn fa fa-edit" data-toggle="modal" data-target="#user-basic-info-modal"></i>
+              </div>
               <ul class="simple-list">
                 <li>
                   <ellipsis-text label="Email">
@@ -64,12 +68,19 @@
             </card>
             <card class="m-tb-10" title="Address">
               <ul class="simple-list">
-                <li>
+                <li v-for="(address,index) in userAddresses" v-bind:key="index">
                   <ellipsis-text>
-                    Shokay Lapu-Lapu City Cebu
+                    {{ address.address_text }}
                   </ellipsis-text>
+                  <div style="position: absolute; top: 10px; left: 0px; text-align: right; right: 15px;">
+                    <i class="small-option-btn fa fa-edit" data-toggle="modal" data-target="#user-basic-info-modal"></i>
+                  </div>
                 </li>
               </ul>
+              <label class="text-muted" v-if="userAddresses.length == 0"> Information not available? </label>
+              <icon-button v-if="userAddresses.length == 0"  data-toggle="modal" data-target="#user-address-info-modal">
+                ADD ADDRESS
+              </icon-button>
             </card>
             <card class="m-tb-10" title="Contact Number">
               <ul class="simple-list">
@@ -527,13 +538,56 @@
         </div>
       </div>
     </div>
+    <div class="modal fade" id="description-modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <form @submit.prevent="updateDescription" @keydown="userDescriptionForm.onKeydown($event)">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">About yourself</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group row">
+                    <label class="col-md-3 col-form-label text-md-right">Description</label>
+                    <div class="col-md-7">
+                      <textarea v-model="userDescriptionForm.description" :class="{ 'is-invalid': userDescriptionForm.errors.has('description') }" class="form-control" name="description" rows="10">
+                      </textarea>
+                      <has-error :form="userDescriptionForm" field="description"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <v-button :loading="userDescriptionForm.busy" type="success">Save</v-button>
+                </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <user-basic-info-modal id="user-basic-info-modal" @update="updateUser" :user="user"/>
+    <user-address-info-modal id="user-address-info-modal" @update="updateUser" :user="userAddresses"/>
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
 import axios from 'axios'
 import swal from 'sweetalert2'
 import Form from 'vform'
+import userBasicInfoModal from './../../components/user-profile/basicInfoModal'
+import userAddressInfoModal from './../../components/user-profile/addressInfoModal'
+
+[
+  userBasicInfoModal,
+  userAddressInfoModal,
+].forEach(Component => {
+  Vue.component(Component.name, Component)
+})
+
 export default {
   middleware: 'auth',
 
@@ -561,6 +615,7 @@ export default {
     workExperiences: [],
     educationalBackgrounds: [],
     followedCompanies: [],
+    userAddresses: [],
 
     // forms
     skillsForm: new Form({
@@ -607,7 +662,18 @@ export default {
       course: '',
       from: '',
       to: '',
-    })
+    }),
+    userDescriptionForm: new Form({
+      user_id: '',
+      description: ''
+    }),
+    userBasicInfoForm: new Form({
+      user_id: '',
+      first_name: '',
+      last_name: '',
+      birth_date: '',
+      gender: '',
+    }),
   }),
   methods: {
     async fetch(fetch){
@@ -635,6 +701,13 @@ export default {
 
       this.educationalBackgrounds = data.educationalBackgrounds;
       jQuery('#educational-background-modal').modal('hide');
+    },
+    async updateDescription(){
+      const {data} = await this.userDescriptionForm.post('/api/userInfo/update/user_description');
+
+      this.user = data.user;
+      this.userDescriptionForm.description = this.description;
+      jQuery('#description-modal').modal('hide');
     },
     prepEditWorkExperience(data){
       this.editWorkExperienceForm.id = data.id;
@@ -709,6 +782,9 @@ export default {
           });
         }
       });
+    },
+    updateUser(user){
+      this.user = user
     }
   },
   mounted(){
@@ -717,10 +793,13 @@ export default {
     this.skillsForm.user_id = this.$store.getters['auth/user'].id;
     this.workExperienceForm.user_id = this.$store.getters['auth/user'].id;
     this.educationalBackgroundForm.user_id = this.$store.getters['auth/user'].id;
+    this.userDescriptionForm.user_id = this.$store.getters['auth/user'].id;
+    this.userDescriptionForm.description = this.$store.getters['auth/user'].description;
     this.fetch('user');
     this.fetch('programmingLanguages');
     this.fetch('userTechnologies');
     this.fetch('workExperiences');
+    this.fetch('userAddresses');
     this.fetch('educationalBackgrounds');
     this.fetch('followedCompanies');
     jQuery('#skill-modal').on('show.bs.modal',function(){
