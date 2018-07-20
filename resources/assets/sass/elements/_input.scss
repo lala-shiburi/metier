@@ -102,3 +102,11 @@
     font-size: 10px;
   }
 }
+
+.quill-editor.form-control{
+  padding:0px!important;
+  border: 0px;
+  &.is-invalid .ql-toolbar, &.is-invalid .ql-container{
+    border-color:#dc3545;
+  }
+}
