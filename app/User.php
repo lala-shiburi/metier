@@ -370,7 +370,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * Get educational backgrounds
+     * Get user addresses
      * 
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -379,7 +379,16 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * Get user addresses
+     * Get user contact infos
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function contactNumbers(){
+        return $this->hasMany('\App\UserContactNumber')->orderBy('created_at','desc');
+    }
+
+    /**
+     * Get educational backgrounds 
      * 
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -394,6 +403,15 @@ class User extends Authenticatable implements JWTSubject
      */
     public function followedCompanies(){
         return $this->belongsToMany("\App\Company","company_follows","user_id","company_id");
+    }
+
+    /**
+     * Get HiringApplications
+     * 
+     * @return App\Company
+     */
+    public function hiringApplications(){
+        return $this->hasMany("\App\HiringApplication");
     }
 
 

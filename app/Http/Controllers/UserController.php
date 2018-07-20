@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use \App\User;
+use \App\UserAddress;
+use \App\UserContactNumber;
 use \App\WorkExperience;
 use \App\EducationalBackground;
 
@@ -43,6 +45,12 @@ class UserController extends Controller
         $user = User::findOrFail($request->user_id);
 
         return $user->userAddresses()->get();
+    }
+
+    public function fetch_user_contact_number(Request $request){
+        $user = User::findOrFail($request->user_id);
+
+        return $user->contactNumbers;
     }
 
     public function update_skills(Request $request){
@@ -159,13 +167,45 @@ class UserController extends Controller
         return ['user' => $user];
     }
 
-    public function add_address(Request $request){
+    public function add_update_address(Request $request){
         $user = User::findOrFail($request->user_id);
 
         $this->validate($request,[
             'address_text' => 'required',
             'province' => 'required'
         ]);
+
+        $address = $request->id ? UserAddress::findOrFail($request->id) : new UserAddress;
+
+        $address->address_text = $request->address_text;
+        $address->province = $request->province;
+        $address->user_id = $request->user_id;
+        $address->save();
+
+        return ['addresses' => $user->userAddresses];
+    }
+
+    public function add_update_contact_number(Request $request){
+        $user = User::findOrFail($request->user_id);
+
+        $this->validate($request,[
+            'number' => 'required',
+        ]);
+
+        $number = $request->id ? UserContactNumber::findOrFail($request->id) : new UserContactNumber;
+
+        $number->number = $request->number;
+        $number->user_id = $request->user_id;
+        $number->save();
+
+        return ['contact_numbers' => $user->contactNumbers];
+    }
+
+    public function delete_address(Request $request){
+        $address = UserContactNumber::findOrFail($request->address_id);
+        $address->delete();
+
+        return 'deleted';
     }
     
 }

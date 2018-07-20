@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserAddress extends Model
+class UserContactNumber extends Model
 {
-    protected $table = 'address_users';
+    protected $table = 'contact_infos';
 
     /**
      * The attributes that are mass assignable.
