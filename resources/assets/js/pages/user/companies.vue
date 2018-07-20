@@ -12,23 +12,6 @@ export default {
   metaInfo () {
     return { title: 'Company List' }
   },
-
-  computed: {
-    tabs () {
-      return [
-        {
-          icon: 'user',
-          name: this.$t('profile'),
-          route: 'settings.profile'
-        },
-        {
-          icon: 'lock',
-          name: this.$t('password'),
-          route: 'settings.password'
-        }
-      ]
-    }
-  },
   data : () =>({
     public_path: location.origin
   })

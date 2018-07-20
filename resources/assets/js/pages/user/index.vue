@@ -72,24 +72,33 @@
                   <ellipsis-text>
                     {{ address.address_text }}
                   </ellipsis-text>
-                  <div style="position: absolute; top: 10px; left: 0px; text-align: right; right: 15px;">
-                    <i class="small-option-btn fa fa-edit" data-toggle="modal" data-target="#user-basic-info-modal"></i>
+                  <div class="options">
+                    <i class="option fa fa-edit" v-on:click="prepUpdateAddress(address)"></i>
+                    <i class="option fa fa-close" v-on:click="prepDeleteAddress(address, index)"></i>
                   </div>
                 </li>
               </ul>
               <label class="text-muted" v-if="userAddresses.length == 0"> Information not available? </label>
-              <icon-button v-if="userAddresses.length == 0"  data-toggle="modal" data-target="#user-address-info-modal">
+              <icon-button  v-on:click.native="prepAddAddress(user.id)">
                 ADD ADDRESS
               </icon-button>
             </card>
             <card class="m-tb-10" title="Contact Number">
               <ul class="simple-list">
-                <li>
+                <li v-for="(number,index) in userContactNumbers" v-bind:key="index">
                   <ellipsis-text>
-                    09678687823
+                    {{ number.number }}
                   </ellipsis-text>
+                  <div class="options">
+                    <i class="option fa fa-edit" v-on:click="prepUpdateContact(number)"></i>
+                    <i class="option fa fa-close" v-on:click="prepDeleteContactInfo(number, index)"></i>
+                  </div>
                 </li>
               </ul>
+              <label class="text-muted" v-if="userContactNumbers.length == 0"> Information not available? </label>
+              <icon-button  v-on:click.native="prepAddContactInfo(user.id)">
+                ADD NUMBER
+              </icon-button>
             </card>
           </div>
           <div class="col-md-8">
@@ -569,7 +578,8 @@
       </div>
     </div>
     <user-basic-info-modal id="user-basic-info-modal" @update="updateUser" :user="user"/>
-    <user-address-info-modal id="user-address-info-modal" @update="updateUser" :user="userAddresses"/>
+    <user-address-info-modal ref="userAddInfoModal" @update="updateAddresses" :user="userAddresses"/>
+    <user-contact-info-modal ref="userContactInfoModal" @update="updateContactInfos" :user="userAddresses"/>
   </div>
 </template>
 
@@ -580,10 +590,12 @@ import swal from 'sweetalert2'
 import Form from 'vform'
 import userBasicInfoModal from './../../components/user-profile/basicInfoModal'
 import userAddressInfoModal from './../../components/user-profile/addressInfoModal'
+import userContactInfoModal from './../../components/user-profile/contactInfoModal'
 
 [
   userBasicInfoModal,
   userAddressInfoModal,
+  userContactInfoModal,
 ].forEach(Component => {
   Vue.component(Component.name, Component)
 })
@@ -616,6 +628,7 @@ export default {
     educationalBackgrounds: [],
     followedCompanies: [],
     userAddresses: [],
+    userContactNumbers: [],
 
     // forms
     skillsForm: new Form({
@@ -785,6 +798,89 @@ export default {
     },
     updateUser(user){
       this.user = user
+    },
+    prepUpdateAddress(data){
+      this.$refs.userAddInfoModal.prepUpdate(data);
+    },
+    prepAddAddress(user_id){
+      console.log('asd')
+      this.$refs.userAddInfoModal.prepCreate(user_id);
+    },
+    updateAddresses(data){
+      this.userAddresses = data;
+    },
+    prepAddContactInfo(user_id){
+      this.$refs.userContactInfoModal.prepCreate(user_id);
+    },
+    prepUpdateContact(data){
+      this.$refs.userContactInfoModal.prepUpdate(data);
+    },
+    updateContactInfos(data){
+      this.userContactNumbers = data;
+    },
+    prepDeleteContactInfo(data, index){
+      var $this = this;
+      swal({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value) {
+          axios({
+            method: 'delete',
+            url: '/api/userInfo/delete/contact_number',
+            params: { address_id: data.id }
+          }).then( data => {
+            if(data.data == 'deleted'){
+              var contact_numbers = $this.userContactNumbers;
+              contact_numbers.splice(index, 1);
+              $this.userContactNumbers = contact_numbers;
+
+              swal(
+                'Deleted!',
+                'Contact Info successfuly removed.',
+                'success'
+              )
+            }
+          });
+        }
+      });
+    },
+    prepDeleteAddress(data, index){
+      var $this = this;
+      swal({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value) {
+          axios({
+            method: 'delete',
+            url: '/api/userInfo/delete/address',
+            params: { address_id: data.id }
+          }).then( data => {
+            if(data.data == 'deleted'){
+              var addresses = $this.userAddresses;
+              addresses.splice(index, 1);
+              $this.userAddresses = addresses;
+
+              swal(
+                'Deleted!',
+                'Address successfuly removed.',
+                'success'
+              )
+            }
+          });
+        }
+      });
     }
   },
   mounted(){
@@ -802,6 +898,7 @@ export default {
     this.fetch('userAddresses');
     this.fetch('educationalBackgrounds');
     this.fetch('followedCompanies');
+    this.fetch('userContactNumbers');
     jQuery('#skill-modal').on('show.bs.modal',function(){
       $this.$refs.skillsSelector.updateProgrammingLanguages($this.programmingLanguages);
       $this.$refs.skillsSelector.updateTechnologies($this.userTechnologies);
