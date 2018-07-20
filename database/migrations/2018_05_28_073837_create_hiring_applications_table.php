@@ -18,7 +18,7 @@ class CreateHiringApplicationsTable extends Migration
             $table->integer('user_id');
             $table->integer('opening_id');
             $table->text('application_letter');
-            $table->string('expected_salary');
+            $table->string('expected_salary')->nullable();
             $table->timestamps();
         });
     }
