@@ -101,7 +101,6 @@ export default {
       // this.form.email = user.email;
       this.form.birth_date = user.birth_date;
       this.form.gender = user.gender;
-      console.log(user);
     }
   }
 }

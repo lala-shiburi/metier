@@ -91,7 +91,7 @@ export default {
       {
         var line = document.createElement('div');
         jQuery(line).addClass('line');
-        jQuery(line).css({width: length_unit * 2 * ((1 / steps.children.length) * (steps.children.length - 1))});
+        jQuery(line).css({width: (length_unit * 2 * ((1 / steps.children.length) * (steps.children.length - 1))) + ((length_unit / (steps.children.length - 1)) * (i) / 2 )});
         jQuery(steps.children[i]).prepend(line);
         jQuery(steps.children[i]).css({ 
           left: ((length_unit * i) + ((length_unit / (steps.children.length - 1)) * (i) )),

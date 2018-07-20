@@ -41,7 +41,7 @@ export default {
       this.$refs.file_input.click()
     },
     processFile(files){
-      var imageTypes = ['image/png','image/x-icon','image/jpeg', 'image/gif', 'image/bmp', 'image/jpg'];
+      var imageTypes = ['image/png','image/jpeg', 'image/gif', 'image/jpg'];
       var $this = this;
 
 			var fileType = files[0].type;

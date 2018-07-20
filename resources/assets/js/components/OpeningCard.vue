@@ -53,8 +53,12 @@
             <img class="job-des-icon" :src="public_path+'/images/code.png'" alt="">
           </template>
           <span class="skills"> 
-            <skill-icon v-for="(lang,index) in opening.programming_languages" v-bind:key="index" size="x-small-icon" :icon="lang.tag_name"></skill-icon>
-            <skill-icon v-for="(tech,index) in opening.technologies" v-bind:key="index" size="x-small-icon" :icon="tech.tag_name"></skill-icon>
+            <span>
+              <skill-icon v-for="(lang,index) in opening.programming_languages" v-bind:key="index" size="x-small-icon" :icon="lang.tag_name"></skill-icon>
+            </span>
+            <span>
+              <skill-icon v-for="(tech,index) in opening.technologies" v-bind:key="index" size="x-small-icon" :icon="tech.tag_name"></skill-icon>
+            </span>
           </span>
         </ellipsis-text>
         <ellipsis-text class="job-des">
@@ -63,10 +67,13 @@
           </template>
           {{opening.created_at}}
         </ellipsis-text>
-        <div style="margin-top:10px;">
-          <v-button>
+        <div style="margin-top:10px;" v-if="!noApply">
+          <router-link class="btn btn-primary" :to="{ name: 'hiringApplication.create', params: { opening_id: opening.id} }">
             Apply
-          </v-button>
+          </router-link>
+        </div>
+        <div>
+          <slot/>
         </div>
       </div>
     </div>
@@ -81,6 +88,10 @@ export default {
     opening: {
       type: Object,
       required: true
+    },
+    noApply: {
+      type: Boolean,
+      default: false
     }
   },
   data : () =>({

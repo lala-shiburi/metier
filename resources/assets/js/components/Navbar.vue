@@ -20,16 +20,27 @@
 
         <ul class="navbar-nav ml-auto">
           <!-- Authenticated -->
+          <li v-if="user" class="nav-item">
+            <router-link class="nav-link text-dark" :to="{ name: 'user.profile' }">
+              <img :src="user.photo" class="rounded-circle profile-photo mr-1">
+              {{ user.first_name + " " + user.last_name}}
+            </router-link>
+          </li>
+          <li v-if="user" class="nav-item">
+            <a class="nav-link text-dark"
+               href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-bell-o" aria-hidden="true"></i>
+            </a>
+          </li>
           <li v-if="user" class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-dark"
                href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <img :src="user.photo" class="rounded-circle profile-photo mr-1">
-              {{ user.first_name + " " + user.last_name}}
+              <!--  -->
             </a>
-            <div class="dropdown-menu">
-              <router-link :to="{ name: 'user.profile' }" class="dropdown-item pl-3">
+            <div class="dropdown-menu dropdown-menu-right">
+              <router-link :to="{ name: 'hiringApplication.applications' }" class="dropdown-item pl-3">
                 <fa icon="user" fixed-width/>
-                Profile
+                Your Job Applications
               </router-link>
               <router-link :to="{ name: 'settings.profile' }" class="dropdown-item pl-3">
                 <fa icon="cog" fixed-width/>

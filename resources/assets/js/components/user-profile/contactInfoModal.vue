@@ -5,27 +5,17 @@
           <form @submit.prevent="update" @keydown="form.onKeydown($event)">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title">Address</h5>
+                <h5 class="modal-title">Contact Info</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
                 </div>
                 <div class="modal-body">
                   <div class="form-group row">
-                    <label class="col-md-3 col-form-label text-md-right">Address</label>
+                    <label class="col-md-3 col-form-label text-md-right">Number</label>
                     <div class="col-md-7">
-                      <input v-model="form.address_text" :class="{ 'is-invalid': form.errors.has('address_text') }" class="form-control" name="address_text" rows="10">
-                      <has-error :form="form" field="address_text"/>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-md-3 col-form-label text-md-right">Province</label>
-                    <div class="col-md-7">
-                      <select v-model="form.province" :class="{ 'is-invalid': form.errors.has('gender') }" class="form-control" name="gender">
-                        <option value="" selected>-select</option>
-                        <option v-for="(province, index) in provinces" v-bind:key="index" :value="province.name"> {{province.name}} </option>
-                      </select>
-                      <has-error :form="form" field="province"/>
+                      <input v-model="form.number" :class="{ 'is-invalid': form.errors.has('number') }" class="form-control" name="number" rows="10">
+                      <has-error :form="form" field="number"/>
                     </div>
                   </div>
                 </div>
@@ -44,7 +34,7 @@
 import axios from 'axios'
 import Form from 'vform'
 export default {
-  name: 'UserAddressInfoModal',
+  name: 'UserContactInfoModal',
 
   props: {
     // 
@@ -55,24 +45,21 @@ export default {
     form: new Form({
       id: null,
       user_id: '',
-      address_text: '',
-      province: '',
+      number: '',
     }),
-    provinces: window.config.provinces
   }),
   methods: {
     async update(){
-      const {data} = await this.form.post('/api/userInfo/add/address');
+      const {data} = await this.form.post('/api/userInfo/add/contact_number');
       
-      this.$emit('update', data.addresses);
+      this.$emit('update', data.contact_numbers);
       jQuery(this.$refs.modal).modal('hide');
     },
     prepUpdate(data){
       jQuery(this.$refs.modal).modal('show');
       this.form.id = data.id;
       this.form.user_id = data.user_id;
-      this.form.address_text = data.address_text;
-      this.form.province = data.province;
+      this.form.number = data.number;
     },
     prepCreate(user_id){
       jQuery(this.$refs.modal).modal('show');

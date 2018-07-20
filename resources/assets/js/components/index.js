@@ -16,12 +16,14 @@ import Wizard from './Wizard'
 import SkillSelector from './SkillSelector'
 import CompanyCard from './CompanyCard'
 import IconButton from './IconButton'
+import UnickTable from './UnickTable'
 import { HasError, AlertError, AlertSuccess } from 'vform'
 
 // Components that are registered globally.
 [
   IconButton,
   Card,
+  UnickTable,
   Child,
   Button,
   Checkbox,

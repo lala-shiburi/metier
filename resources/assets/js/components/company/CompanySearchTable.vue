@@ -72,7 +72,6 @@ export default {
         params: { item_id: 1 }
       })
       this.company_result = data.data;
-      console.log(data);
     }
   },
   mounted(){
