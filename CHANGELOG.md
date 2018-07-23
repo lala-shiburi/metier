@@ -1,9 +1,5 @@
 # Changelog
 
-## 4.1.2 - 2018-07-23
-
-	Added VueJS and Fixed other bugs
-
 ## 4.1.1 - 2018-05-10
 
 - Fixed oauth popup
