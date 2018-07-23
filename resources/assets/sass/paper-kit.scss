@@ -1,21 +1,17 @@
-@import 'variables';
-@import '~bootstrap/scss/bootstrap';
-@import '~sweetalert2/src/sweetalert2';
+/*!
 
-@import 'elements/card';
-@import 'elements/profile-view';
-@import 'elements/navbar';
-@import 'elements/buttons';
-@import 'elements/transitions';
-@import 'elements/input';
-@import 'elements/icons';
-@import 'elements/info-preview';
-@import 'elements/photo-viewer';
-@import 'elements/opening-card';
-@import 'elements/table';
-@import 'elements/wizard';
-@import 'elements/icon-button';
+ =========================================================
+ * Paper Kit 2 - v2.0.1
+ =========================================================
 
+ * Product Page: http://www.creative-tim.com/product/paper-kit-2
+ * Copyright 2017 Creative Tim (http://www.creative-tim.com)
+ * Licensed under MIT (https://github.com/timcreative/paper-kit/blob/master/LICENSE.md)
+
+ =========================================================
+
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ */
 
 @import "paper-kit/variables";
 @import "paper-kit/mixins";
@@ -57,8 +53,3 @@
 @import "paper-kit/plugins/datetimepicker";
 @import "paper-kit/social-buttons";
 @import "paper-kit/examples";
-
-// Quill CKEditor
-@import "quill/quill.bubble";
-@import "quill/quill.core";
-@import "quill/quill.snow";
