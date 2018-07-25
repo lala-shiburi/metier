@@ -143,7 +143,7 @@
             <card class="m-tb-10" title="Educational Background">
               <div style="margin-bottom: 20px;">
                 <icon-button data-toggle="modal" data-target="#educational-background-modal">
-                  Add Education Background
+                  ADD EDUCATIONAL BACKGROUND
                 </icon-button>
               </div>
               <info-preview v-for="(education, index) in educationalBackgrounds" v-bind:key="index" icon="school" :title="education.school_name" :subtitle="education.course">
