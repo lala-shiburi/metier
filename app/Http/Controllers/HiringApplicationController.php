@@ -28,6 +28,6 @@ class HiringApplicationController extends Controller
     
     public function fetchApplications(Request $request){
         $user = User::findOrFail($request->user_id);
-        return ['hiringApplications' => $user->hiringApplications->load('opening')];
+        return ['hiringApplications' => $user->hiringApplications->load('opening')->load('opening.company','opening.technologies','opening.programmingLanguages')];
     }
 }
