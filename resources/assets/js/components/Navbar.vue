@@ -26,7 +26,8 @@
               {{ user.first_name + " " + user.last_name}}
             </router-link>
           </li>
-          <li v-if="user" class="nav-item">
+          <li v-if="user" class="nav-item has-num-ico dropdown">
+            <p class="number-icon"><i class="number">1</i></p>
             <a class="nav-link text-dark"
                href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fa fa-bell-o" aria-hidden="true"></i>

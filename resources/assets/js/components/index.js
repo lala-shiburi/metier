@@ -19,6 +19,36 @@ import IconButton from './IconButton'
 import UnickTable from './UnickTable'
 import { HasError, AlertError, AlertSuccess } from 'vform'
 
+var mixins = {
+  methods: {
+    formatedDate(date, withTime){
+      var _date = date.split(' ')[0].split('-');
+      var _time = date.split(' ')[1].split(':');
+
+      var months = [
+        'Jan.',
+        'Feb.',
+        'Mar.',
+        'Apr.',
+        'May',
+        'Jun.',
+        'Jul',
+        'Aug.',
+        'Sep.',
+        'Oct.',
+        'Nov.',
+        'Dec.',
+      ];
+
+      var time = (parseInt(_time[0]) > 12 ? parseInt(_time[0]) - 1 : parseInt(_time[0])) + ':' + _time[1] + ' ' +(parseInt(_time[0]) > 11 ? 'PM' : 'Am');
+
+      return (withTime ? time : '' ) + ' ' + months[parseInt(_date[1]) - 1] + ' ' + parseInt(_date[2]) + ', ' + parseInt(_date[0])
+    }
+  }
+}
+
+Vue.mixin(mixins);
+
 // Components that are registered globally.
 [
   IconButton,

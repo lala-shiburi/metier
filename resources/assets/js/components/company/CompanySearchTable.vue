@@ -38,7 +38,11 @@
             </router-link>
           </td>
           <td v-html="population(company)"></td>
-          <td>10</td>
+          <td>
+            <button type="button" class="btn btn-primary btn-sm" :disabled="company.hiring_application_count == 0 ? true : null">
+              {{company.hiring_application_count}}
+            </button>
+          </td>
         </tr>
         <tr v-if="company_result.length == 0">
           <td colspan="3" style="padding: 10px;"> No result </td>

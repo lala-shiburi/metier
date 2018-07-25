@@ -1,5 +1,5 @@
 <template>
-  <div :data-toggle="title?tooltip:''" data-html="true" :title="'<b>'+title+'</b>'" class="iconized-photo" :class="size? size: 'small-icon'">
+  <div :data-toggle="title?tooltip:''" data-html="true" :title="title ? '<b>'+title+'</b>' : ''" class="iconized-photo" :class="size? size: 'small-icon'">
     <div class="photo-preview-container" style="width:initial; height:100%;">
       <div class="scaffold-div" style="height:100%; background:white;">
         <img src="http://localhost:8000/images/bg-img.png" class="bg-holder" style="width:initial; height:100%;"> 

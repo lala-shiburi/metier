@@ -9,9 +9,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(row, index) in rows" v-bind:key="index">
-          <td v-for="(col, index) in array(row)" v-bind:key="index">
-            {{col}}
+        <tr v-for="(row, index) in feildToRow" v-bind:key="index">
+          <td v-for="(col, index) in row" v-bind:key="index">
+            <div v-html="col"></div>
           </td>
         </tr>
         <tr v-if="rows.length == 0">
@@ -36,12 +36,18 @@ export default {
     public_path: location.origin,
   }),
   computed: {
-    array: function(item){
-      var arr = Object.keys(item);
+    feildToRow: function(){
       var result = [];
 
-      for(var i = 0; i < arr.length; i++){
-        result.push(item[arr[i]]);
+      for(var i = 0; i < this.rows.length; i++){
+        var keys = Object.keys(this.rows[i]);
+        var _result = [];
+
+        for(var x = 0; x < keys.length; x++){
+          _result.push(this.rows[i][keys[x]]);
+        }
+
+        result.push(_result);
       }
 
       return result;
