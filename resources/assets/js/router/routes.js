@@ -8,6 +8,7 @@ const NotFound = () => import('~/pages/errors/404').then(m => m.default || m)
 const Home = () => import('~/pages/home').then(m => m.default || m)
 const UserProfile = () => import('~/pages/user/index').then(m => m.default || m)
 const CompanyProfile = () => import('~/pages/company/index').then(m => m.default || m)
+const CompanyHiringApplicants = () => import('~/pages/company/hiringApplicants').then(m => m.default || m)
 const OpeningProfile = () => import('~/pages/opening/index').then(m => m.default || m)
 const UserCompanies = () => import('~/pages/user/companies').then(m => m.default || m)
 const OpeningApply = () => import('~/pages/opening/apply').then(m => m.default || m)
@@ -38,6 +39,7 @@ export default [
   // company routes
   { path: '/company/profile/:id', name: 'company.profile', component: CompanyProfile },
   { path: '/company/create', name: 'company.create', component: CompanyCreate },
+  { path: '/company/:id/hiringapplicants', name: 'company.hiringapplicants', component: CompanyHiringApplicants },
 
   // user routes
   { path: '/profile/:id?', name: 'user.profile', component: UserProfile },
