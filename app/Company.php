@@ -125,6 +125,10 @@ class Company extends Model
         return $this;
     }
 
+    public function applications(){
+        return $this->hasManyThrough(HiringApplication::class,Opening::class);
+    }
+
     /**
      * Relationship of company saved applicant/user
      * 
