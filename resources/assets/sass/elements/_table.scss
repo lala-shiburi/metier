@@ -1,7 +1,11 @@
 .simple-table{
   border:0px;
-}
-
-.simple-table tbody td{
-  padding: 0px;
+  thead tr th{
+    text-align: center;
+  }
+  tbody tr td{
+    padding: 0px;
+    vertical-align: middle;
+    text-align: center;
+  }
 }

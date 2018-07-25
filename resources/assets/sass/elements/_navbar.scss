@@ -17,3 +17,25 @@
     font-size: 1.4rem;
   }
 }
+
+// custom unick
+.has-num-ico {
+  position: relative;
+  .number-icon{
+    position: absolute;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    background: red;
+    color: white;
+    right: 0px;
+    .number{
+      position: absolute;
+      font-size: 10px;
+      left: 50%;
+      top: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      font-style: normal;
+    }
+  }
+}
