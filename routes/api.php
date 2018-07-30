@@ -64,7 +64,30 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::post('create', 'CompanyController@create');
         Route::get('fetch', 'CompanyController@fetch');
         Route::get('fetch/openings', 'CompanyController@fetch_openings');
+        Route::get('fetch/hiring/applications', 'CompanyController@fetchHiringApplications');
         Route::get('datatable', 'CompanyController@fetch_datatable');
+        
+        Route::group(['prefix' => 'hiringprocess'], function(){
+            // validate
+            Route::group(['prefix' => 'validate'], function(){
+                Route::post('process/step', 'HiringProcessController@validate_process_step');
+                Route::post('hiring/step/result', 'HiringProcessController@validateHiringStepResult');
+                Route::post('hiring/step/note', 'HiringProcessController@validateHiringStepResultNote');
+            });
+            // create
+            Route::group(['prefix' => 'create'], function(){
+                Route::post('process', 'HiringProcessController@createHiringProcess');
+            });
+            // fetch
+            Route::group(['prefix'=>'fetch'], function(){
+                Route::get('processes', 'HiringProcessController@fetchProcesses');
+                Route::get('one/process', 'HiringProcessController@fetchProcess');
+            });
+            // delete
+            Route::group(['prefix' => 'delete'], function(){
+                Route::delete('process', 'HiringProcessController@deleteProcess');
+            });
+        });
     });
 
     // opening
