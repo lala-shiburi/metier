@@ -19,6 +19,26 @@
   }
 }
 
+.h-d-f-r{
+  position: relative;
+  .d-bttns{
+    position: absolute;
+    right: 0px;
+    opacity: 0;
+    transition: 200ms ease all;
+    top: 50%;
+    transform: translateX(50%) translateY(-50%);
+    & .bttn{
+      cursor: pointer;
+    }
+  }
+
+  &:hover .d-bttns{
+    opacity: 1;
+    transform: translateY(-50%);
+  }
+}
+
 @keyframes spinAround {
   from { transform: rotate(0deg); }
   to { transform: rotate(359deg); }
