@@ -125,8 +125,22 @@ class Company extends Model
         return $this;
     }
 
+    /**
+     * Relationship of applications
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
     public function applications(){
         return $this->hasManyThrough(HiringApplication::class,Opening::class);
+    }
+
+    /**
+     * Relationship of hiring processes
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function hiringProcessGroups(){
+        return $this->hasMany(HiringStepGroup::class)->orderBy('hiring_step_groups.updated_at','desc');
     }
 
     /**

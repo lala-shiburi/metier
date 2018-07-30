@@ -16,4 +16,8 @@ class HiringApplication extends Model
     public function opening(){
         return $this->belongsTo(Opening::class);
     }
+
+    public function hiringStepResults(){
+        return $this->hasMany(HiringStepResult::class);
+    }
 }

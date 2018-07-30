@@ -189,4 +189,13 @@ class Opening extends Model
     public function technologies(){
         return $this->belongsToMany('\App\Technology','opening_technologies','opening_id','technology_id')->withPivot('expertise_level')->withTimeStamps();
     }
+
+    /**
+     * Get Hiring Procedure
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function hiringProcedure(){
+        return $this->belongsTo('\App\HiringStepGroup','hiring_step_group_id');
+    }
 }

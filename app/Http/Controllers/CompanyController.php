@@ -79,4 +79,14 @@ class CompanyController extends Controller
         $company = Company::find($request->company_id);
         return ['openings'=>$company->openings()->orderBy('openings.created_at','desc')->get()->load('company')->load('programmingLanguages')->load('technologies')];
     }
+
+    /**
+     * Return hiring applications
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Resources\JsonResource
+     */
+    public function fetchHiringApplications(Request $request){
+        return Company::find($request->company_id)->applications->load('opening','opening.hiringProcedure','opening.hiringProcedure.hiring_steps','user','hiringStepResults');
+    }
 }
