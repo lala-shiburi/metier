@@ -17,7 +17,7 @@
       <ul class="list-inline">
         <li class="list-inline-item">
           <router-link :to="{ name: 'company.create' }" class="btn btn-primary btn-sm">
-            Add Company
+            ADD COMPANY
           </router-link>
         </li>
       </ul>

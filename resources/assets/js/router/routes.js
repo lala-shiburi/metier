@@ -9,6 +9,8 @@ const Home = () => import('~/pages/home').then(m => m.default || m)
 const UserProfile = () => import('~/pages/user/index').then(m => m.default || m)
 const CompanyProfile = () => import('~/pages/company/index').then(m => m.default || m)
 const CompanyHiringApplicants = () => import('~/pages/company/hiringApplicants').then(m => m.default || m)
+const CompanyHiringProcesses = () => import('~/pages/company/hiringProcesses').then(m => m.default || m)
+const CompanyHiringProcessesCreate = () => import('~/pages/hiring-process/edit').then(m => m.default || m)
 const OpeningProfile = () => import('~/pages/opening/index').then(m => m.default || m)
 const UserCompanies = () => import('~/pages/user/companies').then(m => m.default || m)
 const OpeningApply = () => import('~/pages/opening/apply').then(m => m.default || m)
@@ -40,6 +42,8 @@ export default [
   { path: '/company/profile/:id', name: 'company.profile', component: CompanyProfile },
   { path: '/company/create', name: 'company.create', component: CompanyCreate },
   { path: '/company/:id/hiringapplicants', name: 'company.hiringapplicants', component: CompanyHiringApplicants },
+  { path: '/company/:id/hiringprocceses', name: 'company.hiringprocceses', component: CompanyHiringProcesses },
+  { path: '/company/:company_id/hiringprocceses/create/:id?', name: 'company.hiringprocceses.create', component: CompanyHiringProcessesCreate },
 
   // user routes
   { path: '/profile/:id?', name: 'user.profile', component: UserProfile },
@@ -48,7 +52,7 @@ export default [
   // opening routes
   { path: '/opening/profile/:id', name: 'opening.profile', component: OpeningProfile },
   { path: '/company/:company_id/opening/create', name: 'opening.create', component: OpeningCreate },
-  
+
   // application
   { path: '/applications', name: 'hiringApplication.applications', component: HiringApplication },
   { path: '/opening/apply/:opening_id/:applicant_id?', name: 'hiringApplication.create', component: OpeningApply },

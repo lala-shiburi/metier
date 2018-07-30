@@ -2,7 +2,7 @@
   <div class="simple-card">
     <div class="simple-card-header row">
       <div class="col-md-9">
-        Hiring Application List
+        Hiring Procedures
       </div>
       <div class="col-md-3">
         <div class="input-group input-group-sm mb-3">
@@ -13,44 +13,34 @@
         </div>
       </div>
     </div>
+    <div class="p-10" style="padding: 0px 10px;">
+      <ul class="list-inline">
+        <li class="list-inline-item">
+          <router-link :to="{ name: 'company.hiringprocceses.create', params: { company_id: company_id } }" class="btn btn-primary btn-sm">
+            ADD PROCEDURE
+          </router-link>
+        </li>
+      </ul>
+    </div>
     <div class="unick-table">
       <div class="header">
         <div class="row item-row">
-          <div class="col-md-4 part">
-            Applicant
-          </div>
-          <div class="col-md-8 part">
-            Progress
+          <div class="col-md-12 part">
+            Hiring Process
           </div>
         </div>
       </div>
       <div class="body">
-        <div class="row item-row" v-for="(application, index) in applications" v-bind:key="index">
-          <div class="col-md-4 part">
-            <div class="text-truncate">
-            <router-link class="n" :to="{ name: 'user.profile', params: { id: application.user.id }}">
-              <iconized-photo size="medium-icon" :photo="application.user.photo"></iconized-photo>
-              {{application.user.name}}
-            </router-link>
-            : <router-link class="n" :to="{ name: 'opening.profile', params: { id: application.opening.id }}">
-                {{application.opening.title}}
-              </router-link>
+        <div class="row item-row" :class="recent == process.id ? 'recent':''" v-for="(process,index) in hiringProcesses" v-bind:key="index">
+          <div class="col-md-12 p-10 p-r-50 h-d-f-r">
+            {{process.name}}
+            <div class="d-bttns p-15">
+              <i class="fa fa-edit bttn" v-on:click="editHiringProcesses(process)"></i>
+              <i class="fa fa-close bttn" v-on:click="prep_delete(process, index)"></i>
             </div>
-            <div class="p-10">
-              <button type="button" v-on:click="displayApplicationDetail(application)" class="btn btn-primary btn-sm">Start Hiring Procedure</button>
-            </div>
-          </div>
-          <div class="col-md-8 part progress-line-container">
-            <progress-step>
-              <template slot="steps">
-                <li class="step" v-for="(step, index) in application.opening.hiring_procedure.hiring_steps" v-bind:key="index">
-                  <div class="circle" data-toggle="tooltip" data-html="true" :title="'<b>'+step.name+'</b><p>'+(step.description ? step.description : '')+'</p>'"></div>
-                </li>
-              </template>
-            </progress-step>
           </div>
         </div>
-        <div class="row item-row" v-if="applications.length == 0">
+        <div class="row item-row" v-if="hiringProcesses.length == 0">
           <div class="col-md-12 p-10 p-r-50 h-d-f-r">
             <center> Nothing to show </center>
           </div>
@@ -85,18 +75,17 @@
         </div>
       </div>
     </div>
-    <application-detail ref="application-detail-component"></application-detail>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import ProgressStep from './../../components/ProgressStep'
-import ApplicationDetail from './../../components/application/ApplicationDetail'
+import swal from 'sweetalert2'
+
 import Vue from 'vue'
 [
   ProgressStep,
-  ApplicationDetail,
 ].forEach(Component => {
   Vue.component(Component.name, Component)
 })
@@ -122,44 +111,60 @@ export default {
   data : () =>({
     public_path: location.origin,
     company_id: null,
-    company: {},
-    applications: [],
+    openings: [],
+    hiringProcesses:[],
+    recent:null,
   }),
   methods: {
-    fetch_company: async function(){
+    fetchHiringProcesses: async function(){
       const { data } = await axios({
           method: 'get',
-          url: '/api/company/fetch',
+          url: '/api/company/hiringprocess/fetch/processes',
           params: { company_id: this.company_id }
         })
-      this.company = data.data;
+      this.hiringProcesses = data.hiringProcesses;
     },
-    fetch_applications: async function(){
-      const { data } = await axios({
-          method: 'get',
-          url: '/api/company/fetch/hiring/applications',
-          params: { company_id: this.company_id }
-        })
-      this.applications = data;
+    editHiringProcesses: function(data){
+      this.$router.push('/company/'+this.company_id+'/hiringprocceses/create/'+data.id);
     },
-    setTooltip: function(){
-      console.log(el);
-      // jQuery(el).tooltip();
-    },
-    displayApplicationDetail(data){
-      this.$refs['application-detail-component'].showApplication(data);
+    prep_delete(data, index){
+      var $this = this;
+      swal({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value) {
+          axios({
+            method: 'delete',
+            url: '/api/company/hiringprocess/delete/process',
+            params: { id: data.id }
+          }).then( data => {
+            if(data.data.status == 'success'){
+              $this.hiringProcesses.splice(index, 1);
+              $this.$forceUpdate();
+
+              swal(
+                'Deleted!',
+                'Contact Info successfuly removed.',
+                'success'
+              )
+            }
+          });
+        }
+      });
     }
   },
   created: function(){
     this.company_id = this.$route.params.id;
-    this.fetch_applications();
-    this.fetch_company();
-    jQuery(this.$el).find('[data-toggle="tooltip"]').tooltip();
+    this.recent = this.$route.query.newcreated;
   },
   mounted(){
-    jQuery(function () {
-      jQuery('[data-toggle="tooltip"]').tooltip()
-    })
+    this.fetchHiringProcesses();
   }
 }
 </script>

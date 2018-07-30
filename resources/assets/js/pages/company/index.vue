@@ -22,7 +22,13 @@
             <div class="btn-group pull-right">
               <router-link :to="{ name: 'opening.create', params: {company_id:company_id} }" class="btn btn-light">Create Opening</router-link>
               <span class="dvder"/>
-              <button type="button" class="btn btn-light">...</button>
+              <div class="dropdown">
+                <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-light">...</button>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                  <router-link class="dropdown-item" :to="{ name: 'company.hiringapplicants', params: {id:company_id} }" data-toggle="dropdown">Hiring Applications</router-link>
+                  <router-link class="dropdown-item" :to="{ name: 'company.hiringprocceses', params: {id:company_id} }" data-toggle="dropdown">Hiring Procedures</router-link>
+                </div>
+              </div>
             </div>
           </div>
         </div>

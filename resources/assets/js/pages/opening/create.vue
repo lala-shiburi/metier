@@ -67,10 +67,24 @@
             </div>
           </div>
 
+          <!-- Hiring Processes/Procedures -->
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label text-md-right">Hiring Procedure</label>
+            <div class="col-md-7">
+              <select v-model="form1.hiring_step_group_id" :class="{ 'is-invalid': form1.errors.has('hiring_step_group_id') }" class="form-control" name="hiring_step_group_id">
+                <option value="" selected>-select</option>
+                <option v-for="(procedure, index) in hiringProcesses" v-bind:key="index" :value="procedure.id">
+                  {{procedure.name}}
+                </option>
+              </select>
+              <has-error :form="form1" field="hiring_step_group_id"/>
+            </div>
+          </div>
+
           <!-- Submit Button -->
           <div class="form-group row">
             <div class="col-md-9 ml-md-auto">
-              <v-button :loading="form1.busy" type="success">Save</v-button>
+              <v-button :loading="form1.busy" type="success">Next</v-button>
             </div>
           </div>
         </form>
@@ -88,7 +102,7 @@
           <div class="form-group row">
             <div class="col-md-9 ml-md-auto">
               <a href="JavaScript:void(0)" class="btn btn-secondary" v-on:click="left">Back</a>
-              <v-button :loading="form2.busy" type="success">Save</v-button>
+              <v-button :loading="form2.busy" type="success">Next</v-button>
             </div>
           </div>
         </form>
@@ -98,7 +112,7 @@
             <div class="col-md-12">
               <div class="form-group" style="margin-top: 30px; border-top: 1px solid #d5d5d5; padding-top: 30px;">
                 <a href="JavaScript:void(0)" class="btn btn-secondary" v-on:click="left">Back</a>
-                <v-button :loading="form3.busy" type="success">Save</v-button>
+                <v-button :loading="form3.busy" type="success">Next</v-button>
               </div>
             </div>
           </skill-selector>
@@ -127,6 +141,7 @@
 
 <script>
 import Form from 'vform'
+import axios from 'axios'
 export default {
   middleware: 'auth',
   scrollToTop: false,
@@ -141,6 +156,7 @@ export default {
       title: '',
       salary_range: '',
       professional_years: '',
+      hiring_step_group_id:''
     }),
     form2: new Form({
       details: ''
@@ -157,11 +173,13 @@ export default {
       salary_range: '',
       professional_years: '',
       details: '',
-      skills: ''
+      skills: '',
+      hiring_step_group_id:'',
     }),
     public_path: location.origin,
     salary_ranges: window.config.salary_ranges,
-    work_experiences: window.config.work_experiences
+    work_experiences: window.config.work_experiences,
+    hiringProcesses:[],
   }),
 
   methods: {
@@ -189,6 +207,7 @@ export default {
       this.form4.title = this.form1.title;
       this.form4.salary_range = this.form1.salary_range;
       this.form4.professional_years = this.form1.professional_years;
+      this.form4.hiring_step_group_id = this.form1.hiring_step_group_id;
       // 
       this.form4.details = this.form2.details;
       // 
@@ -207,6 +226,14 @@ export default {
     left(){
       this.$refs.wizard.previews();
     }
+  },
+  created: async function(){
+    const { data } = await axios({
+          method: 'get',
+          url: '/api/company/hiringprocess/fetch/processes',
+          params: { company_id: this.$route.params.company_id }
+        })
+    this.hiringProcesses = data.hiringProcesses;
   }
 }
 </script>
