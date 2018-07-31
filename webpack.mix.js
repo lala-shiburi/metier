@@ -6,13 +6,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 mix.config.vue.esModule = true
 
 mix
-  .js(['resources/assets/js/app.js',
-    'node_modules/bootstrap/dist/js/bootstrap.min.js',
-    'resources/assets/js/paper-kit.js',
-    'node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
-    'node_modules/nouislider/distribute/nouislider.js',
-    'node_modules/bootstrap-switch/dist/js/bootstrap-switch.min.js',
-    'resources/assets/js/jquery-ui-1.12.1.custom.min.js'], 'public/js')
+  .js('resources/assets/js/app.js', 'public/js')
   .sass('resources/assets/sass/app.scss', 'public/css')
 
   .sourceMaps()
@@ -32,7 +26,6 @@ if (mix.inProduction()) {
     'vue-meta',
     'js-cookie',
     'bootstrap',
-    'moment',
     'vue-router',
     'sweetalert2',
     'vuex-router-sync',
