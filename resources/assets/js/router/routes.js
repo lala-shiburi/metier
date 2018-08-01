@@ -52,6 +52,7 @@ export default [
   // opening routes
   { path: '/opening/profile/:id', name: 'opening.profile', component: OpeningProfile },
   { path: '/company/:company_id/opening/create', name: 'opening.create', component: OpeningCreate },
+  
   // application
   { path: '/applications', name: 'hiringApplication.applications', component: HiringApplication },
   { path: '/opening/apply/:opening_id/:applicant_id?', name: 'hiringApplication.create', component: OpeningApply },
