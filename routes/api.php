@@ -35,6 +35,7 @@ Route::group(['middleware' => 'auth:api'], function () {
             Route::get('followedCompanies', 'UserController@fetch_followed_companies');
             Route::get('userAddresses', 'UserController@fetch_user_addresses');
             Route::get('userContactNumbers', 'UserController@fetch_user_contact_number');
+            Route::get('companies', 'UserController@fetch_companies');
         });
         // update
         Route::group(['prefix' => 'update'], function(){
@@ -48,6 +49,7 @@ Route::group(['middleware' => 'auth:api'], function () {
             Route::post('education_background', 'UserController@add_education_background');
             Route::post('address', 'UserController@add_update_address');
             Route::post('contact_number', 'UserController@add_update_contact_number');
+            Route::post('resume_file', 'UserController@uploadResumeFile');
         });
         // delete
         Route::group(['prefix' => 'delete'],function(){
@@ -62,10 +64,14 @@ Route::group(['middleware' => 'auth:api'], function () {
     // company
     Route::group(['prefix' => "company"], function(){
         Route::post('create', 'CompanyController@create');
-        Route::get('fetch', 'CompanyController@fetch');
-        Route::get('fetch/openings', 'CompanyController@fetch_openings');
-        Route::get('fetch/hiring/applications', 'CompanyController@fetchHiringApplications');
-        Route::get('datatable', 'CompanyController@fetch_datatable');
+        Route::group(['prefix'=>'fetch'], function(){
+            Route::get('/', 'CompanyController@fetch');
+            Route::get('openings', 'CompanyController@fetch_openings');
+            Route::get('hiring/applications', 'CompanyController@fetchHiringApplications');
+            Route::get('hiring/applications2', 'CompanyController@fetchHiringApplications2');
+            Route::get('collaborators', 'CompanyController@fetchCollaborators');
+            Route::post('search', 'CompanyController@fetchCompanySearch');
+        });
         
         Route::group(['prefix' => 'hiringprocess'], function(){
             // validate
@@ -77,6 +83,7 @@ Route::group(['middleware' => 'auth:api'], function () {
             // create
             Route::group(['prefix' => 'create'], function(){
                 Route::post('process', 'HiringProcessController@createHiringProcess');
+                Route::post('step/result', 'HiringProcessController@createStepResult');
             });
             // fetch
             Route::group(['prefix'=>'fetch'], function(){
@@ -93,7 +100,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     // opening
     Route::group([ "prefix" => "opening" ], function(){
         // fetch
-        Route::get('fetch', 'OpeningController@fetch');
+        Route::group(['prefix'=>'fetch'], function(){
+            Route::get('/', 'OpeningController@fetch');
+            Route::post('search', 'OpeningController@search');
+        });
 
         Route::group(["prefix" => "validate"],function(){
             Route::post('basicInfo', 'OpeningController@validateBasicInfo');
