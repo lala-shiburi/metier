@@ -20,3 +20,19 @@
 @import 'elements/wizard';
 @import 'elements/icon-button';
 @import 'elements/side-popup';
+@import 'elements/company-card';
+
+@media(max-width: 767.98px){
+    .hidden-md{
+        display: none;
+    }
+}
+
+.show-md{
+    display: none!important;
+}
+@media(max-width: 767.98px){
+    .show-md{
+        display: initial!important;
+    }
+}
