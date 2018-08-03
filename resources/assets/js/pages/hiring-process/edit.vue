@@ -134,8 +134,10 @@ export default {
       description: '',
       company_id: this.company_id,
       steps: [
-        { name: 'Application Submitted' },
+        { name: 'Initial Exam' },
         { name: 'Initial Interview' },
+        { name: 'Second Interview' },
+        { name: 'Final Interview' },
       ]
     })
   }),

@@ -36,18 +36,22 @@
                 {{application.opening.title}}
               </router-link>
             </div>
-            <div class="p-10">
-              <button type="button" v-on:click="displayApplicationDetail(application)" class="btn btn-primary btn-sm">Start Hiring Procedure</button>
-            </div>
           </div>
           <div class="col-md-8 part progress-line-container">
-            <progress-step>
+            <progress-step :class="checkIfFinished(application) ? 'finished' : ''">
               <template slot="steps">
-                <li class="step" v-for="(step, index) in application.opening.hiring_procedure.hiring_steps" v-bind:key="index">
+                <li class="step" :class="hiringStepsWithResult(application, step).result ? 'active' : ''" v-for="(step, index) in application.opening.hiring_procedure.hiring_steps" v-bind:key="index">
                   <div class="circle" data-toggle="tooltip" data-html="true" :title="'<b>'+step.name+'</b><p>'+(step.description ? step.description : '')+'</p>'"></div>
                 </li>
               </template>
             </progress-step>
+          </div>
+          <div class="col-md-12">
+            <div class="p-10">
+              <button type="button" v-if="application.hiring_step_results.length > 0" v-on:click="displayApplicationDetail(application)" class="btn btn-primary btn-sm">Proceed To Next Step</button>
+              <button type="button" v-else-if="application.hiring_step_results.length == 0" v-on:click="displayApplicationDetail(application)" class="btn btn-primary btn-sm">Start Hiring Procedure</button>
+              <button type="button" v-if="application.hiring_step_results.length > 0" v-on:click="showApplicationResults(application)" class="btn btn-info btn-sm">View Results</button>
+            </div>
           </div>
         </div>
         <div class="row item-row" v-if="applications.length == 0">
@@ -58,67 +62,27 @@
       </div>
     </div>
 
-    <div v-if="false" class="modal fade" ref="modal" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Basic Info</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body" v-if="modalData">
-            <opening-card :noApply="true" :opening="modalData.opening"/>
-            <div style=" background: #f2f2f2; padding: 15px;">
-              <div style="margin-bottom: 15px;" v-if="modalData.expected_salary">
-                <b> Expected Salary </b>
-                <br>
-                <span v-html="modalData.expected_salary"></span>
-              </div>
-              <div>
-                <b> Application Letter </b>
-                <br>
-                <span v-html="modalData.application_letter"></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <application-detail ref="application-detail-component"></application-detail>
+    <application-detail @update="updateApplicationResult" ref="application-detail-component"></application-detail>
+    <application-results ref="application-application-results-component"></application-results>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import ProgressStep from './../../components/ProgressStep'
-import ApplicationDetail from './../../components/application/ApplicationDetail'
+import ApplicationDetail from './ApplicationDetail'
+import ApplicationResults from './ApplicationResults'
 import Vue from 'vue'
 [
   ProgressStep,
   ApplicationDetail,
+  ApplicationResults,
 ].forEach(Component => {
   Vue.component(Component.name, Component)
 })
 
 export default {
   middleware: 'auth',
-  computed: {
-    tabs () {
-      return [
-        {
-          icon: 'user',
-          name: this.$t('profile'),
-          route: 'settings.profile'
-        },
-        {
-          icon: 'lock',
-          name: this.$t('password'),
-          route: 'settings.password'
-        }
-      ]
-    }
-  },
   data : () =>({
     public_path: location.origin,
     company_id: null,
@@ -148,7 +112,47 @@ export default {
     },
     displayApplicationDetail(data){
       this.$refs['application-detail-component'].showApplication(data);
+    },
+    updateApplicationResult(data){
+      console.log(data);
+      for(var i = 0; i < this.applications.length; i++){
+        if(data.hiring_application_id == this.applications[i].id){
+          this.applications[i].hiring_step_results.push(data);
+        }
+      }      
+    },
+    hiringStepsWithResult(application, step){
+      for(var i = 0; i < application.hiring_step_results.length; i++){
+        if(application.hiring_step_results[i].hiring_step_id == step.id){
+          step.result = application.hiring_step_results[i]
+        }
+
+      }
+      return step;
+    },
+    checkIfFinished(application){
+      var finished = true;
+      for(var i = 0; i < application.opening.hiring_procedure.hiring_steps.length; i++){
+        var foundStepResult = false;
+        for(var x = 0; x < application.hiring_step_results.length; x++){
+          if(application.hiring_step_results[x].hiring_step_id == application.opening.hiring_procedure.hiring_steps[i].id){
+            foundStepResult = true;
+            x = application.hiring_step_results.length;
+          }
+        }
+        finished = foundStepResult;
+        if(!finished){
+          i = application.opening.hiring_procedure.hiring_steps.length;
+        }
+      }
+      return finished;
+    },
+    showApplicationResults(data){
+      this.$refs['application-application-results-component'].showApplicationResults(data);
     }
+  },
+  computed:{
+    // 
   },
   created: function(){
     this.company_id = this.$route.params.id;

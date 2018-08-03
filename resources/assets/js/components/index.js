@@ -11,7 +11,6 @@ import PhotoViewer from './PhotoViewer'
 import OpeningCard from './OpeningCard'
 import PhotoConverter from './PhotoConverter'
 import IconizedPhoto from './IconizedPhoto'
-import CompanySearchTable from './company/CompanySearchTable'
 import Wizard from './Wizard'
 import SkillSelector from './SkillSelector'
 import CompanyCard from './CompanyCard'
@@ -71,7 +70,6 @@ Vue.mixin(mixins);
   PhotoViewer,
   OpeningCard,
   PhotoConverter,
-  CompanySearchTable,
   Wizard,
   AlertSuccess
 ].forEach(Component => {

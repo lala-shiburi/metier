@@ -24,6 +24,18 @@
           <has-error :form="form" field="address"/>
         </div>
       </div>
+      
+      <!-- Province -->
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label text-md-right">Province</label>
+        <div class="col-md-7">
+          <select v-model="form.province" :class="{ 'is-invalid': form.errors.has('province') }" class="form-control" name="province">
+            <option value="" selected>-select</option>
+            <option v-for="(province, index) in provinces" v-bind:key="index" :value="province.name"> {{province.name}} </option>
+          </select>
+          <has-error :form="form" field="province"/>
+        </div>
+      </div>
 
       <!-- Email -->
       <div class="form-group row">
@@ -69,8 +81,10 @@ export default {
       photo: '',
       address: '',
       email: '',
-      website_url: ''
-    })
+      website_url: '',
+      province: ''
+    }),
+    provinces: window.config.provinces
   }),
 
   methods: {

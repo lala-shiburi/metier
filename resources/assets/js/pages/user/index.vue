@@ -24,14 +24,18 @@
         <card class="m-tb-10">
           <div>
             <h5>Description</h5>
-            <label class="text-muted" v-if="!user.description"> How do you describe yourself? </label>
+            <label class="text-muted" v-if="!user.description && authorizeEdit"> How do you describe yourself? </label>
+            <div v-if="userAddresses.length == 0 && !authorizeEdit" class="text-muted">
+                Information not available.
+            </div>
             {{user.description}}
-            <br>
-            <icon-button v-if="!user.description"  data-toggle="modal" data-target="#description-modal">
-              ADD DESCRIPTION
-            </icon-button>
-            <div v-else style="position: absolute; top: 15px; left: 0px; text-align: right; right: 15px;">
-              <i class="small-option-btn fa fa-edit" data-toggle="modal" data-target="#description-modal"></i>
+            <div v-if="authorizeEdit">
+              <icon-button v-if="!user.description"  data-toggle="modal" data-target="#description-modal">
+                ADD DESCRIPTION
+              </icon-button>
+              <div v-else style="position: absolute; top: 15px; left: 0px; text-align: right; right: 15px;">
+                <i class="small-option-btn fa fa-edit" data-toggle="modal" data-target="#description-modal"></i>
+              </div>
             </div>
           </div>
           <br>
@@ -40,7 +44,7 @@
         <div class="row">
           <div class="col-md-4">
             <card class="m-tb-10" title="Basic Info">
-              <div style="position: absolute; top: 10px; left: 0px; text-align: right; right: 15px;">
+              <div v-if="authorizeEdit" style="position: absolute; top: 10px; left: 0px; text-align: right; right: 15px;">
                 <i class="small-option-btn fa fa-edit" data-toggle="modal" data-target="#user-basic-info-modal"></i>
               </div>
               <ul class="simple-list">
@@ -62,41 +66,53 @@
               </ul>
             </card>
             <card class="m-tb-10" title="Resume File">
-              <a href="#" class="btn btn-primary">
-                Download
+              <div v-if="!user.resume_file" class="text-muted">
+                Information not available.
+              </div>
+              <br>
+              <button v-if="authorizeEdit" style="margin:5px;" href="#" class="btn btn-primary" v-on:click="openFileInput">
+                <i class="fa fa-upload" aria-hidden="true"></i> {{user.resume_file ? 'change' : 'Upload'}}
+              </button>
+              <a :href="user.resume_file" style="margin:5px;" class="btn btn-success" v-if="user.resume_file">
+                <i class="fa fa-download" aria-hidden="true"></i>
               </a>
+              <input type="file" ref="resume-file-input" @change="uploadResumeFile($event.target.files)" style="display:none;">
             </card>
             <card class="m-tb-10" title="Address">
+              <div v-if="userAddresses.length == 0" class="text-muted">
+                  Information not available.
+              </div>
               <ul class="simple-list">
                 <li v-for="(address,index) in userAddresses" v-bind:key="index">
                   <ellipsis-text>
                     {{ address.address_text }}
                   </ellipsis-text>
-                  <div class="options">
+                  <div class="options" v-if="authorizeEdit">
                     <i class="option fa fa-edit" v-on:click="prepUpdateAddress(address)"></i>
                     <i class="option fa fa-close" v-on:click="prepDeleteAddress(address, index)"></i>
                   </div>
                 </li>
               </ul>
-              <label class="text-muted" v-if="userAddresses.length == 0"> Information not available? </label>
-              <icon-button  v-on:click.native="prepAddAddress(user.id)">
+              <icon-button v-if="authorizeEdit" v-on:click.native="prepAddAddress(user.id)">
                 ADD ADDRESS
               </icon-button>
             </card>
             <card class="m-tb-10" title="Contact Number">
+              <div v-if="userContactNumbers.length == 0" class="text-muted">
+                  Information not available.
+              </div>
               <ul class="simple-list">
                 <li v-for="(number,index) in userContactNumbers" v-bind:key="index">
                   <ellipsis-text>
                     {{ number.number }}
                   </ellipsis-text>
-                  <div class="options">
+                  <div class="options" v-if="authorizeEdit">
                     <i class="option fa fa-edit" v-on:click="prepUpdateContact(number)"></i>
                     <i class="option fa fa-close" v-on:click="prepDeleteContactInfo(number, index)"></i>
                   </div>
                 </li>
               </ul>
-              <label class="text-muted" v-if="userContactNumbers.length == 0"> Information not available? </label>
-              <icon-button  v-on:click.native="prepAddContactInfo(user.id)">
+              <icon-button v-if="authorizeEdit" v-on:click.native="prepAddContactInfo(user.id)">
                 ADD NUMBER
               </icon-button>
             </card>
@@ -104,10 +120,13 @@
           <div class="col-md-8">
             <card class="m-tb-10" title="Skills">
               <div>
-                <div v-if="programmingLanguages.length == 0 && userTechnologies.length == 0">
+                <div v-if="programmingLanguages.length == 0 && userTechnologies.length == 0 && authorizeEdit">
                   <label class="text-muted"> What skills do you have? </label>
                 </div>
-                <div style="margin-bottom: 20px;">
+                <div v-if="programmingLanguages.length == 0 && userTechnologies.length == 0 && !authorizeEdit" class="text-muted">
+                  Information not available.
+                </div>
+                <div v-if="authorizeEdit" style="margin-bottom: 20px;">
                   <icon-button data-toggle="modal" data-target="#skill-modal">
                     ADD SKILLS
                   </icon-button>
@@ -127,8 +146,13 @@
               </div>
             </card>
             <card class="m-tb-10" title="Work Experience">
+              <div v-if="workExperiences.length == 0" class="text-muted">
+                Information not available.
+                <br>
+                <br>
+              </div>
               <div style="margin-bottom: 20px;">
-                <icon-button data-toggle="modal" data-target="#work-experience-modal">
+                <icon-button v-if="authorizeEdit" data-toggle="modal" data-target="#work-experience-modal">
                   ADD WORK EXPERIENCE
                 </icon-button>
               </div>
@@ -138,17 +162,22 @@
                   <i class="option-btn fa fa-edit" v-on:click="prepEditWorkExperience(experience, index)"></i>
                   <i class="option-btn fa fa-close" v-on:click="prepDeleteWorkExperience(experience, index)"></i>
                 </template>
-              </info-preview> 
+              </info-preview>
             </card>
             <card class="m-tb-10" title="Educational Background">
+              <div v-if="educationalBackgrounds.length == 0" class="text-muted">
+                Information not available.
+                <br>
+                <br>
+              </div>
               <div style="margin-bottom: 20px;">
-                <icon-button data-toggle="modal" data-target="#educational-background-modal">
+                <icon-button v-if="authorizeEdit" data-toggle="modal" data-target="#educational-background-modal">
                   ADD EDUCATIONAL BACKGROUND
                 </icon-button>
               </div>
               <info-preview v-for="(education, index) in educationalBackgrounds" v-bind:key="index" icon="school" :title="education.school_name" :subtitle="education.course">
                 {{education.from.split('-')[0]}} - {{education.to.split('-')[0]}}
-                <template slot="options">
+                <template slot="options" v-if="authorizeEdit">
                   <i class="option-btn fa fa-edit"></i>
                   <i class="option-btn fa fa-close" v-on:click="prepDeleteEducationalBackground(education, index)"></i>
                 </template>
@@ -159,7 +188,7 @@
       </div>
     </div>
     <div class="modal fade" id="skill-modal" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div v-if="authorizeEdit" class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
           <div class="modal-content">
             <form @submit.prevent="validateSkillsForm" @keydown="skillsForm.onKeydown($event)">
@@ -184,7 +213,7 @@
       </div>
     </div>
     <div class="modal fade" id="work-experience-modal" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div v-if="authorizeEdit" class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
           <form @submit.prevent="createWorkExperience" @keydown="workExperienceForm.onKeydown($event)">
             <div class="modal-content">
@@ -269,7 +298,7 @@
       </div>
     </div>
     <div class="modal fade" id="educational-background-modal" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div v-if="authorizeEdit" class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
           <form @submit.prevent="createEducationalBackground" @keydown="educationalBackgroundForm.onKeydown($event)">
             <div class="modal-content">
@@ -366,7 +395,7 @@
       </div>
     </div>
     <div class="modal fade" id="edit-work-experience-modal" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div v-if="authorizeEdit" class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
           <form @submit.prevent="createWorkExperience" @keydown="editWorkExperienceForm.onKeydown($event)">
             <div class="modal-content">
@@ -451,7 +480,7 @@
       </div>
     </div>
     <div class="modal fade" id="edit-educational-background-modal" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div v-if="authorizeEdit" class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
           <form @submit.prevent="createEducationalBackground" @keydown="educationalBackgroundForm.onKeydown($event)">
             <div class="modal-content">
@@ -548,7 +577,7 @@
       </div>
     </div>
     <div class="modal fade" id="description-modal" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div  v-if="authorizeEdit" class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
           <form @submit.prevent="updateDescription" @keydown="userDescriptionForm.onKeydown($event)">
             <div class="modal-content">
@@ -577,9 +606,9 @@
         </div>
       </div>
     </div>
-    <user-basic-info-modal id="user-basic-info-modal" @update="updateUser" :user="user"/>
-    <user-address-info-modal ref="userAddInfoModal" @update="updateAddresses" :user="userAddresses"/>
-    <user-contact-info-modal ref="userContactInfoModal" @update="updateContactInfos" :user="userAddresses"/>
+    <user-basic-info-modal v-if="authorizeEdit" id="user-basic-info-modal" @update="updateUser" :user="user"/>
+    <user-address-info-modal v-if="authorizeEdit" ref="userAddInfoModal" @update="updateAddresses" :user="userAddresses"/>
+    <user-contact-info-modal v-if="authorizeEdit" ref="userContactInfoModal" @update="updateContactInfos" :user="userAddresses"/>
   </div>
 </template>
 
@@ -803,7 +832,6 @@ export default {
       this.$refs.userAddInfoModal.prepUpdate(data);
     },
     prepAddAddress(user_id){
-      console.log('asd')
       this.$refs.userAddInfoModal.prepCreate(user_id);
     },
     updateAddresses(data){
@@ -881,24 +909,93 @@ export default {
           });
         }
       });
+    },
+    openFileInput(){
+      this.$refs['resume-file-input'].click();
+    },
+    uploadResumeFile(files){
+      var ext = files[0].name.split('.')[1];
+      var $this = this;
+      if(ext=="pdf" || ext=="docx" || ext=="doc"){
+          swal({
+          title: 'Please confirm',
+          type: 'info',
+          html:
+              'Click save',
+          showCloseButton: true,
+          showCancelButton: true,
+          focusConfirm: false,
+          confirmButtonText:
+              'Save',
+          cancelButtonText:
+          'Cancel',
+          }).then(function(result){
+            if(result.value){
+              swal({
+                  title: 'Saving',
+                  text: 'Please wait...',
+                  onOpen: () => {
+                      swal.showLoading()
+                  },
+                  allowOutsideClick: () => !swal.isLoading()
+              });
+
+              var formData = new FormData();
+              formData.append('resume_file',files[0],files[0].name);
+              formData.append('user_id',$this.user.id);
+              axios({
+                method: 'post',
+                url: '/api/userInfo/add/resume_file',
+                data: formData
+              }).then( data => {
+                console.log(data.data.status);
+                if(data.data.status == 'created'){
+                  $this.user = data.data.user
+                  swal(
+                    'Uploaded!',
+                    'Resume file uploaded.',
+                    'success'
+                  )
+                }
+              });
+            }
+          })
+      }
+      else
+      {
+          swal({
+              type: 'error',
+              title: 'Oops...',
+              text: 'Please choose .pdf, .doc, or .docx files!',
+          })
+      }
+    },
+    loadEveryThing(){
+      var $this = this;
+      this.user_id = this.$route.params.id ? this.$route.params.id : this.$store.getters['auth/user'].id;
+      this.skillsForm.user_id = this.$store.getters['auth/user'].id;
+      this.workExperienceForm.user_id = this.$store.getters['auth/user'].id;
+      this.educationalBackgroundForm.user_id = this.$store.getters['auth/user'].id;
+      this.userDescriptionForm.user_id = this.$store.getters['auth/user'].id;
+      this.userDescriptionForm.description = this.$store.getters['auth/user'].description;
+      this.fetch('user');
+      this.fetch('programmingLanguages');
+      this.fetch('userTechnologies');
+      this.fetch('workExperiences');
+      this.fetch('userAddresses');
+      this.fetch('educationalBackgrounds');
+      this.fetch('followedCompanies');
+      this.fetch('userContactNumbers');
+    }
+  },
+  computed: {
+    authorizeEdit(){
+      return this.user.id == this.$store.getters['auth/user'].id
     }
   },
   mounted(){
     var $this = this;
-    this.user_id = this.$store.getters['auth/user'].id;
-    this.skillsForm.user_id = this.$store.getters['auth/user'].id;
-    this.workExperienceForm.user_id = this.$store.getters['auth/user'].id;
-    this.educationalBackgroundForm.user_id = this.$store.getters['auth/user'].id;
-    this.userDescriptionForm.user_id = this.$store.getters['auth/user'].id;
-    this.userDescriptionForm.description = this.$store.getters['auth/user'].description;
-    this.fetch('user');
-    this.fetch('programmingLanguages');
-    this.fetch('userTechnologies');
-    this.fetch('workExperiences');
-    this.fetch('userAddresses');
-    this.fetch('educationalBackgrounds');
-    this.fetch('followedCompanies');
-    this.fetch('userContactNumbers');
+    this.loadEveryThing();
     jQuery('#skill-modal').on('show.bs.modal',function(){
       $this.$refs.skillsSelector.updateProgrammingLanguages($this.programmingLanguages);
       $this.$refs.skillsSelector.updateTechnologies($this.userTechnologies);
@@ -911,6 +1008,11 @@ export default {
       $this.educationalBackgroundForm.reset();
       $this.educationalBackgroundForm.user_id = $this.$store.getters['auth/user'].id;
     });
+  },
+  watch: {
+    $route(){
+      this.loadEveryThing();
+    }
   }
 }
 </script>

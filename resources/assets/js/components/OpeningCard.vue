@@ -1,7 +1,7 @@
 <template>
   <card class="opening-card">
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-md-4 col-5">
         <div class="photo-preview-container opening-photo">
           <div class="scaffold-div">
             <img class="bg-holder" :src="public_path+'/images/bg-img.png'">
@@ -14,7 +14,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-9">
+      <div class="col-md-8 col-7">
         <h5>
           <router-link :to="{ name: 'opening.profile', params: { id: opening.id} }">
             {{opening.title}}
