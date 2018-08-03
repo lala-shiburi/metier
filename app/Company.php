@@ -8,7 +8,7 @@ use App\Opening;
 
 class Company extends Model
 {
-    protected $fillable = ['name', 'owner_id', 'address', 'email', 'website_url'];
+    protected $fillable = ['name', 'owner_id', 'address', 'email', 'website_url', 'province'];
     protected $appends = ['photo'];
 
     /**
@@ -131,7 +131,7 @@ class Company extends Model
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
     public function applications(){
-        return $this->hasManyThrough(HiringApplication::class,Opening::class);
+        return $this->hasManyThrough(HiringApplication::class,Opening::class)->orderBy('hiring_applications.created_at', 'desc');
     }
 
     /**
@@ -167,7 +167,7 @@ class Company extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function collaborators(){
-        return $this->belongsToMany('\App\User','company_users','company_id','user_id');
+        return $this->belongsToMany('\App\User','company_users','company_id','user_id')->withPivot('privilege');
     }
 
     /**

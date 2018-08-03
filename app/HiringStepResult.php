@@ -31,4 +31,13 @@ class HiringStepResult extends Model
     public function hiringApplication(){
         return $this->belongsTo("\App\HiringApplication");
     }
+
+    /**
+     * Get Notes
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function notes(){
+        return $this->hasMany("\App\HiringStepResultNote");
+    }
 }

@@ -68,6 +68,20 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
+     * Get the profile cover attribute.
+     *
+     * @return string
+     */
+    public function getResumeFileAttribute()
+    {
+        if(!isset($this->attributes['resume_file']) || !file_exists('storage/documents/'.$this->attributes['resume_file']) || str_replace(' ','',$this->attributes['resume_file']) == ''){
+            return null;
+        }
+
+        return asset('storage/documents/'.$this->attributes['resume_file']);
+    }
+
+    /**
      * Get name attribute.
      *
      * @return string
@@ -310,8 +324,10 @@ class User extends Authenticatable implements JWTSubject
      * @return \App\User
      */
     public function saveResumeFile($file){
-        $fileName = generateFileName($this->attributes['id'],'resume','');
+        $fileName = generateFileName($this->attributes['id'],'resume','.'.$file->getClientOriginalExtension());
         saveDocument($file,$fileName);
+        $this->resume_file = $fileName;
+        $this->save();
         return $this;
     }
 
