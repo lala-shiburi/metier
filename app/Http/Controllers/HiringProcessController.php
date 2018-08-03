@@ -7,6 +7,8 @@ use \App\User;
 use \App\HiringStepGroup;
 use \App\HiringStep;
 use \App\Company;
+use \App\HiringStepResult;
+use \App\HiringStepResultNote;
 
 class HiringProcessController extends Controller
 {
@@ -98,5 +100,28 @@ class HiringProcessController extends Controller
         ]);
 
         return ['status'=>'success'];
+    }
+
+    public function createStepResult(Request $request){
+
+        $this->validate($request, [
+            'result' => 'required'
+        ]);
+
+        $hiringStepResult = new HiringStepResult;
+        $hiringStepResult->result = $request->result;
+        $hiringStepResult->hiring_step_id = $request->hiring_step_id;
+        $hiringStepResult->hiring_application_id = $request->hiring_application_id;
+        $hiringStepResult->save();
+
+        foreach($request->notes as $note){
+            $hiringStepResultNote = new HiringStepResultNote;
+            $hiringStepResultNote->title = $note['title'];
+            $hiringStepResultNote->note = $note['note'];
+            $hiringStepResultNote->hiring_step_result_id = $hiringStepResult->id;
+            $hiringStepResultNote->save();
+        }
+
+        return [ 'hiringStepResult' => $hiringStepResult->load('notes') ];
     }
 }

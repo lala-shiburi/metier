@@ -19,9 +19,9 @@ function saveDocument($file,$name){
         mkdir(public_path('/storage/documents'));
     }
 
-    $arrayExtensions = array("pdf", "docx", "dotx");
+    $arrayExtensions = array("pdf", "docx", "doc", "dotx");
     $extension = $file->getClientOriginalExtension();
-    $file_name = $name.'.'.$extension;
+    $file_name = $name;
 
     if (in_array($extension, $arrayExtensions))
     {

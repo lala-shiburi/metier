@@ -56,4 +56,9 @@ class OpeningController extends Controller
             $opening->addUpdateTechnology([ 'id' => $skill, 'expertise_level' => 0 ]);
         }
     }
+
+    public function search(Request $request){
+        $openings = Opening::where('openings.title','like','%'.$request->keyword.'%');
+        return ['openings'=>$openings->with('company','programmingLanguages','technologies')->get()];
+    }
 }

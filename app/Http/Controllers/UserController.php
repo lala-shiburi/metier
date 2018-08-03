@@ -8,9 +8,27 @@ use \App\UserAddress;
 use \App\UserContactNumber;
 use \App\WorkExperience;
 use \App\EducationalBackground;
+use \App\Company;
 
 class UserController extends Controller
 {
+
+    /**
+     * Return a filtered list of companies
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @return Illuminate\Http\Resources\JsonResource
+     */
+    public function fetch_companies(Request $request){
+        $_companies = Company::all();
+        $companies = [];
+        foreach($_companies as $company){
+            $company->hiring_application_count = $company->applications()->count();
+            $company->collaborator_count = $company->collaborators()->count();
+            array_push($companies,$company);
+        }
+        return ["data"=>$companies];
+    }
     
     public function fetch_user(Request $request){
         return User::find($request->user_id);
@@ -206,6 +224,12 @@ class UserController extends Controller
         $address->delete();
 
         return 'deleted';
+    }
+
+    public function uploadResumeFile(Request $request){
+        $user = User::findOrFail($request->user_id);
+        $user->saveResumeFile($request->resume_file);
+        return ['status'=>'created', 'user'=>$user];
     }
     
 }
