@@ -36,6 +36,8 @@ Route::group(['middleware' => 'auth:api'], function () {
             Route::get('userAddresses', 'UserController@fetch_user_addresses');
             Route::get('userContactNumbers', 'UserController@fetch_user_contact_number');
             Route::get('companies', 'UserController@fetch_companies');
+            Route::post('search', 'UserController@fetchSearch');
+            Route::get('followed/companies', 'UserController@fetchFollowedCompanies');
         });
         // update
         Route::group(['prefix' => 'update'], function(){
@@ -50,6 +52,7 @@ Route::group(['middleware' => 'auth:api'], function () {
             Route::post('address', 'UserController@add_update_address');
             Route::post('contact_number', 'UserController@add_update_contact_number');
             Route::post('resume_file', 'UserController@uploadResumeFile');
+            Route::post('follow/company', 'UserController@followCompany');
         });
         // delete
         Route::group(['prefix' => 'delete'],function(){
@@ -71,6 +74,17 @@ Route::group(['middleware' => 'auth:api'], function () {
             Route::get('hiring/applications2', 'CompanyController@fetchHiringApplications2');
             Route::get('collaborators', 'CompanyController@fetchCollaborators');
             Route::post('search', 'CompanyController@fetchCompanySearch');
+            Route::get('isBookMarked', 'CompanyController@fetchIsBookMarked');
+        });
+
+        // add
+        Route::group(['prefix'=>'add'], function(){
+            Route::post('collaborator','CompanyController@addCollaborator');
+        });
+
+        // delete
+        Route::group(['prefix'=>'delete'], function(){
+            Route::delete('collaborator','CompanyController@removeCollaborator');
         });
         
         Route::group(['prefix' => 'hiringprocess'], function(){
