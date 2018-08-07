@@ -84,6 +84,27 @@ class CompanyController extends Controller
         return Company::find($request->company_id)->collaborators;
     }
 
+    public function removeCollaborator(Request $request){
+        $company = Company::find($request->company_id);
+        $company->removeCollaborator($request->user_id);
+
+        return ['status'=>'success'];
+    }
+
+    public function fetchIsBookMarked(Request $request){
+        return \Auth::user()->followedCompanies()->where('companies.id', $request->company_id)->count();
+    }
+
+    public function addCollaborator(Request $request){
+        $company = Company::find($request->company_id);
+        if($company->addCollaborator($request->user['id']))
+        {
+            return ['status'=>'success'];
+        }
+
+        return ['status'=>'failed', 'message' => 'Collaborator already added.'];
+    }
+
     /**
      * Return hiring applications
      * 

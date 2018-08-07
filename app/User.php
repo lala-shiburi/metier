@@ -421,6 +421,14 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsToMany("\App\Company","company_follows","user_id","company_id");
     }
 
+    public function managedCompanies(){
+        return $this->belongsToMany(Company::class, 'company_users', 'user_id', 'company_id');
+    }
+
+    public function ownedCompanies(){
+        return $this->hasMany(Company::class,'owner_id');
+    }
+
     /**
      * Get HiringApplications
      * 

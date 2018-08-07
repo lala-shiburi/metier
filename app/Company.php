@@ -9,7 +9,7 @@ use App\Opening;
 class Company extends Model
 {
     protected $fillable = ['name', 'owner_id', 'address', 'email', 'website_url', 'province'];
-    protected $appends = ['photo'];
+    protected $appends = ['photo','current_user_followed'];
 
     /**
      * Set user collaborator
@@ -18,12 +18,16 @@ class Company extends Model
      * @param Integer
      * @return App\Company
      */
-    public function addCollaborator($id,$privilege){
+    public function addCollaborator($id,$privilege = 1){
         if($this->collaborators()->where("company_users.user_id",$id)->count() < 1){
             $this->collaborators()->attach($id,["privilege"=>$privilege]);
         }
+        else{
+            return false;
+        }
         return $this;
     }
+
 
     /**
      * Update user collaborator privilege
@@ -167,7 +171,7 @@ class Company extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function collaborators(){
-        return $this->belongsToMany('\App\User','company_users','company_id','user_id')->withPivot('privilege');
+        return $this->belongsToMany('\App\User','company_users','company_id','user_id')->withPivot('privilege')->withTimeStamps();
     }
 
     /**
@@ -203,6 +207,15 @@ class Company extends Model
         }
 
         return asset('storage/photos/'.$this->attributes['cover']);
+    }
+
+    public function getCurrentUserFollowedAttribute(){
+        if(\Auth::check()){
+            return \Auth::user()->followedCompanies()->where('companies.id',$this->attributes['id'])->count();
+        }
+        else{
+            return 0;
+        }
     }
     
 

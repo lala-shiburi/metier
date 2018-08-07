@@ -29,9 +29,34 @@ class UserController extends Controller
         }
         return ["data"=>$companies];
     }
+
+    public function followCompany(Request $request){
+        $company = Company::find($request->company_id);
+        $user = \Auth::user();
+        if($request->follow == 1)
+        {
+            $user->followCompany($company->id);
+        }
+        else
+        {
+            $user->unFollowCompany($company->id);
+        }
+
+        return ['status'=>'success'];
+    }
     
     public function fetch_user(Request $request){
         return User::find($request->user_id);
+    }
+
+    public function fetchFollowedCompanies(Request $request){
+        $companies = \Auth::user()->followedCompanies;
+        return $companies;
+    }
+
+    public function fetchSearch(Request $request){
+        if(!$request->keyword) return [];
+        return User::where(\DB::raw('concat(first_name," ",last_name)'),'like','%'.$request->keyword.'%')->get();
     }
 
     public function fetch_programming_languages(Request $request){
