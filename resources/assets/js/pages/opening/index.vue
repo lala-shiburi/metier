@@ -6,7 +6,7 @@
           <img class="absolute-center" :src="public_path+'/images/register-background.png'">
         </div>
         <div class="row" style="margin-top: -15%;">
-          <div class="col-md-10 offset-md-1">
+          <div class="col-md-6 offset-md-3">
             <opening-card v-if="opening.id" :opening="opening"></opening-card>
           </div>
         </div>
@@ -21,7 +21,42 @@
       
       <div class="row">
         <div class="col-md-4">
-          <company-card title="Company" :company="opening.company"/>
+          <card class="opening-card" title="Company">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="photo-preview-container opening-photo">
+                  <div class="scaffold-div">
+                    <img class="bg-holder" :src="public_path+'/images/bg-img.png'">
+                    <img class="absolute-center" :src="opening.company.photo">
+                    <div class="company-name">
+                      <!-- <ellipsis-text>
+                          {{opening.company.name}}
+                      </ellipsis-text> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <h5>
+                  <router-link :to="{ name: 'company.profile', params: { id: opening.company.id} }">
+                    {{opening.company.name}}
+                  </router-link>
+                  </h5>
+                <ellipsis-text class="job-des" v-if="opening.company.employee_count">
+                  <template slot="icon">
+                    <img class="job-des-icon" :src="public_path+'/images/employees.png'" alt="">
+                  </template>
+                  {{opening.company.employee_count}}
+                </ellipsis-text>
+                <ellipsis-text class="job-des">
+                  <template slot="icon">
+                    <img class="job-des-icon" :src="public_path+'/images/location.png'" alt="">
+                  </template>
+                  {{opening.company.address}}
+                </ellipsis-text>
+              </div>
+            </div>
+          </card>
         </div>
         <div class="col-md-8">
           <card title="Skills Requirements">

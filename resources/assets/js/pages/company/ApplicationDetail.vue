@@ -1,143 +1,145 @@
 <template>
-  <sidebar-popup ref="application-detail-modal">
-    <div v-if="application" class="header-part">
-      <entity-header>
-        <template slot="icon">
-          <iconized-photo size="medium-icon" :photo="application.user.photo"></iconized-photo>
-        </template>
-        <template slot="text">
-          <div class="text-ellipsis">
-            <router-link style="color: inherit; font-weight: bold;" :to="{ name: 'user.profile', params: { id: application.user.id} }">
-              {{application.user.name}}
-            </router-link>
-          </div>
-          <div class="text-muted text-ellipsis">Applying for {{application.opening.title}}</div>
-        </template>
-        <template slot="buttons">
-          <button type="button" style="margin-top: -40px;" v-on:click="close" class="btn btn-light">
-            <i class="fa fa-close" aria-hidden="true"></i>
-          </button>
-        </template>
-      </entity-header>
-      
-      <div style="padding: 25px 50px;">
-        <progress-step :class="checkIfFinished(application) ? 'finished' : ''" ref="progress-component">
-          <template slot="steps">
-            <li class="step" :class="hiringStepsWithResult(application, step).result ? 'active' : ''" v-for="(step, index) in application.opening.hiring_procedure.hiring_steps" v-bind:key="index">
-              <div class="circle" data-toggle="tooltip" data-html="true" :title="'<b>'+step.name+'</b><p>'+(step.description ? step.description : '')+'</p>'"></div>
-            </li>
+  <div>
+    <sidebar-popup ref="application-detail-modal">
+      <div v-if="application" class="header-part">
+        <entity-header>
+          <template slot="icon">
+            <iconized-photo size="medium-icon" :photo="application.user.photo"></iconized-photo>
           </template>
-        </progress-step>
-      </div>
-    </div>
-    <div class="main-container">
-      <div ref="initial-form" class="panel has-footer">
-        <p class="text-center">
-          Have you finished <b>{{this.currentStep.name}}</b>?
-          <br>
-          <br>
-          <button type="button" class="btn btn-primary" v-on:click="displayRatePanel">Fill up results</button>
-        </p>
-        <div class="footer">
-          <button type="button" class="btn btn-light btn-sm">Dismiss Application</button>
+          <template slot="text">
+            <div class="text-ellipsis">
+              <router-link style="color: inherit; font-weight: bold;" :to="{ name: 'user.profile', params: { id: application.user.id} }">
+                {{application.user.name}}
+              </router-link>
+            </div>
+            <div class="text-muted text-ellipsis">Applying for {{application.opening.title}}</div>
+          </template>
+          <template slot="buttons">
+            <button type="button" style="margin-top: -40px;" v-on:click="close" class="btn btn-light">
+              <i class="fa fa-close" aria-hidden="true"></i>
+            </button>
+          </template>
+        </entity-header>
+        
+        <div style="padding: 25px 50px;">
+          <progress-step :class="checkIfFinished(application) ? 'finished' : ''" ref="progress-component">
+            <template slot="steps">
+              <li class="step" :class="hiringStepsWithResult(application, step).result ? 'active' : ''" v-for="(step, index) in application.opening.hiring_procedure.hiring_steps" v-bind:key="index">
+                <div class="circle" data-toggle="tooltip" data-html="true" :title="'<b>'+step.name+'</b><p>'+(step.description ? step.description : '')+'</p>'"></div>
+              </li>
+            </template>
+          </progress-step>
         </div>
       </div>
-      <div ref="rate-form" class="panel has-footer">
-        <form @submit.prevent="validateRateForm" @keydown="rateForm.onKeydown($event)">
-          <div class="text-center container-body">
-            Rate the result 1 to 10.
-            <div class="form-group">
-                <b>Rate</b>
-                <div>
-                  <select v-model="rateForm.result" :class="{ 'is-invalid': rateForm.errors.has('result') }" class="form-control" name="result">
-                    <option value="" selected>-select</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                  </select>
-                  <has-error :form="rateForm" field="result"/>
-                </div>
-                <br>
-            </div>
-          </div>
-          <div class="footer">
-            <v-button :loading="rateForm.busy" type="success">Next</v-button>
-          </div>
-        </form>
-      </div>
-      <div ref="note-form" class="panel has-footer">
-        <div class="text-center container-body">
-          <div class="text-muted">
-            Do you have any special noted?
-          </div>
-          <button type="button" v-on:click="prepEditNote(false)" class="btn btn-success">Add Note</button>
-          <br>
-          <br>
-          <div>
-            <div class="note-card" v-for="(note, index) in notes" v-bind:key="index">
-              <div class="note-header">{{note.title}}</div>
-              <div>{{note.note}}</div>
-              <br>
-              <button type="button" v-on:click="prepEditNote(note, index)" class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-              <button type="button" v-on:click="prepDeleteNote(note, index)" class="btn btn-danger btn-sm"><i class="fa fa-times" aria-hidden="true"></i></button>
-            </div>
-          </div>
-        </div>
-        <div class="footer">
-          <button type="button" v-on:click="displayRatePanel" class="btn btn-secondary">Back</button>
-          <button type="button" v-on:click="showSubmitPanel" class="btn btn-primary">Next</button>
-        </div>
-      </div>
-      <div class="panel has-footer" ref="submit-form">
-        <form @submit.prevent="validateStepResultForm" @keydown="stepResultForm.onKeydown($event)">
-          <div class="container-body">
-            Result is {{rateForm.result}} out of 10.
-            <div>
-              <br>
-              <h4>
-                Notes
-              </h4>
-              <dl>
-                <div class="note-card" v-for="(note, index) in notes" v-bind:key="index">
-                  <dt>{{note.title}}</dt>
-                  <dd>- {{note.note}}</dd>
-                </div>
-              </dl> 
-            </div>
-          </div>
-          <div class="footer">
-            <button type="button" v-on:click="showNoteForm" class="btn btn-secondary">Back</button>
-            <v-button :loading="stepResultForm.busy" type="success">Submit</v-button>
-          </div>
-        </form>
-      </div>
-      <div class="panel has-footer" ref="done-panel">
-        <form @submit.prevent="validateStepResultForm" @keydown="stepResultForm.onKeydown($event)">
-          <div class="text-center">
-            Result successfuly submitted.
+      <div class="main-container">
+        <div ref="initial-form" class="panel has-footer">
+          <p class="text-center">
+            Have you finished <b>{{this.currentStep.name}}</b>?
             <br>
-            <button type="button" v-on:click="showApplication(application)" class="btn btn-secondary">Proceed To Next Step</button>
-          </div>
-        </form>
-      </div>
-      <div class="panel has-footer" ref="finished-procedure-panel">
-        <div class="text-center">
-          <p>
-            <i class="fa fa-check-circle text-success" aria-hidden="true"></i>
+            <br>
+            <button type="button" class="btn btn-primary" v-on:click="displayRatePanel">Fill up results</button>
           </p>
-          Hiring procedure finished!
-          <br>
-          <button type="button" v-on:click="close" class="btn btn-secondary">Close</button>
+          <div class="footer">
+            <button type="button" class="btn btn-light btn-sm">Dismiss Application</button>
+          </div>
+        </div>
+        <div ref="rate-form" class="panel has-footer">
+          <form @submit.prevent="validateRateForm" @keydown="rateForm.onKeydown($event)">
+            <div class="text-center container-body">
+              Rate the result 1 to 10.
+              <div class="form-group">
+                  <b>Rate</b>
+                  <div>
+                    <select v-model="rateForm.result" :class="{ 'is-invalid': rateForm.errors.has('result') }" class="form-control" name="result">
+                      <option value="" selected>-select</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
+                    </select>
+                    <has-error :form="rateForm" field="result"/>
+                  </div>
+                  <br>
+              </div>
+            </div>
+            <div class="footer">
+              <v-button :loading="rateForm.busy" type="success">Next</v-button>
+            </div>
+          </form>
+        </div>
+        <div ref="note-form" class="panel has-footer">
+          <div class="text-center container-body">
+            <div class="text-muted">
+              Do you have any special noted?
+            </div>
+            <button type="button" v-on:click="prepEditNote(false)" class="btn btn-success">Add Note</button>
+            <br>
+            <br>
+            <div>
+              <div class="note-card" v-for="(note, index) in notes" v-bind:key="index">
+                <div class="note-header">{{note.title}}</div>
+                <div>{{note.note}}</div>
+                <br>
+                <button type="button" v-on:click="prepEditNote(note, index)" class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                <button type="button" v-on:click="prepDeleteNote(note, index)" class="btn btn-danger btn-sm"><i class="fa fa-times" aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </div>
+          <div class="footer">
+            <button type="button" v-on:click="displayRatePanel" class="btn btn-secondary">Back</button>
+            <button type="button" v-on:click="showSubmitPanel" class="btn btn-primary">Next</button>
+          </div>
+        </div>
+        <div class="panel has-footer" ref="submit-form">
+          <form @submit.prevent="validateStepResultForm" @keydown="stepResultForm.onKeydown($event)">
+            <div class="container-body">
+              Result is {{rateForm.result}} out of 10.
+              <div>
+                <br>
+                <h4>
+                  Notes
+                </h4>
+                <dl>
+                  <div class="note-card" v-for="(note, index) in notes" v-bind:key="index">
+                    <dt>{{note.title}}</dt>
+                    <dd>- {{note.note}}</dd>
+                  </div>
+                </dl> 
+              </div>
+            </div>
+            <div class="footer">
+              <button type="button" v-on:click="showNoteForm" class="btn btn-secondary">Back</button>
+              <v-button :loading="stepResultForm.busy" type="success">Submit</v-button>
+            </div>
+          </form>
+        </div>
+        <div class="panel has-footer" ref="done-panel">
+          <form @submit.prevent="validateStepResultForm" @keydown="stepResultForm.onKeydown($event)">
+            <div class="text-center">
+              Result successfuly submitted.
+              <br>
+              <button type="button" v-on:click="showApplication(application)" class="btn btn-secondary">Proceed To Next Step</button>
+            </div>
+          </form>
+        </div>
+        <div class="panel has-footer" ref="finished-procedure-panel">
+          <div class="text-center">
+            <p>
+              <i class="fa fa-check-circle text-success" aria-hidden="true"></i>
+            </p>
+            Hiring procedure finished!
+            <br>
+            <button type="button" v-on:click="close" class="btn btn-secondary">Close</button>
+          </div>
         </div>
       </div>
-    </div>
+    </sidebar-popup>
     <div class="modal fade" ref="modal" tabindex="-1" role="dialog">
       <div class="modal-dialog modal-dialog-centered modal-lg">
         <form style="width: 100%;" @submit.prevent="validateResultNote" @keydown="noteForm.onKeydown($event)">
@@ -173,7 +175,7 @@
         </form>
       </div>
     </div>
-  </sidebar-popup>
+  </div>
 </template>
 
 <script>
@@ -305,7 +307,6 @@ export default {
         this.noteForm.reset();
       }
       jQuery(this.$refs.modal).modal('show');
-      jQuery('.modal-backdrop').removeClass("modal-backdrop");  
     },
     prepDeleteNote(data, index){
       var $this = this;

@@ -20,13 +20,14 @@
       </template>
       <template slot="panels">
         <form @submit.prevent="apply" @keydown="opening.onKeydown($event)">
-
-          <opening-card :noApply="true" v-if="opening.id" :opening="opening">
-            <!-- Submit Button -->
-            <div style="height: 50px;">
-              <v-button :loading="opening.busy" style="position:absolute; bottom: 15px; right:15px;" type="success">Continue</v-button>
-            </div>
-          </opening-card>
+          <div class="col-md-6 offset-md-3">
+            <opening-card :noApply="true" v-if="opening.id" :opening="opening">
+              <!-- Submit Button -->
+              <div style="height: 50px;">
+                <v-button :loading="opening.busy" style="position:absolute; bottom: 15px; right:15px;" type="success">Continue</v-button>
+              </div>
+            </opening-card>
+          </div>
 
         </form>
         <form @submit.prevent="create" @keydown="form1.onKeydown($event)">

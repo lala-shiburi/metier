@@ -22,10 +22,11 @@
 @import 'elements/side-popup';
 @import 'elements/company-card';
 
-@media(max-width: 767.98px){
-    .hidden-md{
-        display: none;
-    }
+.has-border-right-md{
+    border-right:1px solid #cecece;
+}
+.has-border-right-sm{
+    border-right:1px solid #cecece;
 }
 
 .show-md{
@@ -34,5 +35,17 @@
 @media(max-width: 767.98px){
     .show-md{
         display: initial!important;
+    }
+    .hidden-md{
+        display: none;
+    }
+    .has-border-right-md{
+        border: none;
+    }
+}
+
+@media(max-width: 576px){
+    .has-border-right-sm{
+        border: none;
     }
 }

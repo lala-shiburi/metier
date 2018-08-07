@@ -69,6 +69,7 @@ export default {
       const { data } = await this.searchForm.post('/api/company/fetch/search');
 
       this.companies = data.companies;
+      this.$forceUpdate();
     }
   },
   created: function(){

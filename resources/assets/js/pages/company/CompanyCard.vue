@@ -8,7 +8,7 @@
         </div>
       </div>
       <div class="buttons">
-        <i class="fa fa-bookmark-o" ref="bookmark" aria-hidden="true"></i>
+        <i class="fa fa-bookmark-o follow-btn" v-on:click="followCompany" :class="company.current_user_followed ? 'active' : ''" ref="bookmark" aria-hidden="true"></i>
       </div>
     </div>
     <div class="col-md-8 col-sm-6 company-details">
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'CompanyCard',
 
@@ -41,18 +42,21 @@ export default {
     }
   },
   data : () =>({
-    public_path: location.origin
+    public_path: location.origin,
   }),
   methods: {
     upperCaseFirst: function(string){
       return string.charAt(0).toUpperCase() + string.slice(1);
     },
+    async followCompany(){
+      this.company.current_user_followed = this.company.current_user_followed == 1 ? 0 : 1
+      const {data} = await axios({
+        method: 'post',
+        url: '/api/userInfo/add/follow/company',
+        params:{company_id:this.company.id, follow: this.company.current_user_followed ? 1 : 0}
+      });
+    }
   },
-  mounted(){
-    jQuery(function () {
-      jQuery('[data-toggle="tooltip"]').tooltip()
-    })
-  }
 }
 </script>
 <style lang="scss" scoped>
@@ -64,6 +68,12 @@ export default {
   margin-bottom: 15px;
   .buttons{
     padding: 0px 10px;
+    & .follow-btn{
+      cursor: pointer;
+      &.active{
+        color: goldenrod;
+      }
+    }
   }
   & .company-photo{
     padding: 0px;
