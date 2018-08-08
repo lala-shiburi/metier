@@ -3,7 +3,7 @@
     <div class="scaffold-div">
       <div class="scaffold-div">
         <img class="bg-holder" :src="public_path+'/images/bg-img.png'">
-        <img ref="photo" class="absolute-center" :src="placeholder ? public_path + '/' + placeholder : public_path+'/images/photo.png'">
+        <img ref="photo" class="absolute-center" :src="currentPhoto?currentPhoto:(placeholder ? public_path + '/' + placeholder : public_path+'/images/photo.png')">
       </div>
       <div class="upload-button" v-on:click="prompFile">
         <div class="bg"></div>
@@ -31,6 +31,10 @@ export default {
     placeholder:{
       type: String,
       default: null
+    },
+    currentPhoto:{
+      type: String,
+      defauly: null
     }
   },
   data: () => ({

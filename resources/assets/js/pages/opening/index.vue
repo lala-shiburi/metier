@@ -3,11 +3,20 @@
     <div class="col-md-12">
       <div class="profile-tile-view">
         <div class="profile-cover" style="height: 300px;">
-          <img class="absolute-center" :src="public_path+'/images/register-background.png'">
+          <img class="absolute-center" :src="public_path+'/images/opening-background.jpg'">
         </div>
         <div class="row" style="margin-top: -15%;">
           <div class="col-md-6 offset-md-3">
-            <opening-card v-if="opening.id" :opening="opening"></opening-card>
+            <opening-card v-if="opening.id" :opening="opening" :noApply="true">
+              <div style="margin-top: 10px;">
+                <router-link class="btn btn-primary" :to="{ name: 'hiringApplication.create', params: { opening_id: opening.id} }">
+                  Apply
+                </router-link>
+                <router-link v-if="authorizeEdit" class="btn btn-success" :to="{ name: 'opening.edit', params: { id: opening.id} }">
+                  Edit  
+                </router-link>
+              </div>
+            </opening-card>
           </div>
         </div>
       </div>
@@ -88,7 +97,8 @@ export default {
   data : () =>({
     public_path: location.origin,
     opening_id: null,
-    opening: {}
+    opening: {},
+    authorizeEdit: false
   }),
   methods: {
     fetch_opening: async function(){
@@ -97,7 +107,8 @@ export default {
           url: '/api/opening/fetch',
           params: { opening_id: this.opening_id }
         })
-      this.opening = data;
+      this.opening = data.data;
+      this.authorizeEdit = data.meta.authorizeEdit;
     }
   },
   created: function(){

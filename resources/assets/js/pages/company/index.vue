@@ -19,7 +19,7 @@
             <!-- <label>Software Developer</label> -->
           </div>
           <div class="col-md-5 col-12">
-            <div class="btn-group pull-right">
+            <div class="btn-group pull-right" v-if="authorizeEdit">
               <router-link :to="{ name: 'opening.create', params: {company_id:company_id} }" class="btn btn-light">Create Opening</router-link>
               <span class="dvder"/>
               <div class="dropdown">
@@ -44,18 +44,18 @@
       <div class="row">
         <div class="col-md-4">
           <card class="m-tb-10" title="Basic Info">
+            <div v-if="authorizeEdit" style="position: absolute; top: 10px; left: 0px; text-align: right; right: 15px;">
+              <i class="small-option-btn fa fa-edit" v-on:click="prepUpdateBasicInfo" data-toggle="modal" data-target="#user-basic-info-modal"></i>
+            </div>
             <ul class="simple-list">
               <li>
-                <ellipsis-text label="Email">
-                  uelmarortega@gmail.com
+                <ellipsis-text label="Email" :title="company.email">
+                  {{company.email}}
                 </ellipsis-text>
               </li>
               <li>
-                <ellipsis-text label="Address">
-                  Business Park Mabolo Cebu City Cebu
-                </ellipsis-text>
-                <ellipsis-text label="Contact #">
-                  09123123212
+                <ellipsis-text label="Address" :title="company.address">
+                  {{company.address}}
                 </ellipsis-text>
               </li>
             </ul>
@@ -71,10 +71,13 @@
             </photo-viewer>
           </card>
           <card class="m-tb-10" title="Website">
+            <div v-if="authorizeEdit" style="position: absolute; top: 10px; left: 0px; text-align: right; right: 15px;">
+              <i class="small-option-btn fa fa-edit" v-on:click="prepUpdateWebsiteInfo" data-toggle="modal" data-target="#user-basic-info-modal"></i>
+            </div>
             <ul class="simple-list">
               <li>
                 <ellipsis-text>
-                  <a href="http://job-seed.com" target="blank">http://job-seed.com</a>
+                  <a :href="'http://'+company.website_url" target="blank">{{company.website_url}}</a>
                 </ellipsis-text>
               </li>
             </ul>
@@ -85,15 +88,19 @@
         </div>
       </div>
     </div>
+    <basic-info-modal ref="basic-info-modal-component" @update="updateCompany" :company="company"></basic-info-modal>
+    <website-info-modal ref="website-info-modal-component" @update="updateCompany" :company="company"></website-info-modal>
   </div>
 </template>
 
 <script>
+import BasicInfoModal from './basicInfoModal';
+import WebsiteInfoModal from './websiteInfoModal';
 import axios from 'axios'
 
 export default {
   middleware: 'auth',
-
+  components: {BasicInfoModal, WebsiteInfoModal},
   computed: {
     tabs () {
       return [
@@ -115,6 +122,7 @@ export default {
     company_id: null,
     company: {},
     openings: [],
+    authorizeEdit: false,
   }),
   methods: {
     fetch_company: async function(){
@@ -124,6 +132,11 @@ export default {
           params: { company_id: this.company_id }
         })
       this.company = data.data;
+      this.authorizeEdit = data.meta.edit_allowed;
+    },
+    updateCompany(data){
+      console.log(data);
+      this.company = data;
     },
     fetch_openings: async function(){
       const { data } = await axios({
@@ -132,6 +145,12 @@ export default {
           params: { company_id: this.company_id }
         })
       this.openings = data.openings;
+    },
+    prepUpdateBasicInfo(){
+      this.$refs['basic-info-modal-component'].prepUpdate(this.company);
+    },
+    prepUpdateWebsiteInfo(){
+      this.$refs['website-info-modal-component'].prepUpdate(this.company);
     }
   },
   created: function(){

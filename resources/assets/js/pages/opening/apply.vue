@@ -169,7 +169,7 @@ export default {
           url: '/api/opening/fetch',
           params: { opening_id: $this.$route.params.opening_id }
         })
-      $this.opening = data;
+      $this.opening = data.data;
     }())
   }
 }
