@@ -4,11 +4,39 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use \App\Opening;
+use \App\Http\Resources\OpeningResource;
 
 class OpeningController extends Controller
 {
     public function fetch(Request $request){
-        return Opening::findOrFail($request->opening_id)->load('company')->load('programmingLanguages')->load('technologies');
+        return new OpeningResource(Opening::findOrFail($request->opening_id)->load('company')->load('programmingLanguages')->load('technologies'));
+    }
+
+    public function update(Request $request){
+        $opening = Opening::findOrFail($request->opening_id);
+        $opening->title = $request->title;
+        $opening->details = $request->details;
+        $opening->salary_range = $request->salary_range;
+        $opening->professional_years = $request->professional_years;
+        $opening->hiring_step_group_id = $request->hiring_step_group_id;
+        $opening->save();
+        
+        if($request->picture){
+            $opening->savePicture($request->picture);
+        }
+
+        $opening->programmingLanguages()->detach();
+        $opening->technologies()->detach();
+
+        foreach($request->skills['programming_languages'] as $skill){
+            $opening->addUpdateProgrammingLanguage([ 'id' => $skill, 'expertise_level' => 0 ]);
+        }
+
+        foreach($request->skills['technologies'] as $skill){
+            $opening->addUpdateTechnology([ 'id' => $skill, 'expertise_level' => 0 ]);
+        }
+
+        return $opening;
     }
 
     public function validateBasicInfo(Request $request){

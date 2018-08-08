@@ -45,6 +45,36 @@ class CompanyController extends Controller
 
     }
 
+    public function updateBasicInfo(Request $request){
+        $company = Company::findOrFail($request->company_id);
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required|email',
+            'address' => 'required',
+        ]);
+
+        $company->name = $request->name;
+        $company->email = $request->email;
+        $company->address = $request->address;
+
+        $company->save();
+
+        return $company;
+    }
+
+    public function updateWebsiteInfo(Request $request){
+        $company = Company::findOrFail($request->company_id);
+        $this->validate($request, [
+            'website_url' => 'required',
+        ]);
+        $url = str_replace('http://','',$request->website_url);
+        $url = str_replace('https://','',$url);
+        $company->website_url = $url;
+        $company->save();
+
+        return $company;
+    }
+
     /**
      * Return a filtered list of companies
      * 

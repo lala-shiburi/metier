@@ -20,9 +20,11 @@ class UserController extends Controller
      * @return Illuminate\Http\Resources\JsonResource
      */
     public function fetch_companies(Request $request){
-        $_companies = Company::all();
+        $user = \Auth::user();
+        $owned_company = $user->ownedCompanies;
+        $managed_company = $owned_company->merge($user->managedCompanies);
         $companies = [];
-        foreach($_companies as $company){
+        foreach($managed_company as $company){
             $company->hiring_application_count = $company->applications()->count();
             $company->collaborator_count = $company->collaborators()->count();
             array_push($companies,$company);

@@ -25,10 +25,19 @@ class CompanyResource extends JsonResource
      */
     public function with($request)
     {
+        $allow_edit = false;
+        if(\Auth::check()){
+            $manage_companies = \Auth::user()->managedCompanies()->where('companies.id', $this->id)->count();
+            $owned_companies = \Auth::user()->ownedCompanies()->where('companies.id', $this->id)->count();
+
+            $allow_edit = ($manage_companies + $owned_companies) > 0;
+        }
+
         return [
             "meta" => [
                 "version" => "0.01",
-                "author" => "unick"
+                "author" => "unick",
+                "edit_allowed" => $allow_edit,
             ]
         ];
     }
