@@ -13,7 +13,7 @@
                   Apply
                 </router-link>
                 <router-link v-if="authorizeEdit" class="btn btn-success" :to="{ name: 'opening.edit', params: { id: opening.id} }">
-                  Edit  
+                  Edit
                 </router-link>
               </div>
             </opening-card>

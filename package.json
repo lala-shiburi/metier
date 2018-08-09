@@ -11,6 +11,7 @@
     "lint": "vue-cli-service lint resources/assets/js"
   },
   "dependencies": {
+    "@coreui/coreui": "^2.0.4",
     "@fortawesome/fontawesome": "^1.1.7",
     "@fortawesome/fontawesome-free-brands": "^5.0.12",
     "@fortawesome/fontawesome-free-regular": "^5.0.12",
