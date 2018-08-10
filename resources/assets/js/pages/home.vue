@@ -382,9 +382,7 @@
             </div>
           </div>
         </div>
-
       </div>
-
       <br>
       <table class="table table-responsive-sm table-hover table-outline mb-0">
         <thead class="thead-light">

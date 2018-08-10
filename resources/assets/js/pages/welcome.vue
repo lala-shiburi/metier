@@ -1,5 +1,61 @@
 <template>
   <div>
+
+    <header>
+      <nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-trasparent navbar-light">
+          <div class="container">
+            <a href="#" class="navbar-brand mr-lg-5">
+                <img :src="public_path + '/images/logo_brand.png'">
+            </a>
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="navbar-collapse collapse" id="navbar_global">
+            <div class="navbar-collapse-header">
+              <div class="row">
+                <div class="col-6 collapse-brand">
+                  <a href=""></a>
+                </div>
+                <div class="col-6 collapse-close">
+                  <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
+              <li class="nav-item">
+                <a href="">
+                  <span></span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="">
+                  <span></span>
+                </a>
+              </li>
+            </ul>
+            <ul>
+              <li class="nav-item">
+                <a href=""></a>
+              </li>
+              <li class="nav-item">
+                <a href=""></a>
+              </li>
+              <li class="nav-item">
+                <a href=""></a>
+              </li>
+            </ul>
+          </div>
+
+          </div>
+      </nav>
+    </header>
+
     <div class="top-right links">
       <template v-if="authenticated">
         <router-link :to="{ name: 'home' }">
@@ -43,7 +99,8 @@ export default {
   },
 
   data: () => ({
-    title: window.config.appName
+    title: window.config.appName,
+    public_path: location.origin
   }),
 
   computed: mapGetters({
