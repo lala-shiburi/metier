@@ -22,6 +22,7 @@
     "imagemin-pngquant": "5.0.1",
     "jquery": "^3.3.1",
     "js-cookie": "^2.2.0",
+    "perfect-scrollbar": "^1.4.0",
     "popper.js": "^1.14.3",
     "sweetalert2": "^7.19.3",
     "vform": "^1.0.0",
