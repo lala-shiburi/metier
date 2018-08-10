@@ -6,7 +6,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 mix.config.vue.esModule = true
 
 mix
-  .js('resources/assets/js/app.js', 'public/js')
+  .js(['resources/assets/js/app.js', 'node_modules/@coreui/coreui/dist/js/coreui.js'], 'public/js')
   .sass('resources/assets/sass/app.scss', 'public/css')
 
   .sourceMaps()
