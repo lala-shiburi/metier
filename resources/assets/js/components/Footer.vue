@@ -1,6 +1,6 @@
 <template>
     <!-- Footer -->
-    <footer class="page-footer font-small mdb-color lighten-3 pt-4">
+    <footer class="footer page-footer font-small mdb-color lighten-3 pt-4">
 
       <!-- Footer Links -->
       <div class="container text-center text-md-left">
@@ -130,11 +130,9 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import LocaleDropdown from './LocaleDropdown'
 
 export default {
   components: {
-    LocaleDropdown
   },
 
   data: () => ({
@@ -143,17 +141,9 @@ export default {
   }),
 
   computed: mapGetters({
-    user: 'auth/user'
   }),
 
   methods: {
-    async logout () {
-      // Log out the user.
-      await this.$store.dispatch('auth/logout')
-
-      // Redirect to login.
-      this.$router.push({ name: 'login' })
-    }
   }
 }
 </script>
