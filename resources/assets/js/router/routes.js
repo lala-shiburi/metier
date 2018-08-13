@@ -23,9 +23,14 @@ const SettingsProfile = () => import('~/pages/settings/profile').then(m => m.def
 const SettingsPassword = () => import('~/pages/settings/password').then(m => m.default || m)
 const SearchCompanyPage = () => import('~/pages/company/SearchPage').then(m => m.default || m)
 const SearchOpeningPage = () => import('~/pages/opening/SearchPage').then(m => m.default || m)
+const About = () => import('~/pages/about').then(m => m.default || m)
+const Contact = () => import('~/pages/contact').then(m => m.default || m)
 
 export default [
   { path: '/', name: 'welcome', component: Welcome },
+
+  { path: '/about', name: 'about', component: About },
+  { path: '/contact', name: 'contact', component: Contact },
 
   { path: '/login', name: 'login', component: Login },
   { path: '/register', name: 'register', component: Register },
@@ -57,8 +62,7 @@ export default [
   { path: '/opening/profile/:id', name: 'opening.profile', component: OpeningProfile },
   { path: '/opening/search', name: 'opening.search', component: SearchOpeningPage },
   { path: '/opening/:id/edit', name: 'opening.edit', component: OpeningEdit },
-  { path: '/company/:company_id/opening/create', name: 'opening.create', component: OpeningCreate },
-  
+  { path: '/company/:company_id/opening/create', name: 'opening.create', component: OpeningCreate },  
   // application
   { path: '/applications', name: 'hiringApplication.applications', component: HiringApplication },
   { path: '/opening/apply/:opening_id/:applicant_id?', name: 'hiringApplication.create', component: OpeningApply },
