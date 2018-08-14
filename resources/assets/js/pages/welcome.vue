@@ -1,76 +1,158 @@
 <template>
   <div>
 
+  <header class="header-global">
+    <nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light">
+      <div class="container">
+          <router-link :to="{ name: user ? 'home' : 'welcome' }" class="navbar-brand mr-lg-5">
+          <img :src="public_path + '/images/logo_brand.png'">
+          </router-link>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbar_global">
+           <div class="navbar-collapse-header">
+            <div class="row">
+              <div class="col-6 collapse-brand">
+                  <router-link :to="{ name: 'welcome' }">
 
-    <div class="text-center cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-      <header class="masthead mb-auto">
-        <div class="inner">
-          <h3 class="masthead-brand">Cover</h3>
-          <nav class="nav nav-masthead justify-content-center">
-            <a class="nav-link active" href="#">Home</a>
-            <a class="nav-link" href="#">Features</a>
-            <a class="nav-link" href="#">Contact</a>
-          </nav>
-        </div>
-      </header>
-
-      <main role="main" class="inner cover">
-        <h1 class="cover-heading">Cover your page.</h1>
-        <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
-        <p class="lead">
-          <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
-        </p>
-      </main>
-
-      <footer class="mastfoot mt-auto">
-        <div class="inner">
-          <p>Cover template for <a href="https://getbootstrap.com/">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
-        </div>
-      </footer>
-    </div>
-
-    <header>
-    <!-- Fixed navbar -->
-      <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">xProject name</a>
+                <a href="">
+                  <img :src="public_path + '/images/logo_brand.png'">
+                </a>
+                    </router-link>
+              </div>
+              <div class="col-6 collapse-close">
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
+                  <span></span>
+                  <span></span>
+                </button>
+              </div>
+            </div>
           </div>
-          <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li role="separator" class="divider"></li>
-                  <li class="dropdown-header">Nav header</li>
-                  <li><a href="#">Separated link</a></li>
-                  <li><a href="#">One more separated link</a></li>
-                </ul>
-              </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-              <li><a href="../navbar/">Default</a></li>
-              <li><a href="../navbar-static-top/">Static top</a></li>
-              <li class="active"><a href="./">Fixed top <span class="sr-only">(current)</span></a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </nav>
-    </header>
+          <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
+            <li class="nav-item dropdown">
+                <router-link :to="{ name: 'company.search' }" class="nav-link" data-toggle="dropdown" role="button" active-class="active">
+                <i class="ni ni-ui-04 d-lg-none"></i>
+                <span class="nav-link-inner--text">Companies</span>
+                </router-link>
+            </li>
+            <li class="nav-item dropdown">
+              <router-link :to="{ name: 'opening.search' }" class="nav-link" data-toggle="dropdown" role="button" active-class="active">
+                <i class="ni ni-collection d-lg-none"></i>
+                <span class="nav-link-inner--text">Openings</span>
+              </router-link>
+            </li>
+          </ul>
 
-    <div class="top-right links">
+
+          <ul class="navbar-nav align-items-lg-center ml-lg-auto">
+                      <template v-if="!user">
+
+            <li class="nav-item">
+              <router-link :to="{ name: 'register' }" class="nav-link nav-link-icon" active-class="active" data-toggle="tooltip" title="Register">
+                <span class="nav-link-inner--text">Register</span>
+              </router-link>
+            </li>
+            <li class="nav-item">
+          <router-link :to="{ name: 'login' }" class="nav-link nav-link-icon" active-class="active" data-toggle="tooltip" title="Login">
+                <span class="nav-link-inner--text ">Login</span>
+            </router-link>
+
+            </li>
+            <li class="nav-item">
+              <a href="#" target="_blank" class="btn btn-neutral btn-icon">
+                <span class="btn-inner--icon">
+                  <i class="fa fa-user mr-2"></i>
+                </span>
+                <span class="">Employers</span>
+              </a>
+            </li>
+                      </template>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+<main>
+    <div class="position-relative">
+      <section class="section-hero section-shaped my-0" style="background: linear-gradient(150deg, #281483 15%, #8f6ed5 70%, #d782d9 94%)">
+        <div class="shape shape-style-1 shape-primary">
+          <span class="span-150"></span>
+          <span class="span-50"></span>
+          <span class="span-50"></span>
+          <span class="span-75"></span>
+          <span class="span-100"></span>
+          <span class="span-75"></span>
+          <span class="span-50"></span>
+          <span class="span-100"></span>
+          <span class="span-50"></span>
+          <span class="span-100"></span>
+        </div>
+        <div class="container shape-container d-flex"> <!--align-items-center-->
+          <div class="col px-0">
+            <div class="row justify-content-center"> <!--align-items-center-->
+              <div class="col-lg-7 text-center pt-lg">
+                <h3 class="text-white">Jobseed</h3>
+                <p class="lead text-white mt-4 mb-5">Build your professional identity online and stay connected with opportunities.</p>
+                <div class="btn-wrapper">
+                  <input type="text">
+                </div>
+              </div>
+            </div>
+            <div class="row align-items-center justify-content-around stars-and-coded">
+            <div class="col-md-4">
+              <div class="card mb-4 shadow-sm">
+                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    </div>
+                    <small class="text-muted">9 mins</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card mb-4 shadow-sm">
+                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    </div>
+                    <small class="text-muted">9 mins</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card mb-4 shadow-sm">
+                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    </div>
+                    <small class="text-muted">9 mins</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+</main>
+    <!-- <div class="top-right links">
       <template v-if="authenticated">
         <router-link :to="{ name: 'home' }">
           {{ $t('home') }}
@@ -84,7 +166,7 @@
           {{ $t('register') }}
         </router-link>
       </template>
-    </div>
+    </div> -->
 
     <div class="text-center">
       <div class="title mb-4">
@@ -106,18 +188,14 @@
 </template>
 
 <script>
-import Navbar from '~/components/Navbar'
+// import Navbar from '~/components/Navbar'
 import { mapGetters } from 'vuex'
 
 export default {
-  layout: 'basic',
+  layout: 'welcome',
 
   metaInfo () {
     return { title: this.$t('home') }
-  },
-
-  components: {
-    Navbar
   },
 
   data: () => ({
@@ -146,66 +224,4 @@ export default {
   max-width: 42em;
 }
 
-
-/*
- * Header
- */
-.masthead {
-  margin-bottom: 2rem;
-}
-
-.masthead-brand {
-  margin-bottom: 0;
-}
-
-.nav-masthead .nav-link {
-  padding: .25rem 0;
-  font-weight: 700;
-  color: rgba(255, 255, 255, .5);
-  background-color: transparent;
-  border-bottom: .25rem solid transparent;
-}
-
-.nav-masthead .nav-link:hover,
-.nav-masthead .nav-link:focus {
-  border-bottom-color: rgba(255, 255, 255, .25);
-}
-
-.nav-masthead .nav-link + .nav-link {
-  margin-left: 1rem;
-}
-
-.nav-masthead .active {
-  color: #fff;
-  border-bottom-color: #fff;
-}
-
-@media (min-width: 48em) {
-  .masthead-brand {
-    float: left;
-  }
-  .nav-masthead {
-    float: right;
-  }
-}
-
-
-/*
- * Cover
- */
-.cover {
-  padding: 0 1.5rem;
-}
-.cover .btn-lg {
-  padding: .75rem 1.25rem;
-  font-weight: 700;
-}
-
-
-/*
- * Footer
- */
-.mastfoot {
-  color: rgba(255, 255, 255, .5);
-}
 </style>
