@@ -44,6 +44,7 @@ Route::group(['middleware' => 'auth:api'], function () {
             Route::post('skills', 'UserController@update_skills');
             Route::post('user_description', 'UserController@update_description');
             Route::post('basic_info', 'UserController@update_basic_info');
+            Route::patch('photo', 'UserController@updatePhoto');
         });
         // add
         Route::group(['prefix' => 'add'], function(){

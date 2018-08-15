@@ -258,5 +258,11 @@ class UserController extends Controller
         $user->saveResumeFile($request->resume_file);
         return ['status'=>'created', 'user'=>$user];
     }
+
+    public function updatePhoto(Request $request){
+        $user = \Auth::user();
+        $user->saveProfilePhoto($request->photo_data);
+        return $user;
+    }
     
 }
