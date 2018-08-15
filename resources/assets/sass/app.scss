@@ -5,8 +5,6 @@
 @import url('~quill/dist/quill.bubble.css');
 @import '~sweetalert2/src/sweetalert2';
 
-@import '~@coreui/coreui/scss/coreui';
-
 @import 'elements/card';
 @import 'elements/profile-view';
 @import 'elements/navbar';
@@ -23,9 +21,6 @@
 @import 'elements/icon-button';
 @import 'elements/side-popup';
 @import 'elements/company-card';
-@import 'elements/about_timeline';
-
-@import 'elements/section_hero';
 
 .has-border-right-md{
     border-right:1px solid #cecece;

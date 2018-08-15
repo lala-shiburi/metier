@@ -92,9 +92,8 @@ export default {
       // Fetch the user.
       await this.$store.dispatch('auth/fetchUser')
     },
-  },
-  watch: {
-    user: function(user){
+    prepUpdate(user){
+      jQuery(this.$refs.modal).modal('show');
       this.form.user_id = user.id;
       this.form.first_name = user.first_name;
       this.form.last_name = user.last_name;
@@ -102,6 +101,6 @@ export default {
       this.form.birth_date = user.birth_date;
       this.form.gender = user.gender;
     }
-  }
+  },
 }
 </script>

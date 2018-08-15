@@ -9,7 +9,7 @@
           <div class="row">
             <div class="col-lg-2 col-5">
               <div class="profile-photo">
-                <div class="scaffold-div">
+                <div class="scaffold-div" v-on:click="showPhotoEditor">
                   <img class="bg-holder" :src="public_path+'/images/bg-img.png'">
                   <img class="absolute-center" :src="user.photo">
                 </div>
@@ -45,7 +45,7 @@
           <div class="col-md-4">
             <card class="m-tb-10" title="Basic Info">
               <div v-if="authorizeEdit" style="position: absolute; top: 10px; left: 0px; text-align: right; right: 15px;">
-                <i class="small-option-btn fa fa-edit" data-toggle="modal" data-target="#user-basic-info-modal"></i>
+                <i class="small-option-btn fa fa-edit" v-on:click="prepUpdateBasicInfo"></i>
               </div>
               <ul class="simple-list">
                 <li>
@@ -606,9 +606,10 @@
         </div>
       </div>
     </div>
-    <user-basic-info-modal v-if="authorizeEdit" id="user-basic-info-modal" @update="updateUser" :user="user"/>
+    <user-basic-info-modal v-if="authorizeEdit" ref="user-basic-info-modal" @update="updateUser" :user="user"/>
     <user-address-info-modal v-if="authorizeEdit" ref="userAddInfoModal" @update="updateAddresses" :user="userAddresses"/>
     <user-contact-info-modal v-if="authorizeEdit" ref="userContactInfoModal" @update="updateContactInfos" :user="userAddresses"/>
+    <photo-editor ref="photo-editor" @update="updateUserPhoto"></photo-editor>
   </div>
 </template>
 
@@ -620,11 +621,13 @@ import Form from 'vform'
 import userBasicInfoModal from './../../components/user-profile/basicInfoModal'
 import userAddressInfoModal from './../../components/user-profile/addressInfoModal'
 import userContactInfoModal from './../../components/user-profile/contactInfoModal'
+import photoEditor from './../../components/PhotoEditor'
 
 [
   userBasicInfoModal,
   userAddressInfoModal,
   userContactInfoModal,
+  photoEditor,
 ].forEach(Component => {
   Vue.component(Component.name, Component)
 })
@@ -718,6 +721,21 @@ export default {
     }),
   }),
   methods: {
+    showPhotoEditor(){
+      this.$refs['photo-editor'].show(this.user.photo);
+    },
+    async updateUserPhoto(photo_data){
+      var form = new Form({
+        photo_data: photo_data
+      });
+
+      this.$refs['photo-editor'].loading(true);
+
+      const {data} = await form.patch('/api/userInfo/update/photo');
+      
+      this.user = data;
+      this.$refs['photo-editor'].loading(false);
+    },
     async fetch(fetch){
       axios({
           method: 'get',
@@ -760,6 +778,9 @@ export default {
       this.editWorkExperienceForm.current = data.is_current;
       this.editWorkExperienceForm.to = data.to;
       jQuery('#edit-work-experience-modal').modal('show');
+    },
+    prepUpdateBasicInfo(){
+      this.$refs['user-basic-info-modal'].prepUpdate(this.user);
     },
     prepDeleteWorkExperience(data,index){
       var $this = this;

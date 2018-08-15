@@ -54,8 +54,6 @@ $polyfills = [
 
   <title>{{ config('app.name') }}</title>
 
-  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-  
   <link rel="stylesheet" href="{{ mix('css/app.css') }}">
   <link rel="stylesheet" href="{{ asset('css/common.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
@@ -72,10 +70,7 @@ $polyfills = [
   {{-- Load the application scripts --}}
   @if (app()->isLocal())
     <script src="{{ mix('js/app.js') }}"></script>
-    <script src="{{ asset('js/argon.js') }}"></script>
-
   @else
-    <script src="{{ asset('js/argon.js') }}"></script>
     <script src="{{ mix('js/manifest.js') }}"></script>
     <script src="{{ mix('js/vendor.js') }}"></script>
     <script src="{{ mix('js/app.js') }}"></script>
