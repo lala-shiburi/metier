@@ -87,10 +87,11 @@ export default {
     async update(){
       const {data} = await this.form.post('/api/userInfo/update/basic_info');
       
-      this.$emit('update', data.user)
       jQuery(this.$refs.modal).modal('hide');
       // Fetch the user.
       await this.$store.dispatch('auth/fetchUser')
+
+      this.$emit('update',data.user);
     },
     prepUpdate(user){
       jQuery(this.$refs.modal).modal('show');

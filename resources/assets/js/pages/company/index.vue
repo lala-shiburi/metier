@@ -8,7 +8,7 @@
         <div class="row">
           <div class="col-md-2 col-5">
             <div class="profile-photo">
-              <div class="scaffold-div" style="background: #e5e5e5;">
+              <div class="scaffold-div" v-on:click="showPhotoLogoEditor" style="background: #e5e5e5;">
                 <img class="bg-holder" :src="public_path+'/images/bg-img.png'">
                 <img class="absolute-center" :src="company.photo">
               </div>
@@ -90,6 +90,7 @@
     </div>
     <basic-info-modal ref="basic-info-modal-component" @update="updateCompany" :company="company"></basic-info-modal>
     <website-info-modal ref="website-info-modal-component" @update="updateCompany" :company="company"></website-info-modal>
+    <vue-photo-editor title="Company Logo" ref="photo-editor" @update="updateLogo"/>
   </div>
 </template>
 
@@ -97,10 +98,16 @@
 import BasicInfoModal from './basicInfoModal';
 import WebsiteInfoModal from './websiteInfoModal';
 import axios from 'axios'
+import Form from 'vform'
+import vuePhotoEditor from 'unick-vue-photo-editor';
 
 export default {
   middleware: 'auth',
-  components: {BasicInfoModal, WebsiteInfoModal},
+  components: {
+    BasicInfoModal,
+    WebsiteInfoModal,
+    vuePhotoEditor
+  },
   computed: {
     tabs () {
       return [
@@ -133,6 +140,18 @@ export default {
         })
       this.company = data.data;
       this.authorizeEdit = data.meta.edit_allowed;
+    },
+    showPhotoLogoEditor(){
+      if(this.authorizeEdit){
+        this.$refs['photo-editor'].show(this.company.photo);
+      }
+    },
+    updateLogo(photo_data){
+      var form =  new Form({
+        photo_data:photo_data,
+        company_id:this.company.id
+      });
+      const {data} = await form.patch();
     },
     updateCompany(data){
       console.log(data);

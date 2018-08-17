@@ -5,6 +5,7 @@ import i18n from '~/plugins/i18n'
 import App from '~/components/App'
 import jQuery from 'jquery'
 global.jQuery = jQuery
+global.Vue = Vue
 let Bootstrap = require('bootstrap');
 
 import '~/plugins'

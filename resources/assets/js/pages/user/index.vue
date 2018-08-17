@@ -3,9 +3,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="profile-tile-view">
-          <div class="profile-cover">
-            <img class="absolute-center" :src="user.cover_photo">
-          </div>
+          <cover :user="user" @update="updateUser"/>
           <div class="row">
             <div class="col-lg-2 col-5">
               <div class="profile-photo">
@@ -609,7 +607,7 @@
     <user-basic-info-modal v-if="authorizeEdit" ref="user-basic-info-modal" @update="updateUser" :user="user"/>
     <user-address-info-modal v-if="authorizeEdit" ref="userAddInfoModal" @update="updateAddresses" :user="userAddresses"/>
     <user-contact-info-modal v-if="authorizeEdit" ref="userContactInfoModal" @update="updateContactInfos" :user="userAddresses"/>
-    <photo-editor ref="photo-editor" @update="updateUserPhoto"></photo-editor>
+    <vue-photo-editor title="Profile Photo" ref="photo-editor" @update="updateUserPhoto"/>
   </div>
 </template>
 
@@ -621,39 +619,22 @@ import Form from 'vform'
 import userBasicInfoModal from './../../components/user-profile/basicInfoModal'
 import userAddressInfoModal from './../../components/user-profile/addressInfoModal'
 import userContactInfoModal from './../../components/user-profile/contactInfoModal'
-import photoEditor from './../../components/PhotoEditor'
+import cover from './Cover'
+import { mapGetters } from 'vuex'
+import vuePhotoEditor from 'unick-vue-photo-editor';
 
-[
-  userBasicInfoModal,
-  userAddressInfoModal,
-  userContactInfoModal,
-  photoEditor,
-].forEach(Component => {
-  Vue.component(Component.name, Component)
-})
 
 export default {
   middleware: 'auth',
-
-  computed: {
-    tabs () {
-      return [
-        {
-          icon: 'user',
-          name: this.$t('profile'),
-          route: 'settings.profile'
-        },
-        {
-          icon: 'lock',
-          name: this.$t('password'),
-          route: 'settings.password'
-        }
-      ]
-    }
+  components:{
+    userBasicInfoModal,
+    userAddressInfoModal,
+    userContactInfoModal,
+    cover,
+    vuePhotoEditor
   },
   data : () =>({
     public_path: location.origin,
-    user: {},
     programmingLanguages:[],
     userTechnologies: [],
     workExperiences: [],
@@ -661,6 +642,7 @@ export default {
     followedCompanies: [],
     userAddresses: [],
     userContactNumbers: [],
+    user: {},
 
     // forms
     skillsForm: new Form({
@@ -722,7 +704,9 @@ export default {
   }),
   methods: {
     showPhotoEditor(){
-      this.$refs['photo-editor'].show(this.user.photo);
+      if(this.authorizeEdit()){
+        this.$refs['photo-editor'].show(this.user.photo);
+      }
     },
     async updateUserPhoto(photo_data){
       var form = new Form({
@@ -732,7 +716,7 @@ export default {
       this.$refs['photo-editor'].loading(true);
 
       const {data} = await form.patch('/api/userInfo/update/photo');
-      
+      await this.$store.dispatch('auth/fetchUser')
       this.user = data;
       this.$refs['photo-editor'].loading(false);
     },
@@ -765,9 +749,13 @@ export default {
     async updateDescription(){
       const {data} = await this.userDescriptionForm.post('/api/userInfo/update/user_description');
 
-      this.user = data.user;
+      await this.$store.dispatch('auth/fetchUser')
       this.userDescriptionForm.description = this.description;
+      this.user = data.user;
       jQuery('#description-modal').modal('hide');
+    },
+    updateUser(data){
+      this.user = data;
     },
     prepEditWorkExperience(data){
       this.editWorkExperienceForm.id = data.id;
@@ -845,9 +833,6 @@ export default {
           });
         }
       });
-    },
-    updateUser(user){
-      this.user = user
     },
     prepUpdateAddress(data){
       this.$refs.userAddInfoModal.prepUpdate(data);
@@ -971,7 +956,6 @@ export default {
               }).then( data => {
                 console.log(data.data.status);
                 if(data.data.status == 'created'){
-                  $this.user = data.data.user
                   swal(
                     'Uploaded!',
                     'Resume file uploaded.',
@@ -1007,9 +991,7 @@ export default {
       this.fetch('educationalBackgrounds');
       this.fetch('followedCompanies');
       this.fetch('userContactNumbers');
-    }
-  },
-  computed: {
+    },
     authorizeEdit(){
       return this.user.id == this.$store.getters['auth/user'].id
     }
