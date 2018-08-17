@@ -45,6 +45,7 @@ Route::group(['middleware' => 'auth:api'], function () {
             Route::post('user_description', 'UserController@update_description');
             Route::post('basic_info', 'UserController@update_basic_info');
             Route::patch('photo', 'UserController@updatePhoto');
+            Route::patch('cover', 'UserController@updateCover');
         });
         // add
         Route::group(['prefix' => 'add'], function(){
@@ -92,6 +93,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::group(['prefix' => 'update'], function(){
             Route::patch('basic/info', 'CompanyController@updateBasicInfo');
             Route::patch('website/info', 'CompanyController@updateWebsiteInfo');
+            Route::patch('photo', 'CompanyController@updatePhoto');
         });
         
         Route::group(['prefix' => 'hiringprocess'], function(){
