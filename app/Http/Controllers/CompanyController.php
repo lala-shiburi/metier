@@ -149,4 +149,16 @@ class CompanyController extends Controller
 
         return ['companies'=>$companies->get()];
     }
+
+    /**
+     * Update Company photo
+     *
+     *@param \Illuminate\Http\Request
+     *@return \Illuminate\Http\Resources\JsonResource
+     */
+    public function updatePhoto(Request $request){
+        $company = Company::find($request->company_id);
+        $company->saveProfilePhoto($request->photo_data);
+        return $company;
+    }
 }

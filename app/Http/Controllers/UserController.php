@@ -264,5 +264,11 @@ class UserController extends Controller
         $user->saveProfilePhoto($request->photo_data);
         return $user;
     }
+
+    public function updateCover(Request $request){
+        $user = \Auth::user();
+        $user->saveCoverPhoto($request->photo_data);
+        return $user;
+    }
     
 }
