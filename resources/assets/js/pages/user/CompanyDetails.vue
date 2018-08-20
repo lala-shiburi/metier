@@ -6,7 +6,7 @@
           <div class="photo-preview-container cover">
             <div class="scaffold-div">
               <img class="bg-holder" :src="public_path+'/images/bg-cover.png'">
-              <img class="absolute-center" :src="public_path+'/images/register-background.png'">
+              <img class="absolute-center" :src="company.cover">
             </div>
           </div>
           <div class="photo-preview-container logo">

@@ -26,8 +26,8 @@
       <template slot="panels">
         <form @submit.prevent="validateForm1" @keydown="form1.onKeydown($event)">
 
-          <div style="text-align:center">
-            <photo-converter style="width:200px; display:inline-block; background:#d9d9d9;" placeholder="images/job.png" :form="form1" field="picture"></photo-converter>
+          <div class="text-center">
+            <img ref="opening-picture" v-on:click="showPhotoEditor" :src="form1.photo" class="rounded img-thumbnail" width="200px">
           </div>
           <br>
           <!-- Title -->
@@ -136,15 +136,20 @@
         </form>
       </template>
     </wizard>
+    <vue-photo-editor title="Company Cover" ref="photo-editor" @update="updatePhoto"></vue-photo-editor>
   </div>
 </template>
 
 <script>
 import Form from 'vform'
 import axios from 'axios'
+import vuePhotoEditor from 'unick-vue-photo-editor';
 export default {
   middleware: 'auth',
   scrollToTop: false,
+  components: {
+    vuePhotoEditor
+  },
 
   metaInfo () {
     return { title: 'Create Company' }
@@ -152,7 +157,7 @@ export default {
 
   data: () => ({
     form1: new Form({
-      photo: '',
+      photo: location.origin+'/images/photo.png',
       title: '',
       salary_range: '',
       professional_years: '',
@@ -183,6 +188,13 @@ export default {
   }),
 
   methods: {
+    updatePhoto(photo_data){
+      this.form1.photo = photo_data;
+      this.$refs['opening-photo'].src = photo_data;
+    },
+    showPhotoEditor(){
+      this.$refs['photo-editor'].show(this.form1.photo);
+    },
     async validateForm1 () {
       console.log(this.form1);
       const {data} = await this.form1.post('/api/opening/validate/basicInfo')
@@ -203,7 +215,7 @@ export default {
     async validateForm4 () {
       // 
       this.form4.company_id = this.$route.params.company_id;
-      this.form4.picture = this.form1.picture;
+      this.form4.picture = this.form1.photo;
       this.form4.title = this.form1.title;
       this.form4.salary_range = this.form1.salary_range;
       this.form4.professional_years = this.form1.professional_years;
