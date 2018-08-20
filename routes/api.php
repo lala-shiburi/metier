@@ -94,6 +94,7 @@ Route::group(['middleware' => 'auth:api'], function () {
             Route::patch('basic/info', 'CompanyController@updateBasicInfo');
             Route::patch('website/info', 'CompanyController@updateWebsiteInfo');
             Route::patch('photo', 'CompanyController@updatePhoto');
+            Route::patch('cover', 'CompanyController@updateCover');
         });
         
         Route::group(['prefix' => 'hiringprocess'], function(){
