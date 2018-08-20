@@ -3,8 +3,8 @@
     <form @submit.prevent="create" @keydown="form.onKeydown($event)">
       <alert-success :form="form" message="Registration Successful"/>
 
-      <div style="text-align:center">
-        <photo-converter style="width:200px; display:inline-block; background:#d9d9d9;" :form="form" field="photo"></photo-converter>
+      <div class="text-center">
+        <img ref="company-logo" v-on:click="showPhotoEditor" :src="form.photo" class="rounded img-thumbnail" width="200px">
       </div>
       <br>
       <!-- Name -->
@@ -62,15 +62,19 @@
         </div>
       </div>
     </form>
+    <vue-photo-editor title="Company Cover" ref="photo-editor" @update="updateLogo"></vue-photo-editor>
   </card>
 </template>
 
 <script>
 import Form from 'vform'
+import vuePhotoEditor from 'unick-vue-photo-editor';
 export default {
   middleware: 'auth',
   scrollToTop: false,
-
+  components: {
+    vuePhotoEditor
+  },
   metaInfo () {
     return { title: 'Create Company' }
   },
@@ -78,20 +82,27 @@ export default {
   data: () => ({
     form: new Form({
       name: '',
-      photo: '',
+      photo: location.origin+'/images/photo.png',
       address: '',
       email: '',
       website_url: '',
       province: ''
     }),
-    provinces: window.config.provinces
+    provinces: window.config.provinces,
   }),
 
   methods: {
     async create () {
       const {data} = await this.form.post('/api/company/create')
       this.$router.push("/company/profile/"+data.company_id);
-    }
+    },
+    updateLogo(photo_data){
+      this.form.photo = photo_data;
+      this.$refs['company-logo'].src = photo_data;
+    },
+    showPhotoEditor(){
+      this.$refs['photo-editor'].show(this.form.photo);
+    },
   }
 }
 </script>

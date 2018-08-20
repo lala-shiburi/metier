@@ -2,17 +2,10 @@
   <div class="row">
     <div class="col-md-12">
       <div class="profile-tile-view">
-        <div class="profile-cover">
-          <img class="absolute-center" :src="company.cover">
-        </div>
+        <cover @update="updateCompany" :company="company" :authorizeEdit="authorizeEdit"/>
         <div class="row">
           <div class="col-md-2 col-5">
-            <div class="profile-photo">
-              <div class="scaffold-div" v-on:click="showPhotoLogoEditor" style="background: #e5e5e5;">
-                <img class="bg-holder" :src="public_path+'/images/bg-img.png'">
-                <img class="absolute-center" :src="company.photo">
-              </div>
-            </div>
+            <logo @update="updateCompany" :company="company" :authorizeEdit="authorizeEdit"/>
           </div>
           <div class="col-md-5 col-7">
             <h3>{{company.name}}</h3>
@@ -90,7 +83,6 @@
     </div>
     <basic-info-modal ref="basic-info-modal-component" @update="updateCompany" :company="company"></basic-info-modal>
     <website-info-modal ref="website-info-modal-component" @update="updateCompany" :company="company"></website-info-modal>
-    <vue-photo-editor title="Company Logo" ref="photo-editor" @update="updateLogo"/>
   </div>
 </template>
 
@@ -99,14 +91,16 @@ import BasicInfoModal from './basicInfoModal';
 import WebsiteInfoModal from './websiteInfoModal';
 import axios from 'axios'
 import Form from 'vform'
-import vuePhotoEditor from 'unick-vue-photo-editor';
+import Logo from './logo'
+import Cover from './cover'
 
 export default {
   middleware: 'auth',
   components: {
     BasicInfoModal,
     WebsiteInfoModal,
-    vuePhotoEditor
+    Logo,
+    Cover,
   },
   computed: {
     tabs () {
@@ -141,20 +135,7 @@ export default {
       this.company = data.data;
       this.authorizeEdit = data.meta.edit_allowed;
     },
-    showPhotoLogoEditor(){
-      if(this.authorizeEdit){
-        this.$refs['photo-editor'].show(this.company.photo);
-      }
-    },
-    updateLogo(photo_data){
-      var form =  new Form({
-        photo_data:photo_data,
-        company_id:this.company.id
-      });
-      const {data} = await form.patch();
-    },
     updateCompany(data){
-      console.log(data);
       this.company = data;
     },
     fetch_openings: async function(){

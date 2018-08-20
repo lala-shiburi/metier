@@ -47,7 +47,7 @@
             </progress-step>
           </div>
           <div class="col-md-12">
-            <div class="p-10">
+            <div style="margin-left: -10px; margin-bottom: 10px;">
               <button type="button" v-if="application.hiring_step_results.length > 0" v-on:click="displayApplicationDetail(application)" class="btn btn-primary btn-sm">Proceed To Next Step</button>
               <button type="button" v-else-if="application.hiring_step_results.length == 0" v-on:click="displayApplicationDetail(application)" class="btn btn-primary btn-sm">Start Hiring Procedure</button>
               <button type="button" v-if="application.hiring_step_results.length > 0" v-on:click="showApplicationResults(application)" class="btn btn-info btn-sm">View Results</button>
@@ -73,16 +73,14 @@ import ProgressStep from './../../components/ProgressStep'
 import ApplicationDetail from './ApplicationDetail'
 import ApplicationResults from './ApplicationResults'
 import Vue from 'vue'
-[
-  ProgressStep,
-  ApplicationDetail,
-  ApplicationResults,
-].forEach(Component => {
-  Vue.component(Component.name, Component)
-})
 
 export default {
   middleware: 'auth',
+  components: {
+    ProgressStep,
+    ApplicationDetail,
+    ApplicationResults,
+  },
   data : () =>({
     public_path: location.origin,
     company_id: null,
