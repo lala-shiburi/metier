@@ -9,7 +9,6 @@
           </div>
           <div class="col-md-5 col-7">
             <h3>{{company.name}}</h3>
-            <!-- <label>Software Developer</label> -->
           </div>
           <div class="col-md-5 col-12">
             <div class="btn-group pull-right" v-if="authorizeEdit">
@@ -33,7 +32,7 @@
         </div>
         <br>
       </card>
-      
+
       <div class="row">
         <div class="col-md-4">
           <card class="m-tb-10" title="Basic Info">
