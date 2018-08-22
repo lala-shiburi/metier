@@ -1,209 +1,163 @@
 <template>
   <div>
+    <header class="header-global">
+      <nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light">
+        <div class="container">
+          <router-link :to="{ name: user ? 'home' : 'welcome' }" class="navbar-brand mr-lg-5">
+            <img :src="public_path + '/images/logo_brand.png'">
+          </router-link>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="navbar-collapse collapse" id="navbar_global">
+            <div class="navbar-collapse-header">
+              <div class="row">
+                <div class="col-6 collapse-brand">
+                  <router-link :to="{ name: 'welcome' }">
+                    <a href="">
+                      <img :src="public_path + '/images/logo_brand.png'">
+                    </a>
+                  </router-link>
+                </div>
+                <div class="col-6 collapse-close">
+                  <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
+              <li class="nav-item dropdown">
+                <router-link :to="{ name: 'company.search' }" class="nav-link" data-toggle="dropdown" role="button" active-class="active">
+                  <i class="ni ni-ui-04 d-lg-none"></i>
+                  <span class="nav-link-inner--text">Companies</span>
+                </router-link>
+              </li>
+              <li class="nav-item dropdown">
+                <router-link :to="{ name: 'opening.search' }" class="nav-link" data-toggle="dropdown" role="button" active-class="active">
+                  <i class="ni ni-collection d-lg-none"></i>
+                  <span class="nav-link-inner--text">Openings</span>
+                </router-link>
+              </li>
+            </ul>
 
-    <section class="cd-horizontal-timeline">
-      <div class="timeline">
-        <div class="events-wrapper">
-          <div class="events">
-            <ol>
-              <li>
-                <a href="#0" data-date="16/01/2014" class="selected">16 Jan</a>
-              </li>
-              <li>
-                <a href="#0" data-date="28/02/2014">28 Feb</a>
-              </li>
-              <li>
-                <a href="#0" data-date="20/04/2014">20 Mar</a>
-              </li>
-              <li>
-                <a href="#0" data-date="20/05/2014">20 May</a>
-              </li>
-              <li>
-                <a href="#0" data-date="09/07/2014">09 Jul</a>
-              </li>
-              <li>
-                <a href="#0" data-date="30/08/2014">30 Aug</a>
-              </li>
-              <li>
-                <a href="#0" data-date="15/09/2014">15 Sep</a>
-              </li>
-              <li>
-                <a href="#0" data-date="01/11/2014">01 Nov</a>
-              </li>
-              <li>
-                <a href="#0" data-date="10/12/2014">10 Dec</a>
-              </li>
-              <li>
-                <a href="#0" data-date="19/01/2015">29 Jan</a>
-              </li>
-              <li>
-                <a href="#0" data-date="03/03/2015">3 Mar</a>
-              </li>
-            </ol>
+            <ul class="navbar-nav align-items-lg-center ml-lg-auto">
+              <template v-if="authenticated">
+                <li class="nav-item">
+                  <router-link :to="{ name: 'home' }" class="btn btn-neutral btn-icon">
+                    <span class="btn-inner--icon">
+                      <i class="fa fa-user mr-2"></i>
+                    </span>
+                    <span class="">Dashboard</span>
+                  </router-link>
+                </li>
+              </template>
+              <template v-else>
+                <li class="nav-item">
+                  <router-link :to="{ name: 'register' }" class="nav-link nav-link-icon" active-class="active" data-toggle="tooltip" title="Register">
+                    <span class="nav-link-inner--text">Register</span>
+                  </router-link>
+                </li>
+                <li class="nav-item">
+                  <router-link :to="{ name: 'login' }" class="nav-link nav-link-icon" active-class="active" data-toggle="tooltip" title="Login">
+                    <span class="nav-link-inner--text ">Login</span>
+                  </router-link>
 
-            <span class="filling-line" aria-hidden="true"></span>
+                </li>
+                <li class="nav-item">
+                  <router-link :to="{ name: 'register' }" class="btn btn-neutral btn-icon" active-class="active" data-toggle="tooltip" title="Register">
+                    <span class="btn-inner--icon">
+                      <i class="fa fa-user mr-2"></i>
+                    </span>
+                    <span class="">Employers</span>
+                  </router-link>
+                </li>
+              </template>
+            </ul>
           </div>
-          <!-- .events -->
         </div>
-        <!-- .events-wrapper -->
+      </nav>
+    </header>
 
-        <ul class="cd-timeline-navigation">
-          <li>
-            <a href="#0" class="prev inactive">Prev</a>
-          </li>
-          <li>
-            <a href="#0" class="next">Next</a>
-          </li>
-        </ul>
-        <!-- .cd-timeline-navigation -->
+    <main>
+      <div class="position-relative">
+        <section class="section-hero section-shaped my-0" style="background: linear-gradient(150deg, #281483 15%, #8f6ed5 70%, #d782d9 94%)">
+          <div class="shape shape-style-1 shape-primary">
+            <span class="span-150"></span>
+            <span class="span-50"></span>
+            <span class="span-50"></span>
+            <span class="span-75"></span>
+            <span class="span-100"></span>
+            <span class="span-75"></span>
+            <span class="span-50"></span>
+            <span class="span-100"></span>
+            <span class="span-50"></span>
+            <span class="span-100"></span>
+          </div>
+          <div class="container-fluid shape-container d-flex">
+            <!--align-items-center-->
+            <div class="col px-0">
+              <div class="row justify-content-center">
+                <!--align-items-center-->
+                <div class="col-lg-7 text-center pt-lg">
+                    <div class="card">
+                      <div class="card-body">
+                        <h3>What is Jobseed</h3>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
-      <!-- .timeline -->
+    </main>
 
-      <div class="events-content">
-        <ol>
-          <li class="selected" data-date="16/01/2014">
-            <h2>Horizontal Timeline</h2>
-            <em>January 16th, 2014</em>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla
-              adipisci? Consequuntur aspernatur at, eaque hic repellendus sit dicta consequatur quae, ut harum ipsam molestias
-              maxime non nisi reiciendis eligendi! Doloremque quia pariatur harum ea amet quibusdam quisquam, quae, temporibus
-              dolores porro doloribus.
-            </p>
-          </li>
-
-          <li data-date="28/02/2014">
-            <h2>Event title here</h2>
-            <em>February 28th, 2014</em>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla
-              adipisci? Consequuntur aspernatur at, eaque hic repellendus sit dicta consequatur quae, ut harum ipsam molestias
-              maxime non nisi reiciendis eligendi! Doloremque quia pariatur harum ea amet quibusdam quisquam, quae, temporibus
-              dolores porro doloribus.
-            </p>
-          </li>
-
-          <li data-date="20/04/2014">
-            <h2>Event title here</h2>
-            <em>March 20th, 2014</em>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla
-              adipisci? Consequuntur aspernatur at, eaque hic repellendus sit dicta consequatur quae, ut harum ipsam molestias
-              maxime non nisi reiciendis eligendi! Doloremque quia pariatur harum ea amet quibusdam quisquam, quae, temporibus
-              dolores porro doloribus.
-            </p>
-          </li>
-
-          <li data-date="20/05/2014">
-            <h2>Event title here</h2>
-            <em>May 20th, 2014</em>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla
-              adipisci? Consequuntur aspernatur at, eaque hic repellendus sit dicta consequatur quae, ut harum ipsam molestias
-              maxime non nisi reiciendis eligendi! Doloremque quia pariatur harum ea amet quibusdam quisquam, quae, temporibus
-              dolores porro doloribus.
-            </p>
-          </li>
-
-          <li data-date="09/07/2014">
-            <h2>Event title here</h2>
-            <em>July 9th, 2014</em>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla
-              adipisci? Consequuntur aspernatur at, eaque hic repellendus sit dicta consequatur quae, ut harum ipsam molestias
-              maxime non nisi reiciendis eligendi! Doloremque quia pariatur harum ea amet quibusdam quisquam, quae, temporibus
-              dolores porro doloribus.
-            </p>
-          </li>
-
-          <li data-date="30/08/2014">
-            <h2>Event title here</h2>
-            <em>August 30th, 2014</em>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla
-              adipisci? Consequuntur aspernatur at, eaque hic repellendus sit dicta consequatur quae, ut harum ipsam molestias
-              maxime non nisi reiciendis eligendi! Doloremque quia pariatur harum ea amet quibusdam quisquam, quae, temporibus
-              dolores porro doloribus.
-            </p>
-          </li>
-
-          <li data-date="15/09/2014">
-            <h2>Event title here</h2>
-            <em>September 15th, 2014</em>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla
-              adipisci? Consequuntur aspernatur at, eaque hic repellendus sit dicta consequatur quae, ut harum ipsam molestias
-              maxime non nisi reiciendis eligendi! Doloremque quia pariatur harum ea amet quibusdam quisquam, quae, temporibus
-              dolores porro doloribus.
-            </p>
-          </li>
-
-          <li data-date="01/11/2014">
-            <h2>Event title here</h2>
-            <em>November 1st, 2014</em>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla
-              adipisci? Consequuntur aspernatur at, eaque hic repellendus sit dicta consequatur quae, ut harum ipsam molestias
-              maxime non nisi reiciendis eligendi! Doloremque quia pariatur harum ea amet quibusdam quisquam, quae, temporibus
-              dolores porro doloribus.
-            </p>
-          </li>
-
-          <li data-date="10/12/2014">
-            <h2>Event title here</h2>
-            <em>December 10th, 2014</em>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla
-              adipisci? Consequuntur aspernatur at, eaque hic repellendus sit dicta consequatur quae, ut harum ipsam molestias
-              maxime non nisi reiciendis eligendi! Doloremque quia pariatur harum ea amet quibusdam quisquam, quae, temporibus
-              dolores porro doloribus.
-            </p>
-          </li>
-
-          <li data-date="19/01/2015">
-            <h2>Event title here</h2>
-            <em>January 19th, 2015</em>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla
-              adipisci? Consequuntur aspernatur at, eaque hic repellendus sit dicta consequatur quae, ut harum ipsam molestias
-              maxime non nisi reiciendis eligendi! Doloremque quia pariatur harum ea amet quibusdam quisquam, quae, temporibus
-              dolores porro doloribus.
-            </p>
-          </li>
-
-          <li data-date="03/03/2015">
-            <h2>Event title here</h2>
-            <em>March 3rd, 2015</em>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla
-              adipisci? Consequuntur aspernatur at, eaque hic repellendus sit dicta consequatur quae, ut harum ipsam molestias
-              maxime non nisi reiciendis eligendi! Doloremque quia pariatur harum ea amet quibusdam quisquam, quae, temporibus
-              dolores porro doloribus.
-            </p>
-          </li>
-        </ol>
+    <div class="text-center">
+      <div class="title mb-4">
+        {{ title }}
       </div>
-      <!-- .events-content -->
-    </section>
+
+      <div class="links">
+        <a href="https://laravel.com/docs">Documentation</a>
+        <a href="https://laracasts.com">Laracasts</a>
+        <a href="https://laravel-news.com">News</a>
+        <a href="https://forge.laravel.com">Forge</a>
+        <a href="https://github.com/laravel/laravel">GitHub</a>
+      </div>
+    </div>
+
+    <footer/>
 
   </div>
 </template>
 
 <script>
+  // import Navbar from '~/components/Navbar'
   import {
     mapGetters
   } from 'vuex'
 
   export default {
-    layout: 'basic',
+    layout: 'welcome',
+
+    metaInfo() {
+      return {
+        title: this.$t('home')
+      }
+    },
 
     data: () => ({
       title: window.config.appName,
-	  public_path: location.origin,
-	  timelines: $('.cd-horizontal-timeline'),
-	  eventsMinDistance: 60
-	})
-	
+      public_path: location.origin
+    }),
+
+    computed: mapGetters({
+      authenticated: 'auth/check'
+    })
   }
 
 </script>
@@ -217,6 +171,10 @@
 
   .title {
     font-size: 85px;
+  }
+
+  .cover-container {
+    max-width: 42em;
   }
 
 </style>
