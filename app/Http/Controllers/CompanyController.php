@@ -161,4 +161,16 @@ class CompanyController extends Controller
         $company->saveProfilePhoto($request->photo_data);
         return $company;
     }
+
+    /**
+     * Update Company cover
+     * 
+     * @param \Illuminate\Http\Request
+     * @return \Illuminate\Http\Resources\JsonResource
+     */
+    public function updateCover(Request $request){
+        $company = Company::find($request->company_id);
+        $company->saveCoverPhoto($request->photo_data);
+        return $company;
+    }
 }

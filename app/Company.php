@@ -107,7 +107,7 @@ class Company extends Model
     public function saveCoverPhoto($data){
         $fileName = generateFileName($this->attributes['id'],'company_cover','.png');
         saveBase64Photo($data,$fileName);
-        $this->cover_photo = $fileName;
+        $this->cover = $fileName;
         $this->save();
 
         return $this;
