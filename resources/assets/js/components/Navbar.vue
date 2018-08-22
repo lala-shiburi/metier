@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-md navbar-light bg-white">
+  <nav class="navbar navbar-expand-md fixed-top navbar-light bg-white">
     <div class="container">
       <router-link :to="{ name: user ? 'home' : 'welcome' }" class="navbar-brand">
         <!-- {{ appName }} -->
@@ -89,6 +89,7 @@
       </div>
     </div>
   </nav>
+  
 </template>
 
 <script>
