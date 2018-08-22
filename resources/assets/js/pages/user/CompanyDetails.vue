@@ -267,7 +267,7 @@ export default {
   },
 }
 </script>
-<style lang="sass" scoped>
+<style lang="scss" scoped>
   .contents{
     overflow: auto;
     height: 100%;

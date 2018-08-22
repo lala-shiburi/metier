@@ -386,7 +386,7 @@ export default {
   },
 }
 </script>
-<style lang="sass" scoped>
+<style lang="scss" scoped>
   .header-part{
     position: absolute; 
     top: 15px; 

@@ -56,16 +56,13 @@
 import ProgressStep from './../../components/ProgressStep'
 import SidebarPopup from './../../components/SidebarPopup'
 import Form from 'vform'
-import Vue from 'vue'
 import swal from 'sweetalert2'
-[
-  SidebarPopup,
-  ProgressStep,
-].forEach(Component => {
-  Vue.component(Component.name, Component)
-})
 export default {
   name: 'ApplicationResults',
+  components: {
+    SidebarPopup,
+    ProgressStep,
+  },
   data: () => ({
     application: null
   }),
@@ -121,7 +118,7 @@ export default {
   },
 }
 </script>
-<style lang="sass" scoped>
+<style lang="scss" scoped>
   .header-part{
     position: absolute; 
     top: 15px; 
