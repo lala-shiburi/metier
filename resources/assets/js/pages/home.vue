@@ -627,130 +627,166 @@
 
     </card>
 
-    <!-- Footer -->
-    <footer class="page-footer font-small mdb-color lighten-3 pt-4">
-
-      <!-- Footer Links -->
-      <div class="container text-center text-md-left">
-
-        <!-- Grid row -->
+    <!--footer starts from here-->
+    <footer class="footer">
+      <div class="container-fluid bottom_border">
         <div class="row">
+          <div class=" col-sm-4 col-md col-sm-4  col-12 col">
+            <h5 class="headin5_amrc col_white_amrc pt2">Find us</h5>
+            <!--headin5_amrc-->
+            <p class="mb10">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+              standard dummy text ever since the 1500s</p>
+            <p>
+              <i class="fa fa-location-arrow"></i> 9878/25 sec 9 rohini 35 </p>
+            <p>
+              <i class="fa fa-phone"></i> +91-9999878398 </p>
+            <p>
+              <i class="fa fa fa-envelope"></i> info@example.com </p>
 
-          <!-- Grid column -->
-          <div class="col-md-4 col-lg-3 mr-auto my-md-4 my-0 mt-4 mb-1">
-
-            <!-- Content -->
-            <h5 class="font-weight-bold text-uppercase mb-4">Footer Content</h5>
-            <p>Here you can use rows and columns here to organize your footer content.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit amet numquam iure provident voluptate esse quasi,
-              veritatis totam voluptas nostrum.</p>
 
           </div>
-          <!-- Grid column -->
 
-          <hr class="clearfix w-100 d-md-none">
 
-          <!-- Grid column -->
-          <div class="col-md-2 col-lg-2 mx-auto my-md-4 my-0 mt-4 mb-1">
-
-            <!-- Links -->
-            <h5 class="font-weight-bold text-uppercase mb-4">About</h5>
-
-            <ul class="list-unstyled">
+          <div class=" col-sm-4 col-md  col-6 col">
+            <h5 class="headin5_amrc col_white_amrc pt2">Quick links</h5>
+            <!--headin5_amrc-->
+            <ul class="footer_ul_amrc">
               <li>
-                <p>
-                  <a href="#!">PROJECTS</a>
+                <a href="#">Image Rectoucing</a>
+              </li>
+              <li>
+                <a href="#">Clipping Path</a>
+              </li>
+              <li>
+                <a href="#">Hollow Man Montage</a>
+              </li>
+              <li>
+                <a href="#">Ebay & Amazon</a>
+              </li>
+              <li>
+                <a href="#">Hair Masking/Clipping</a>
+              </li>
+              <li>
+                <a href="#">Image Cropping</a>
+              </li>
+            </ul>
+            <!--footer_ul_amrc ends here-->
+          </div>
+
+
+          <div class=" col-sm-4 col-md  col-6 col">
+            <h5 class="headin5_amrc col_white_amrc pt2">Quick links</h5>
+            <!--headin5_amrc-->
+            <ul class="footer_ul_amrc">
+              <li>
+                <a href="#">Remove Background</a>
+              </li>
+              <li>
+                <a href="#">Shadows & Mirror Reflection</a>
+              </li>
+              <li>
+                <a href="#">Logo Design</a>
+              </li>
+              <li>
+                <a href="#">Vectorization</a>
+              </li>
+              <li>
+                <a href="#">Hair Masking/Clipping</a>
+              </li>
+              <li>
+                <a href="#">Image Cropping</a>
+              </li>
+            </ul>
+            <!--footer_ul_amrc ends here-->
+          </div>
+
+
+          <div class=" col-sm-4 col-md  col-12 col">
+            <h5 class="headin5_amrc col_white_amrc pt2">Follow us</h5>
+            <!--headin5_amrc ends here-->
+
+            <ul class="footer_ul2_amrc">
+              <li>
+                <a href="#">
+                  <i class="fab fa-twitter fleft padding-right"></i>
+                </a>
+                <p>Lorem Ipsum is simply dummy text of the printing...
+                  <a href="#">https://www.lipsum.com/</a>
                 </p>
               </li>
               <li>
-                <p>
-                  <a href="#!">ABOUT US</a>
+                <a href="#">
+                  <i class="fab fa-twitter fleft padding-right"></i>
+                </a>
+                <p>Lorem Ipsum is simply dummy text of the printing...
+                  <a href="#">https://www.lipsum.com/</a>
                 </p>
               </li>
               <li>
-                <p>
-                  <a href="#!">BLOG</a>
-                </p>
-              </li>
-              <li>
-                <p>
-                  <a href="#!">AWARDS</a>
+                <a href="#">
+                  <i class="fab fa-twitter fleft padding-right"></i>
+                </a>
+                <p>Lorem Ipsum is simply dummy text of the printing...
+                  <a href="#">https://www.lipsum.com/</a>
                 </p>
               </li>
             </ul>
-
+            <!--footer_ul2_amrc ends here-->
           </div>
-          <!-- Grid column -->
+        </div>
+      </div>
 
-          <hr class="clearfix w-100 d-md-none">
 
-          <!-- Grid column -->
-          <div class="col-md-4 col-lg-3 mx-auto my-md-4 my-0 mt-4 mb-1">
+      <div class="container">
+        <ul class="foote_bottom_ul_amrc">
+          <li>
+            <a href="#">Home</a>
+          </li>
+          <li>
+            <a href="#">About</a>
+          </li>
+          <li>
+            <a href="#">Services</a>
+          </li>
+          <li>
+            <a href="#">Pricing</a>
+          </li>
+          <li>
+            <a href="#">Blog</a>
+          </li>
+          <li>
+            <a href="#">Contact</a>
+          </li>
+        </ul>
+        <!--foote_bottom_ul_amrc ends here-->
+        <p class="text-center">Copyright @ 2018 | Designed With by
+          <a href="https://nexseed.net/">Nexseed</a>
+        </p>
 
-            <!-- Contact details -->
-            <h5 class="font-weight-bold text-uppercase mb-4">Address</h5>
-
-            <ul class="list-unstyled">
-              <li>
-                <p>
-                  <i class="fa fa-home mr-3"></i> New York, NY 10012, US</p>
-              </li>
-              <li>
-                <p>
-                  <i class="fa fa-envelope mr-3"></i> info@example.com</p>
-              </li>
-              <li>
-                <p>
-                  <i class="fa fa-phone mr-3"></i> + 01 234 567 88</p>
-              </li>
-              <li>
-                <p>
-                  <i class="fa fa-print mr-3"></i> + 01 234 567 89</p>
-              </li>
-            </ul>
-
-          </div>
-          <!-- Grid column -->
-
-          <hr class="clearfix w-100 d-md-none">
-
-          <!-- Grid column -->
-          <div class="col-md-2 col-lg-2 text-center mx-auto my-4">
-
-            <!-- Social buttons -->
-            <h5 class="font-weight-bold text-uppercase mb-4">Follow Us</h5>
-
-            <!-- Facebook -->
-            <a type="button" class="btn-floating btn-fb">
-              <i class="fa fa-facebook"></i>
+        <ul class="social_footer_ul">
+          <li>
+            <a href="#">
+              <i class="fa fa-facebook-f"></i>
             </a>
-            <!-- Twitter -->
-            <a type="button" class="btn-floating btn-tw">
+          </li>
+          <li>
+            <a href="#">
               <i class="fa fa-twitter"></i>
             </a>
-            <!-- Google +-->
-            <a type="button" class="btn-floating btn-gplus">
-              <i class="fa fa-google-plus"></i>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fa fa-linkedin"></i>
             </a>
-            <!-- Dribbble -->
-            <a type="button" class="btn-floating btn-dribbble">
-              <i class="fa fa-dribbble"></i>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fa fa-instagram"></i>
             </a>
-
-          </div>
-          <!-- Grid column -->
-
-        </div>
-        <!-- Grid row -->
-
+          </li>
+        </ul>
+        <!--social_footer_ul ends here-->
       </div>
-      <!-- Footer Links -->
-
-      <!-- Copyright -->
-      <div class="footer-copyright text-center py-3">© 2018 Copyright:
-        <a href="https://nexseed.net"> Nexseed Inc.</a>
-      </div>
-      <!-- Copyright -->
 
     </footer>
     <!-- Footer -->

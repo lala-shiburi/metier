@@ -1,6 +1,18 @@
 <template>
   <card class="opening-card">
     <div class="row">
+      <div class="col-md-2">
+          <img class="job-des-icon" :src="public_path+'/images/company.png'" alt="">
+      </div>
+      <div class="col-md-10">
+          <h5>
+            <router-link :to="{ name: 'opening.profile', params: { id: opening.id} }">
+              {{opening.title}}
+            </router-link>
+          </h5>
+      </div>
+    </div>
+    <div class="row">
       <div class="col-md-4 col-5">
         <div class="photo-preview-container opening-photo">
           <div class="scaffold-div">

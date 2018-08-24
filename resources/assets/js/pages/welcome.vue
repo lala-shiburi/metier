@@ -88,7 +88,7 @@
 
     <main>
       <div class="position-relative">
-        <section class="section-hero section-shaped my-0" style="background: linear-gradient(150deg, #281483 15%, #8f6ed5 70%, #d782d9 94%)">
+        <section class="section-hero section-shaped my-0" style="background: linear-gradient(150deg, rgba(40, 20, 131,.7) 15%, rgb(143, 110, 213) 70%, rgb(215, 130, 217) 94%),url(https://images.unsplash.com/photo-1521312706689-fbd93fd5af46?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=3240eff4dc36cc4647d84cda9f1ee04e&auto=format&fit=crop&w=1452&q=80)">
           <div class="shape shape-style-1 shape-primary">
             <span class="span-150"></span>
             <span class="span-50"></span>
@@ -111,8 +111,22 @@
                     <div class="card-body" id="card-hero-carousel">
                       <h5 class="card-title">Over 100,000 IT Jobs</h5>
                       <p class="card-text">Search jobs anywhere in the philippines. Nationwide</p>
-                      <a href="#" class="btn btn-primary btn-hero-nt-opp">Signup Free</a>
-                      <a href="#" class="btn btn-primary btn-hero-opp">Search Jobs</a>
+
+                    <template v-if="authenticated">
+                      <router-link :to="{ name: 'home' }" class="btn btn-primary btn-hero-nt-opp">
+                        Profile
+                      </router-link>
+                    </template>
+
+                    <template v-else>
+                      <router-link :to="{ name: 'register' }" class="btn btn-primary btn-hero-nt-opp" active-class="active" data-toggle="tooltip">
+                        Signup Free
+                      </router-link>
+                    </template>
+      
+                      <router-link :to="{ name: 'opening.search' }" class="btn btn-primary btn-hero-opp" data-toggle="dropdown" role="button" active-class="active">
+                            Search Job
+                      </router-link>
 
                     </div>
                   </div>
@@ -555,8 +569,6 @@
     </main>
 
 
-
-    <!--Footer-->
     <!--footer starts from here-->
     <footer class="footer">
       <div class="container bottom_border">

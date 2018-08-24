@@ -17,7 +17,7 @@
     <div class="col-md-12">
       <br>
       <div class="row">
-        <div class="col-md-6" v-for="(opening,index) in openings" v-bind:key="index">
+        <div class="col-md-12" v-for="(opening,index) in openings" v-bind:key="index">
           <opening-card :opening="opening"></opening-card>
         </div>
       </div>

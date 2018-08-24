@@ -15,7 +15,7 @@ import Wizard from './Wizard'
 import SkillSelector from './SkillSelector'
 import CompanyCard from './CompanyCard'
 import IconButton from './IconButton'
-// import UnickTable from './UnickTable'
+import UnickTable from './UnickTable'
 import EntityHeader from './EntityHeader'
 import { HasError, AlertError, AlertSuccess } from 'vform'
 
@@ -53,7 +53,7 @@ Vue.mixin(mixins);
 [
   IconButton,
   Card,
-  // UnickTable,
+  UnickTable,
   Child,
   Button,
   EntityHeader,
