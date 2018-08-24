@@ -72,10 +72,9 @@ $polyfills = [
   {{-- Load the application scripts --}}
   @if (app()->isLocal())
     <script src="{{ mix('js/app.js') }}"></script>
-    <script src="{{ asset('js/argon.js') }}"></script>
-
+    <script src="{{ asset('js/gart.js') }}"></script>
   @else
-    <script src="{{ asset('js/argon.js') }}"></script>
+    <script src="{{ asset('js/gart.js') }}"></script>
     <script src="{{ mix('js/manifest.js') }}"></script>
     <script src="{{ mix('js/vendor.js') }}"></script>
     <script src="{{ mix('js/app.js') }}"></script>

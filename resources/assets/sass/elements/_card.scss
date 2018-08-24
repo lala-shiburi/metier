@@ -1,5 +1,5 @@
 .card {
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
   .small-option-btn{
     opacity: 0;
     transform: translateX(50%);
@@ -76,9 +76,9 @@ transform: translate(-50%, 0%);
 .profile-card-2 i {
 display: inline-block;
   font-size: 16px;
-  color: #6ab04c;
+  color: #281483;
   text-align: center;
-  border: 1px solid #6ab04c;
+  border: 1px solid #281483;
   width: 30px;
   height: 30px;
   line-height: 30px;
@@ -86,9 +86,24 @@ display: inline-block;
   margin:0 5px;
 }
 .profile-card-2 i:hover {
-background-color:#6ab04c;
+background-color:#281483;
 color:#fff;
 }
+
+.profile-card-2 .icon-block{
+  // border-top: 1px solid rgba(151,22,226,.6);
+  // padding-top: 1em;
+  margin-top: 5px;
+}
+
+.profile-card-2 .icon-block span{
+
+  border-top: 1px solid rgba(151,22,226,.6);
+  padding-top: 7px;
+  font-size: 13px;
+
+}
+
 
 // Bootstrap Company Card WelcomeVue
 /*Profile card 4*/
@@ -133,9 +148,10 @@ color:#fff;
 }
 .profile-card-4 h5{
   font-weight:600;
-  color:#d90be1;
+  color:#311c8a;
 }
 .profile-card-4 .card-text{
+  margin: 5px;
   font-weight:300;
   font-size:15px;
 }
@@ -149,9 +165,9 @@ color:#fff;
 .profile-card-4 i {
 display: inline-block;
   font-size: 16px;
-  color: #d90be1;
+  color: #311c8a;
   text-align: center;
-  border: 1px solid #d90be1;
+  border: 1px solid #311c8a;
   width: 30px;
   height: 30px;
   line-height: 30px;
@@ -159,20 +175,20 @@ display: inline-block;
   margin:0 5px;
 }
 .profile-card-4 i:hover {
-background-color:#d90be1;
+background-color:#311c8a;
 color:#fff;
 }
 
 
 .profile-card-4 .btn-outline-secondary {
     font-size: 16px;
-    color: #d90be1;
+    color: #311c8a;
     text-align: center;
-    border: 1px solid #d90be1;
+    border: 1px solid #311c8a;
     margin:0 5px;
   }
   .profile-card-4 .btn-outline-secondary:hover {
-  background-color:#d90be1;
+  background-color:#311c8a;
   color:#fff;
   }
 
