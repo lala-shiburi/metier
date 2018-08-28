@@ -3,9 +3,15 @@
     <form @submit.prevent="create" @keydown="form.onKeydown($event)">
       <alert-success :form="form" message="Registration Successful"/>
 
-      <div class="text-center">
-        <img ref="company-logo" v-on:click="showPhotoEditor" :src="form.photo" class="rounded img-thumbnail" width="200px">
-      </div>
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="text-center">
+            <img ref="company-logo" v-on:click="showPhotoEditor" :src="form.photo" class="rounded img-thumbnail">
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+
       <br>
       <!-- Name -->
       <div class="form-group row">
@@ -61,6 +67,10 @@
           <v-button :loading="form.busy" type="success">Save</v-button>
         </div>
       </div>
+        </div>
+      </div>
+
+
     </form>
     <vue-photo-editor title="Company Cover" ref="photo-editor" @update="updateLogo"></vue-photo-editor>
   </card>

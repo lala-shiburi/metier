@@ -1,6 +1,7 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import * as types from '../mutation-types'
+import Echo from "laravel-echo"
 
 // state
 export const state = {
@@ -52,12 +53,28 @@ export const mutations = {
 // actions
 export const actions = {
   saveToken ({ commit, dispatch }, payload) {
+
+    // set Echo with Auth token
+    window.Pusher = require('pusher-js');
+    window.Echo = new Echo({
+        broadcaster: 'pusher',
+        key: '64025db9c2035154c318',
+        cluster: 'ap1',
+        encrypted: true,
+        auth: {
+          headers: {
+            Authorization: 'Bearer ' + payload.token,
+          },
+        },
+    });
+
     commit(types.SAVE_TOKEN, payload)
   },
 
   async fetchUser ({ commit }) {
     try {
       const { data } = await axios.get('/api/user')
+      jQuery('meta[name="auth_id"]').prop('content', data.id)
 
       commit(types.FETCH_USER_SUCCESS, { user: data })
     } catch (e) {

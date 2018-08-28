@@ -165,9 +165,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.settings-card .card-body {
-  padding: 0;
-}
-</style>

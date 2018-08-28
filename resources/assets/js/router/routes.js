@@ -14,7 +14,7 @@ const CompanyHiringProcessesCreate = () => import('~/pages/hiring-process/edit')
 const OpeningProfile = () => import('~/pages/opening/index').then(m => m.default || m)
 const UserCompanies = () => import('~/pages/user/companies').then(m => m.default || m)
 const OpeningApply = () => import('~/pages/opening/apply').then(m => m.default || m)
-const HiringApplication = () => import('~/pages/user/hiringApplications').then(m => m.default || m)
+const HiringApplications = () => import('~/pages/user/hiringApplications').then(m => m.default || m)
 const CompanyCreate = () => import('~/pages/company/create').then(m => m.default || m)
 const OpeningCreate = () => import('~/pages/opening/create').then(m => m.default || m)
 const OpeningEdit = () => import('~/pages/opening/edit').then(m => m.default || m)
@@ -25,6 +25,7 @@ const SearchCompanyPage = () => import('~/pages/company/SearchPage').then(m => m
 const SearchOpeningPage = () => import('~/pages/opening/SearchPage').then(m => m.default || m)
 const About = () => import('~/pages/about').then(m => m.default || m)
 const Contact = () => import('~/pages/contact').then(m => m.default || m)
+const HiringApplication = () => import('~/pages/hiring/application').then(m => m.default || m)
 
 export default [
   { path: '/', name: 'welcome', component: Welcome },
@@ -64,7 +65,8 @@ export default [
   { path: '/opening/:id/edit', name: 'opening.edit', component: OpeningEdit },
   { path: '/company/:company_id/opening/create', name: 'opening.create', component: OpeningCreate },
   // application
-  { path: '/applications', name: 'hiringApplication.applications', component: HiringApplication },
+  { path: '/applications', name: 'hiringApplication.applications', component: HiringApplications },
+  { path: '/applications/:application_id', name: 'hiringApplication.application', component: HiringApplication },
   { path: '/opening/apply/:opening_id/:applicant_id?', name: 'hiringApplication.create', component: OpeningApply },
 
   { path: '*', component: NotFound }

@@ -36,7 +36,7 @@ axios.interceptors.response.use(response => response, error => {
     })
   }
 
-  if (status === 401 && store.getters['auth/check']) {
+  if (status === 401 && store.getters['auth/check'] && jQuery('.swal2-container').length == 0) {
     swal({
       type: 'warning',
       title: i18n.t('token_expired_alert_title'),

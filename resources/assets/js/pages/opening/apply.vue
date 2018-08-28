@@ -35,7 +35,7 @@
           <div class="form-group row">
             <label class="col-md-3 col-form-label text-md-right">Application Letter</label>
             <div class="col-md-7">
-              <quill-editor class="form-control" :class="{ 'is-invalid': form1.errors.has('application_letter') }" v-model="form1.application_letter"
+              <quill-editor class="form-control" style="height:initial;" :class="{ 'is-invalid': form1.errors.has('application_letter') }" v-model="form1.application_letter"
                             :options="editorOption"
                             @blur="onEditorBlur($event)"
                             @focus="onEditorFocus($event)"

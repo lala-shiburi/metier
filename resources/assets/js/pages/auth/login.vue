@@ -63,20 +63,28 @@ export default {
 
   methods: {
     async login () {
+      var $this=this;
       // Submit the form.
-      const { data } = await this.form.post('/api/login')
+      this.form.post('/api/login')
+      .catch(error=>{
+        if(error.response.data.error == "Already authenticated."){
+          window.location.href = '/home';
+        }
+      }).then(async function(data){
+        if(data){
+          // Save the token.
+          $this.$store.dispatch('auth/saveToken', {
+            token: data.data.token,
+            remember: $this.remember
+          })
 
-      // Save the token.
-      this.$store.dispatch('auth/saveToken', {
-        token: data.token,
-        remember: this.remember
-      })
+          // Fetch the user.
+          await $this.$store.dispatch('auth/fetchUser')
 
-      // Fetch the user.
-      await this.$store.dispatch('auth/fetchUser')
-
-      // Redirect home.
-      this.$router.push({ path: this.$store.getters['auth/expired_url']?this.$store.getters['auth/expired_url']:'home' })
+          // Redirect home.
+          $this.$router.push({ path: $this.$store.getters['auth/expired_url']?$this.$store.getters['auth/expired_url']:'home' })
+        }
+      });
     },
   }
 }

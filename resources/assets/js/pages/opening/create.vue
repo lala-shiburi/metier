@@ -228,7 +228,7 @@ export default {
       console.log(this.form3);
       console.log(this.form4);
       // 
-      this.form4.post('/api/opening/create');
+      await this.form4.post('/api/opening/create');
 
       this.$router.push("/company/profile/"+this.$route.params.company_id);
     },
@@ -249,9 +249,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.settings-card .card-body {
-  padding: 0;
-}
-</style>

@@ -1,9 +1,9 @@
 <template>
   <div>
-    <card :title="$t('home')">
-      <div class="card-header">
+    <card :title="$t('Account dashboard')">
+      <!-- <div class="card-header">
         Your Jobseed dashboard
-      </div>
+      </div> -->
       <div class="row">
         <div class="col-sm-6 col-lg-3">
           <div class="card text-white bg-primary">
@@ -803,7 +803,7 @@
 
     metaInfo() {
       return {
-        title: this.$t('home')
+        title: this.$t('Account dashboard')
       }
     }
   }

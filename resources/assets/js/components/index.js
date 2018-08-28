@@ -44,7 +44,7 @@ var mixins = {
 
       return (withTime ? time : '' ) + ' ' + months[parseInt(_date[1]) - 1] + ' ' + parseInt(_date[2]) + ', ' + parseInt(_date[0])
     }
-  }
+  },
 }
 
 Vue.mixin(mixins);
