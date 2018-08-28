@@ -148,6 +148,22 @@ Route::group(['middleware' => 'auth:api'], function () {
         // fetch
         Route::group(['prefix' => 'fetch'], function(){
             Route::get('hiringApplications', 'HiringApplicationController@fetchApplications');
+            Route::get('one', 'HiringApplicationController@fetchOneApplication');
+        });
+    });
+
+    // notification routes
+    Route::group(['prefix' => 'notification'], function(){
+        // fetch
+        Route::group(['prefix'=>'fetch'], function(){
+            Route::get('/', 'NotificationController@fetchNotifications');
+            Route::get('one', 'NotificationController@fetchNotification');
+            Route::get('more', 'NotificationController@fetchMoreNotifications');
+            Route::get('unread/count', 'NotificationController@fetchUnreadNotificationCount');
+        });
+        // update
+        Route::group(['prefix'=>'update'], function(){
+            Route::patch('mark_read_all', 'NotificationController@marReadAll');
         });
     });
 });
