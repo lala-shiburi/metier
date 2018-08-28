@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('BROADCAST_DRIVER', 'null'),
+    'default' => env('BROADCAST_DRIVER', 'pusher'),
 
     /*
     |--------------------------------------------------------------------------
@@ -32,11 +32,13 @@ return [
 
         'pusher' => [
             'driver' => 'pusher',
-            'key' => env('PUSHER_APP_KEY'),
-            'secret' => env('PUSHER_APP_SECRET'),
-            'app_id' => env('PUSHER_APP_ID'),
+            'key' => '64025db9c2035154c318',
+            'secret' => '1139abde2197e1e7ab6a',
+            'app_id' => '582727',
             'options' => [
                 //
+                'cluster' => 'ap1',
+                'encrypted' => true
             ],
         ],
 

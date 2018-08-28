@@ -184,6 +184,15 @@ class Company extends Model
     }
 
     /**
+     * Relationship of company followers
+     * 
+     * @return \Illuminate\Database\Eloquent\Relationship\BelongsToMany
+     */
+    public function followers(){
+        return $this->belongsToMany(User::class, 'company_follows', 'company_id', 'user_id');
+    }
+
+    /**
      * update photo attribute
      * 
      * @return String

@@ -33,9 +33,10 @@ class CompanyController extends Controller
             "website_url" => $request->website_url,
             "province" => $request->province
         ]);
-
-        $company->owner_id = \Auth::user()->id;
+        $auth = \Auth::user();
+        $company->owner_id = $auth->id;
         $company->save();
+        $company->addCollaborator($auth->id);
 
         if($request->photo){
             $company->saveProfilePhoto($request->photo);

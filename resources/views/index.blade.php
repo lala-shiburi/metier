@@ -55,6 +55,7 @@ $polyfills = [
   <title>{{ config('app.name') }}</title>
 
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+  <meta name="auth_id" content="{{Auth::check() ?? Auth::user()->id}}">
   
   <link rel="stylesheet" href="{{ mix('css/app.css') }}">
   <link rel="stylesheet" href="{{ asset('css/common.css') }}">

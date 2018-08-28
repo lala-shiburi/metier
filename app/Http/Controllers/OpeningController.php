@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use \App\Opening;
 use \App\Http\Resources\OpeningResource;
+use \App\Notifications\NewOpening;
+use Illuminate\Support\Facades\Notification;
 
 class OpeningController extends Controller
 {
@@ -83,6 +85,8 @@ class OpeningController extends Controller
         foreach($request->skills['technologies'] as $skill){
             $opening->addUpdateTechnology([ 'id' => $skill, 'expertise_level' => 0 ]);
         }
+
+        Notification::send($opening->company->followers, new NewOpening($opening));
     }
 
     public function search(Request $request){

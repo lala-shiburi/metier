@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use \App\User;
 use \App\HiringApplication;
+use \App\Notifications\NewApplication;
+use Illuminate\Support\Facades\Notification;
 
 class HiringApplicationController extends Controller
 {
@@ -23,11 +25,17 @@ class HiringApplicationController extends Controller
 
         $hiringApplication->save();
 
+        Notification::send($hiringApplication->opening->company->collaborators, new NewApplication($hiringApplication));
+
         return ['status'=>'created', 'hiringApplication'=>$hiringApplication];
     }
     
     public function fetchApplications(Request $request){
         $user = User::findOrFail($request->user_id);
         return ['hiringApplications' => $user->hiringApplications->load('opening')->load('opening.company','opening.technologies','opening.programmingLanguages')];
+    }
+
+    public function fetchOneApplication(Request $request){
+        return ['application'=>HiringApplication::find($request->application_id)->load('user','opening','opening.company','opening.technologies','opening.programmingLanguages')];
     }
 }
