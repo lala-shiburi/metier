@@ -143,11 +143,12 @@
                       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5ESrIBaeH36xzs-kYsI4t9qGIkJ_j1hFuMz6CotRsramDblPFiw" alt="profile-image"
                         class="profile" />
                       <h5 class="card-title">Swift Developer</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <h3 class="card-sub-title">Amazon AWS inc.</h3>
+                      <p class="card-text">Proficient in Swift and good in AWS Network Architecture set-up.</p>
+                      <p class="card-text-add">Ayala Business Park, Cebu City, Philippines </p>
                       <div class="icon-block text-left">
                           <span>48 minutes ago</span>
                       </div>
-
                     </div>
                   </div>
 
@@ -160,9 +161,11 @@
                     <div class="card-body pt-5">
                       <img src="https://ucarecdn.com/cc6abaa3-acab-4ce7-a0fd-a0ef563ef08c/" alt="profile-image" class="profile" />
                       <h5 class="card-title">Full Stack Web Developer</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <h3 class="card-sub-title">Heroku Inc.</h3>
+                      <p class="card-text">Proficient in Swift and good in AWS Network Architecture set-up.</p>
+                      <p class="card-text-add">Ayala Business Park, Cebu City, Philippines </p>
                       <div class="icon-block text-left">
-                          <span>1 hour ago</span>
+                          <span>48 minutes ago</span>
                       </div>
 
                     </div>
@@ -178,9 +181,11 @@
                       <img src="https://www.accenture.com/t20170407T081136Z__w__/us-en/_acnmedia/Accenture/Conversion-Assets/Careers/Images/LandingPage/58/Accenture-Explore-08"
                         alt="profile-image" class="profile" />
                       <h5 class="card-title">Python Developer</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <h3 class="card-sub-title">Accenture inc.</h3>
+                      <p class="card-text">Proficient in Swift and good in AWS Network Architecture set-up.</p>
+                      <p class="card-text-add">Ayala Business Park, Cebu City, Philippines </p>
                       <div class="icon-block text-left">
-                          <span>7 minutes ago</span>
+                          <span>48 minutes ago</span>
                       </div>
 
                     </div>
@@ -200,9 +205,11 @@
                       <a href="#">
                         <h5 class="card-title">Laravel Developer</h5>
                       </a>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <h3 class="card-sub-title">Nexseed inc.</h3>
+                      <p class="card-text">Proficient in Swift and good in AWS Network Architecture set-up.</p>
+                      <p class="card-text-add">Ayala Business Park, Cebu City, Philippines </p>
                       <div class="icon-block text-left">
-                          <span>2 hours ago</span>
+                          <span>48 minutes ago</span>
                       </div>
                     </div>
                   </div>
@@ -233,7 +240,9 @@
                   <img src="https://obs.line-scdn.net/0hQeeW3D9hDkpYLiKnDRFxHXZ9CDE0QxlZMxYCcGNvEyQgWhtZekhBLX8sV3lxcB1JYkEVeSh7TH9xF0oAYU9JKGF-FXtzTE5LMRxI/f280x280"
                     alt="profile-image" class="profile" />
                   <h5 class="card-title text-center">Nexseed Inc .</h5>
-                  <p class="card-text text-center">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <p class="card-text text-center">Language School</p>
+                  <p class="card-text text-center">50-200 employees...</p>
+                  <p class="card-text text-center">Cebu City, PH</p>
                   <div class="text-center">
                     <div class="btn-group">
                       <button type="button" class="btn btn-sm btn-outline-secondary">Learn more</button>
@@ -279,28 +288,9 @@
                   <img src="https://obs.line-scdn.net/0hQeeW3D9hDkpYLiKnDRFxHXZ9CDE0QxlZMxYCcGNvEyQgWhtZekhBLX8sV3lxcB1JYkEVeSh7TH9xF0oAYU9JKGF-FXtzTE5LMRxI/f280x280"
                     alt="profile-image" class="profile" />
                   <h5 class="card-title text-center">Nexseed Inc .</h5>
-                  <p class="card-text text-center">lorem20</p>
-                  <div class="text-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Learn more</button>
-                      <button type="button" class="btn btn-sm btn-outline-secondary">View jobs</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-              <div class="card profile-card-4">
-                <div class="card-img-block">
-                  <div class="info-box">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua.</div>
-                  <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/48.jpg" alt="Card image cap">
-                </div>
-                <div class="card-body pt-5">
-                  <img src="https://obs.line-scdn.net/0hQeeW3D9hDkpYLiKnDRFxHXZ9CDE0QxlZMxYCcGNvEyQgWhtZekhBLX8sV3lxcB1JYkEVeSh7TH9xF0oAYU9JKGF-FXtzTE5LMRxI/f280x280"
-                    alt="profile-image" class="profile" />
-                  <h5 class="card-title text-center">Nexseed Inc .</h5>
-                  <p class="card-text text-center">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <p class="card-text text-center">Language School</p>
+                  <p class="card-text text-center">50-200 employees...</p>
+                  <p class="card-text text-center">Cebu City, PH</p>
                   <div class="text-center">
                     <div class="btn-group">
                       <button type="button" class="btn btn-sm btn-outline-secondary">Learn more</button>
@@ -322,49 +312,9 @@
                   <img src="https://obs.line-scdn.net/0hQeeW3D9hDkpYLiKnDRFxHXZ9CDE0QxlZMxYCcGNvEyQgWhtZekhBLX8sV3lxcB1JYkEVeSh7TH9xF0oAYU9JKGF-FXtzTE5LMRxI/f280x280"
                     alt="profile-image" class="profile" />
                   <h5 class="card-title text-center">Nexseed Inc .</h5>
-                  <p class="card-text text-center">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <div class="text-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Learn more</button>
-                      <button type="button" class="btn btn-sm btn-outline-secondary">View jobs</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-              <div class="card profile-card-4 text-center">
-                <div class="card-img-block">
-                  <div class="info-box">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua.</div>
-                  <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/48.jpg" alt="Card image cap">
-                </div>
-                <div class="card-body pt-5">
-                  <img src="https://obs.line-scdn.net/0hQeeW3D9hDkpYLiKnDRFxHXZ9CDE0QxlZMxYCcGNvEyQgWhtZekhBLX8sV3lxcB1JYkEVeSh7TH9xF0oAYU9JKGF-FXtzTE5LMRxI/f280x280"
-                    alt="profile-image" class="profile" />
-                  <h5 class="card-title text-center">Nexseed Inc .</h5>
-                  <p class="card-text text-center">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <div class="text-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Learn more</button>
-                      <button type="button" class="btn btn-sm btn-outline-secondary">View jobs</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-              <div class="card profile-card-4">
-                <div class="card-img-block">
-                  <div class="info-box">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua.</div>
-                  <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/48.jpg" alt="Card image cap">
-                </div>
-                <div class="card-body pt-5">
-                  <img src="https://obs.line-scdn.net/0hQeeW3D9hDkpYLiKnDRFxHXZ9CDE0QxlZMxYCcGNvEyQgWhtZekhBLX8sV3lxcB1JYkEVeSh7TH9xF0oAYU9JKGF-FXtzTE5LMRxI/f280x280"
-                    alt="profile-image" class="profile" />
-                  <h5 class="card-title text-center">Nexseed Inc .</h5>
-                  <p class="card-text text-center">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <p class="card-text text-center">Language School</p>
+                  <p class="card-text text-center">50-200 employees...</p>
+                  <p class="card-text text-center">Cebu City, PH</p>
                   <div class="text-center">
                     <div class="btn-group">
                       <button type="button" class="btn btn-sm btn-outline-secondary">Learn more</button>
@@ -376,7 +326,6 @@
             </div>
 
             <div class="col-lg-3 col-md-6">
-
               <div class="card profile-card-4">
                 <div class="card-img-block">
                   <div class="info-box">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
@@ -387,7 +336,9 @@
                   <img src="https://obs.line-scdn.net/0hQeeW3D9hDkpYLiKnDRFxHXZ9CDE0QxlZMxYCcGNvEyQgWhtZekhBLX8sV3lxcB1JYkEVeSh7TH9xF0oAYU9JKGF-FXtzTE5LMRxI/f280x280"
                     alt="profile-image" class="profile" />
                   <h5 class="card-title text-center">Nexseed Inc .</h5>
-                  <p class="card-text text-center">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <p class="card-text text-center">Language School</p>
+                  <p class="card-text text-center">50-200 employees...</p>
+                  <p class="card-text text-center">Cebu City, PH</p>
                   <div class="text-center">
                     <div class="btn-group">
                       <button type="button" class="btn btn-sm btn-outline-secondary">Learn more</button>
@@ -397,6 +348,79 @@
                 </div>
               </div>
             </div>
+
+            <div class="col-lg-3 col-md-6">
+              <div class="card profile-card-4">
+                <div class="card-img-block">
+                  <div class="info-box">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                    dolore magna aliqua.</div>
+                  <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/48.jpg" alt="Card image cap">
+                </div>
+                <div class="card-body pt-5">
+                  <img src="https://obs.line-scdn.net/0hQeeW3D9hDkpYLiKnDRFxHXZ9CDE0QxlZMxYCcGNvEyQgWhtZekhBLX8sV3lxcB1JYkEVeSh7TH9xF0oAYU9JKGF-FXtzTE5LMRxI/f280x280"
+                    alt="profile-image" class="profile" />
+                  <h5 class="card-title text-center">Nexseed Inc .</h5>
+                  <p class="card-text text-center">Language School</p>
+                  <p class="card-text text-center">50-200 employees...</p>
+                  <p class="card-text text-center">Cebu City, PH</p>
+                  <div class="text-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Learn more</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary">View jobs</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+              <div class="card profile-card-4">
+                <div class="card-img-block">
+                  <div class="info-box">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                    dolore magna aliqua.</div>
+                  <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/48.jpg" alt="Card image cap">
+                </div>
+                <div class="card-body pt-5">
+                  <img src="https://obs.line-scdn.net/0hQeeW3D9hDkpYLiKnDRFxHXZ9CDE0QxlZMxYCcGNvEyQgWhtZekhBLX8sV3lxcB1JYkEVeSh7TH9xF0oAYU9JKGF-FXtzTE5LMRxI/f280x280"
+                    alt="profile-image" class="profile" />
+                  <h5 class="card-title text-center">Nexseed Inc .</h5>
+                  <p class="card-text text-center">Language School</p>
+                  <p class="card-text text-center">50-200 employees...</p>
+                  <p class="card-text text-center">Cebu City, PH</p>
+                  <div class="text-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Learn more</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary">View jobs</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+              <div class="card profile-card-4">
+                <div class="card-img-block">
+                  <div class="info-box">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                    dolore magna aliqua.</div>
+                  <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/48.jpg" alt="Card image cap">
+                </div>
+                <div class="card-body pt-5">
+                  <img src="https://obs.line-scdn.net/0hQeeW3D9hDkpYLiKnDRFxHXZ9CDE0QxlZMxYCcGNvEyQgWhtZekhBLX8sV3lxcB1JYkEVeSh7TH9xF0oAYU9JKGF-FXtzTE5LMRxI/f280x280"
+                    alt="profile-image" class="profile" />
+                  <h5 class="card-title text-center">Nexseed Inc .</h5>
+                  <p class="card-text text-center">Language School</p>
+                  <p class="card-text text-center">50-200 employees...</p>
+                  <p class="card-text text-center">Cebu City, PH</p>
+                  <div class="text-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Learn more</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary">View jobs</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
           </div>
         </div>
       </div>
@@ -729,6 +753,11 @@
 </script>
 
 <style scoped>
+
+.card {
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.2);
+}
+
   .pt-5,
   .py-5 {
     padding-top: 4rem !important;
@@ -774,6 +803,11 @@
     border-radius: 4px;
   }
 
+  .card-text-add{
+    font-style: italic;
+    font-size: .8rem;
+  }
+
   #card-hero-carousel .btn-hero-nt-opp {
     background: #3c2693;
     border-color: #8c8c8c;
@@ -794,6 +828,12 @@
     text-transform: uppercase;
     font-family: Verdana, sans-serif;
   }
+
+  .card-sub-title  {
+  font-size: .9rem;
+ }
+
+
 
   .hero-center-title .pt-lg {
     padding-top: 9rem !important
