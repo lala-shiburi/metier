@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-12" id="user-cover-fluid">
         <div class="profile-tile-view">
           <cover :user="user" @update="updateUser"/>
           <div class="row">
@@ -625,6 +625,7 @@ import vuePhotoEditor from 'unick-vue-photo-editor';
 
 
 export default {
+  layout: 'profile',
   middleware: 'auth',
   components:{
     userBasicInfoModal,
@@ -1022,6 +1023,9 @@ export default {
 
 <style>
 .settings-card .card-body {
+  padding: 0;
+}
+#user-cover-fluid{
   padding: 0;
 }
 </style>

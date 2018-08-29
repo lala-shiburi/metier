@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12" id="company-cover-fluid">
       <div class="profile-tile-view">
         <cover @update="updateCompany" :company="company" :authorizeEdit="authorizeEdit"/>
         <div class="row">
@@ -94,6 +94,7 @@ import Logo from './logo'
 import Cover from './cover'
 
 export default {
+  layout: 'profile',
   middleware: 'auth',
   components: {
     BasicInfoModal,
@@ -164,6 +165,9 @@ export default {
 
 <style>
 .settings-card .card-body {
+  padding: 0;
+}
+#company-cover-fluid{
   padding: 0;
 }
 </style>

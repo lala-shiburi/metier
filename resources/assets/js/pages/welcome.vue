@@ -112,20 +112,20 @@
                       <h5 class="card-title">Over 100,000 IT Jobs</h5>
                       <p class="card-text">Search jobs anywhere in the philippines. Nationwide</p>
 
-                    <template v-if="authenticated">
-                      <router-link :to="{ name: 'home' }" class="btn btn-primary btn-hero-nt-opp">
-                        Profile
-                      </router-link>
-                    </template>
+                      <template v-if="authenticated">
+                        <router-link :to="{ name: 'home' }" class="btn btn-primary btn-hero-nt-opp">
+                          Profile
+                        </router-link>
+                      </template>
 
-                    <template v-else>
-                      <router-link :to="{ name: 'register' }" class="btn btn-primary btn-hero-nt-opp" active-class="active" data-toggle="tooltip">
-                        Signup Free
-                      </router-link>
-                    </template>
-      
+                      <template v-else>
+                        <router-link :to="{ name: 'register' }" class="btn btn-primary btn-hero-nt-opp" active-class="active" data-toggle="tooltip">
+                          Signup Free
+                        </router-link>
+                      </template>
+
                       <router-link :to="{ name: 'opening.search' }" class="btn btn-primary btn-hero-opp" data-toggle="dropdown" role="button" active-class="active">
-                            Search Job
+                        Search Job
                       </router-link>
 
                     </div>
@@ -147,7 +147,7 @@
                       <p class="card-text">Proficient in Swift and good in AWS Network Architecture set-up.</p>
                       <p class="card-text-add">Ayala Business Park, Cebu City, Philippines </p>
                       <div class="icon-block text-left">
-                          <span>48 minutes ago</span>
+                        <span>48 minutes ago</span>
                       </div>
                     </div>
                   </div>
@@ -165,7 +165,7 @@
                       <p class="card-text">Proficient in Swift and good in AWS Network Architecture set-up.</p>
                       <p class="card-text-add">Ayala Business Park, Cebu City, Philippines </p>
                       <div class="icon-block text-left">
-                          <span>48 minutes ago</span>
+                        <span>48 minutes ago</span>
                       </div>
 
                     </div>
@@ -185,7 +185,7 @@
                       <p class="card-text">Proficient in Swift and good in AWS Network Architecture set-up.</p>
                       <p class="card-text-add">Ayala Business Park, Cebu City, Philippines </p>
                       <div class="icon-block text-left">
-                          <span>48 minutes ago</span>
+                        <span>48 minutes ago</span>
                       </div>
 
                     </div>
@@ -209,7 +209,7 @@
                       <p class="card-text">Proficient in Swift and good in AWS Network Architecture set-up.</p>
                       <p class="card-text-add">Ayala Business Park, Cebu City, Philippines </p>
                       <div class="icon-block text-left">
-                          <span>48 minutes ago</span>
+                        <span>48 minutes ago</span>
                       </div>
                     </div>
                   </div>
@@ -243,7 +243,7 @@
                   <p class="card-text text-center">Language School</p>
                   <p class="card-text text-center">50-200 employees...</p>
                   <p class="card-text text-center">Cebu City, PH</p>
-                  <div class="text-center">
+                  <div class="text-center mt-3">
                     <div class="btn-group">
                       <button type="button" class="btn btn-sm btn-outline-secondary">Learn more</button>
                       <button type="button" class="btn btn-sm btn-outline-secondary">View jobs</button>
@@ -267,7 +267,7 @@
                   <p class="card-text text-center">Language School</p>
                   <p class="card-text text-center">50-200 employees...</p>
                   <p class="card-text text-center">Cebu City, PH</p>
-                  <div class="text-center">
+                  <div class="text-center mt-3">
                     <div class="btn-group">
                       <button type="button" class="btn btn-sm btn-outline-secondary">Learn more</button>
                       <button type="button" class="btn btn-sm btn-outline-secondary">View jobs</button>
@@ -291,7 +291,7 @@
                   <p class="card-text text-center">Language School</p>
                   <p class="card-text text-center">50-200 employees...</p>
                   <p class="card-text text-center">Cebu City, PH</p>
-                  <div class="text-center">
+                  <div class="text-center mt-3">
                     <div class="btn-group">
                       <button type="button" class="btn btn-sm btn-outline-secondary">Learn more</button>
                       <button type="button" class="btn btn-sm btn-outline-secondary">View jobs</button>
@@ -315,7 +315,7 @@
                   <p class="card-text text-center">Language School</p>
                   <p class="card-text text-center">50-200 employees...</p>
                   <p class="card-text text-center">Cebu City, PH</p>
-                  <div class="text-center">
+                  <div class="text-center mt-3">
                     <div class="btn-group">
                       <button type="button" class="btn btn-sm btn-outline-secondary">Learn more</button>
                       <button type="button" class="btn btn-sm btn-outline-secondary">View jobs</button>
@@ -339,7 +339,7 @@
                   <p class="card-text text-center">Language School</p>
                   <p class="card-text text-center">50-200 employees...</p>
                   <p class="card-text text-center">Cebu City, PH</p>
-                  <div class="text-center">
+                  <div class="text-center mt-3">
                     <div class="btn-group">
                       <button type="button" class="btn btn-sm btn-outline-secondary">Learn more</button>
                       <button type="button" class="btn btn-sm btn-outline-secondary">View jobs</button>
@@ -363,7 +363,7 @@
                   <p class="card-text text-center">Language School</p>
                   <p class="card-text text-center">50-200 employees...</p>
                   <p class="card-text text-center">Cebu City, PH</p>
-                  <div class="text-center">
+                  <div class="text-center mt-3">
                     <div class="btn-group">
                       <button type="button" class="btn btn-sm btn-outline-secondary">Learn more</button>
                       <button type="button" class="btn btn-sm btn-outline-secondary">View jobs</button>
@@ -387,7 +387,7 @@
                   <p class="card-text text-center">Language School</p>
                   <p class="card-text text-center">50-200 employees...</p>
                   <p class="card-text text-center">Cebu City, PH</p>
-                  <div class="text-center">
+                  <div class="text-center mt-3">
                     <div class="btn-group">
                       <button type="button" class="btn btn-sm btn-outline-secondary">Learn more</button>
                       <button type="button" class="btn btn-sm btn-outline-secondary">View jobs</button>
@@ -411,7 +411,7 @@
                   <p class="card-text text-center">Language School</p>
                   <p class="card-text text-center">50-200 employees...</p>
                   <p class="card-text text-center">Cebu City, PH</p>
-                  <div class="text-center">
+                  <div class="text-center mt-3">
                     <div class="btn-group">
                       <button type="button" class="btn btn-sm btn-outline-secondary">Learn more</button>
                       <button type="button" class="btn btn-sm btn-outline-secondary">View jobs</button>
@@ -420,7 +420,7 @@
                 </div>
               </div>
             </div>
-            
+
           </div>
         </div>
       </div>
@@ -428,10 +428,10 @@
       <div class="album bg-light">
         <div class="container-fluid">
 
-            <div class="pricing-header px-3 py-3 pb-md-4 mx-auto text-center">
-              <h1 class="display-4">Programming languages</h1>
-              <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam dignissimos vero aspernatur suscipit modi.</p>
-            </div>
+          <div class="pricing-header px-3 py-3 pb-md-4 mx-auto text-center">
+            <h1 class="display-4">Programming languages</h1>
+            <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam dignissimos vero aspernatur suscipit modi.</p>
+          </div>
 
           <div class="card-group">
             <div class="card profile-card-1" id="prog-php">
@@ -489,8 +489,6 @@
                 <span>NodeJS</span>
                 <!-- <div class="icon-block"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"> <i class="fa fa-twitter"></i></a><a href="#"> <i class="fa fa-google-plus"></i></a></div> -->
               </div>
-
-
             </div>
 
             <div class="card profile-card-1" id="prog-cplus">
@@ -529,32 +527,29 @@
               </div>
             </div>
           </div>
-
-
         </div>
-
       </div>
 
 
-            <div class="pricing-header px-5 py-5 pb-md-4 mx-auto text-center">
-              <h1 class="display-4">Search by Map</h1>
-              <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam dignissimos vero aspernatur suscipit modi.</p>
-            </div>
+      <div class="pricing-header px-5 py-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4">Search by Map</h1>
+        <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam dignissimos vero aspernatur suscipit modi.</p>
+      </div>
 
-      <div class="row featurette py-5">
-          <div class="col-md-7 text-center py-5">
-            <h2 class="featurette-heading">Jobseed job navigator</h2>
-            <p class="lead">Look for about thousand jobs all over the Philippines and in some parts of the world.</p>
+      <div class="row featurette">
+        <div class="col-md-7 text-center py-5">
+          <h2 class="featurette-heading">Jobseed job navigator</h2>
+          <p class="lead">Look for about thousand jobs all over the Philippines and in some parts of the world.</p>
 
-            <a href="#" class="btn btn-primary map-nav-bttn" role="button">
-                            Navigate Search
-            </a>
+          <a href="#" class="btn btn-primary map-nav-bttn" role="button">
+            Navigate Search
+          </a>
 
-          </div>
-          <div class="col-md-5">
-            <img class="img-fluid mx-auto" :src="public_path + '/images/phil-img.png'" alt="Philippine Map">
-          </div>
-</div>
+        </div>
+        <div class="col-md-5">
+          <img class="img-fluid mx-auto" :src="public_path + '/images/phil-img.png'" alt="Philippine Map">
+        </div>
+      </div>
 
     </main>
 
@@ -640,7 +635,7 @@
             <ul class="footer_ul2_amrc">
               <li>
                 <a href="#">
-                  <i class="fab fa-twitter fleft padding-right"></i>
+                  <i class="fa fa-twitter fleft padding-right"></i>
                 </a>
                 <p>Lorem Ipsum is simply dummy text of the printing...
                   <a href="#">https://www.lipsum.com/</a>
@@ -648,7 +643,7 @@
               </li>
               <li>
                 <a href="#">
-                  <i class="fab fa-twitter fleft padding-right"></i>
+                  <i class="fa fa-twitter fleft padding-right"></i>
                 </a>
                 <p>Lorem Ipsum is simply dummy text of the printing...
                   <a href="#">https://www.lipsum.com/</a>
@@ -656,7 +651,7 @@
               </li>
               <li>
                 <a href="#">
-                  <i class="fab fa-twitter fleft padding-right"></i>
+                  <i class="fa fa-twitter fleft padding-right"></i>
                 </a>
                 <p>Lorem Ipsum is simply dummy text of the printing...
                   <a href="#">https://www.lipsum.com/</a>
@@ -753,10 +748,9 @@
 </script>
 
 <style scoped>
-
-.card {
-  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.2);
-}
+  .card {
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.2);
+  }
 
   .pt-5,
   .py-5 {
@@ -765,7 +759,7 @@
 
   .featurette {
     color: #fff;
-    background: linear-gradient(150deg, rgba(40, 20, 131,.7) 15%, rgb(143, 110, 213) 70%, rgb(215, 130, 217) 94%),url(https://images.unsplash.com/photo-1442849914809-0df6c377974f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=0bdbb359f0cb7522a9e9714490fe332d&auto=format&fit=crop&w=1500&q=80);
+    background: linear-gradient(150deg, rgba(40, 20, 131, .7) 15%, rgb(143, 110, 213) 70%, rgb(215, 130, 217) 94%), url(https://images.unsplash.com/photo-1442849914809-0df6c377974f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=0bdbb359f0cb7522a9e9714490fe332d&auto=format&fit=crop&w=1500&q=80);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -773,7 +767,7 @@
   }
 
   .profile-card-1 {
-    background: linear-gradient(150deg, rgba(40, 20, 131,.7) 15%, rgb(143, 110, 213) 70%, rgb(215, 130, 217) 94%);
+    background: linear-gradient(150deg, rgba(40, 20, 131, .7) 15%, rgb(143, 110, 213) 70%, rgb(215, 130, 217) 94%);
   }
 
   #welcome-map {
@@ -803,7 +797,7 @@
     border-radius: 4px;
   }
 
-  .card-text-add{
+  .card-text-add {
     font-style: italic;
     font-size: .8rem;
   }
@@ -829,9 +823,9 @@
     font-family: Verdana, sans-serif;
   }
 
-  .card-sub-title  {
-  font-size: .9rem;
- }
+  .card-sub-title {
+    font-size: .9rem;
+  }
 
 
 
@@ -839,21 +833,22 @@
     padding-top: 9rem !important
   }
 
-  #company-cont-body{
+  #company-cont-body {
     margin-top: 12rem;
   }
 
   .display-4 {
-      font-size: 2.5rem;
-      font-weight: 300;
-      line-height: 1.2;
+    font-size: 2.5rem;
+    font-weight: 300;
+    line-height: 1.2;
   }
 
-  .map-nav-bttn{
+  .map-nav-bttn {
     font-size: 1rem;
     border: 2px solid white;
     padding: 1rem;
     margin: 1rem;
     background: transparent;
   }
+
 </style>

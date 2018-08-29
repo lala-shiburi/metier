@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12" id="opening-cover-fluid">
       <div class="profile-tile-view">
         <div class="profile-cover" style="height: 300px;">
           <img class="absolute-center" :src="public_path+'/images/opening-background.jpg'">
@@ -20,6 +20,9 @@
           </div>
         </div>
       </div>
+    </div>
+
+<div class="container">
       <card class="m-tb-10">
         <div>
           <h5>Description</h5>
@@ -85,13 +88,16 @@
           </card>
         </div>
       </div>
-    </div>
+
+</div>
+      
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 export default {
+  layout: 'profile',
   middleware: 'auth',
 
   data : () =>({
@@ -123,5 +129,8 @@ export default {
 <style>
 .settings-card .card-body {
   padding: 0;
+}
+#opening-cover-fluid{
+  padding:0;
 }
 </style>
