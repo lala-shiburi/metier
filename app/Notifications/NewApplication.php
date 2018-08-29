@@ -11,6 +11,7 @@ use Illuminate\Notifications\Messages\BroadcastMessage;
 class NewApplication extends Notification
 {
     use Queueable;
+    
     protected $application;
 
     /**

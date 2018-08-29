@@ -171,7 +171,7 @@ class Company extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function collaborators(){
-        return $this->belongsToMany('\App\User','company_users','company_id','user_id')->withPivot('privilege')->withTimeStamps();
+        return $this->belongsToMany('\App\User','company_users','company_id','user_id')->orWhere('users.id',$this->attributes['owner_id'])->withPivot('privilege')->withTimeStamps();
     }
 
     /**
