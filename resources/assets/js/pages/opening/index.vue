@@ -5,18 +5,87 @@
         <div class="profile-cover" style="height: 300px;">
           <img class="absolute-center" :src="public_path+'/images/opening-background.jpg'">
         </div>
-        <div class="row" style="margin-top: -15%;">
+        <div class="row" style="margin-top: -10%;">
           <div class="col-md-6 offset-md-3">
-            <opening-card v-if="opening.id" :opening="opening" :noApply="true">
-              <div style="margin-top: 10px;">
-                <router-link class="btn btn-primary" :to="{ name: 'hiringApplication.create', params: { opening_id: opening.id} }">
-                  Apply
-                </router-link>
-                <router-link v-if="authorizeEdit" class="btn btn-success" :to="{ name: 'opening.edit', params: { id: opening.id} }">
-                  Edit  
-                </router-link>
+  <card class="opening-card">
+    <div class="row">
+      <div class="col-md-4 col-5">
+        <div class="photo-preview-container opening-photo">
+          <div class="scaffold-div">
+            <img class="bg-holder" :src="public_path+'/images/bg-img.png'">
+            <img class="absolute-center" :src="opening.picture">
+            <div class="company-name">
+              <!-- <ellipsis-text>
+                  {{opening.company.name}}
+              </ellipsis-text> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8 col-7">
+        <h5>
+          <router-link :to="{ name: 'opening.profile', params: { id: opening.id} }">
+            {{opening.title}}
+          </router-link>
+          </h5>
+        <ellipsis-text class="job-des">
+          <template slot="icon">
+            <img class="job-des-icon" :src="public_path+'/images/company.png'" alt="">
+          </template>
+          <router-link :to="{ name: 'company.profile', params: { id: opening.company.id} }">
+            <div class="company-logo">
+              <div class="photo-preview-container">
+                <div class="scaffold-div">
+                  <img class="bg-holder" :src="public_path+'/images/bg-img.png'">
+                  <img class="absolute-center" :src="opening.company.photo">
+                </div>
               </div>
-            </opening-card>
+            </div>
+            {{opening.company.name}}
+          </router-link>
+        </ellipsis-text>
+        <ellipsis-text class="job-des">
+          <template slot="icon">
+            <img class="job-des-icon" :src="public_path+'/images/opening-description.png'" alt="">
+          </template>
+          {{opening.details}}
+        </ellipsis-text>
+        <ellipsis-text class="job-des" v-if="opening.salary_range">
+          <template slot="icon">
+            <img class="job-des-icon" :src="public_path+'/images/salary.png'" alt="">
+          </template>
+          {{opening.salary_range}}
+        </ellipsis-text>
+        <ellipsis-text class="job-des" v-if="opening.programming_languages.length > 0 || opening.technologies.length > 0">
+          <template slot="icon">
+            <img class="job-des-icon" :src="public_path+'/images/code.png'" alt="">
+          </template>
+          <span class="skills"> 
+            <span>
+              <skill-icon v-for="(lang,index) in opening.programming_languages" v-bind:key="index" size="x-small-icon" :icon="lang.tag_name"></skill-icon>
+            </span>
+            <span>
+              <skill-icon v-for="(tech,index) in opening.technologies" v-bind:key="index" size="x-small-icon" :icon="tech.tag_name"></skill-icon>
+            </span>
+          </span>
+        </ellipsis-text>
+        <ellipsis-text class="job-des">
+          <template slot="icon">
+            <img class="job-des-icon" :src="public_path+'/images/calendar.png'" alt="">
+          </template>
+          {{opening.created_at}}
+        </ellipsis-text>
+        <div style="margin-top:10px;" v-if="!noApply">
+          <router-link class="btn btn-primary" :to="{ name: 'hiringApplication.create', params: { opening_id: opening.id} }">
+            Apply
+          </router-link>
+        </div>
+        <div>
+          <slot/>
+        </div>
+      </div>
+    </div>
+  </card>
           </div>
         </div>
       </div>
@@ -126,7 +195,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .settings-card .card-body {
   padding: 0;
 }

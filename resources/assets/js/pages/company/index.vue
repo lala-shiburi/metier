@@ -163,7 +163,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .settings-card .card-body {
   padding: 0;
 }
