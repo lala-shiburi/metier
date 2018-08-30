@@ -33,6 +33,7 @@ if (mix.inProduction()) {
     '@fortawesome/vue-fontawesome'
   ])
 }
+mix.browserSync('http://localhost:8000')
 
 mix.webpackConfig({
   plugins: [
