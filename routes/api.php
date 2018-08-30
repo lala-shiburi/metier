@@ -42,6 +42,8 @@ Route::group(['middleware' => 'auth:api'], function () {
         // update
         Route::group(['prefix' => 'update'], function(){
             Route::post('skills', 'UserController@update_skills');
+            Route::post('work_experience', 'UserController@update_work_experience');
+            Route::post('education_background', 'UserController@update_education_background');
             Route::post('user_description', 'UserController@update_description');
             Route::post('basic_info', 'UserController@update_basic_info');
             Route::patch('photo', 'UserController@updatePhoto');
