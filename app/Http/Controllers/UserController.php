@@ -141,6 +141,35 @@ class UserController extends Controller
         return [ 'workExperiences' => $user->workExperiences()->where('is_current',1)->get()->merge($user->workExperiences()->where('is_current',0)->get()) ];
     }
 
+    public function update_work_experience(Request $request){
+        $user = User::findOrFail($request->user_id);
+
+        $rules = [
+            'company_name' => 'required',
+            'position' => 'required',
+            'from' => 'required',
+        ];
+
+        if($request->current == 0){
+            $rules['to'] = 'required';
+        }
+
+        $this->validate($request, $rules);
+
+        $experience = $user->addUpdateWorkExperience([
+            'company_name' => $request->company_name,
+            'position' => $request->position,
+            'from' => $request->from,
+            'to' => $request->to,
+        ], $request->id);
+
+        if($request->current == 1){
+            $user->setCurrentExperience($experience);
+        }
+
+        return [ 'workExperiences' => $user->workExperiences()->where('is_current',1)->get()->merge($user->workExperiences()->where('is_current',0)->get()) ];
+    }
+
     public function add_education_background(Request $request){
         $user = User::find($request->user_id);
         
@@ -165,6 +194,34 @@ class UserController extends Controller
             'from' => $request->from,
             'to' => $request->to
         ]);
+
+        return ['educationalBackgrounds'=>$user->educationalBackgrounds()->get()];
+    }
+
+    public function update_education_background(Request $request){
+        $user = User::find($request->user_id);
+
+        $rules = [
+            'school_name' => 'required',
+            'school_address' => 'required',
+            'school_email' => 'email|required',
+            'school_number' => 'required',
+            'course' => 'required',
+            'from' => 'required',
+            'to' => 'required'
+        ];
+
+        $this->validate($request, $rules);
+
+        $educationalBackground = $user->addUpdateEducationalBackground([
+            'school_name' => $request->school_name,
+            'school_address' => $request->school_address,
+            'school_email' => $request->school_email,
+            'school_number' => $request->school_number,
+            'course' => $request->course,
+            'from' => $request->from,
+            'to' => $request->to
+        ], $request->id);
 
         return ['educationalBackgrounds'=>$user->educationalBackgrounds()->get()];
     }
