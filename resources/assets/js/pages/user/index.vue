@@ -5,7 +5,7 @@
         <div class="profile-tile-view">
           <cover :user="user" @update="updateUser"/>
           <div class="row">
-            <div class="col-lg-2 col-5">
+            <div class="col-lg-2 col-md-3 col-5">
               <div class="profile-photo">
                 <div class="scaffold-div" v-on:click="showPhotoEditor">
                   <img class="bg-holder" :src="public_path+'/images/bg-img.png'">
@@ -13,7 +13,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-10 col-7">
+            <div class="col-lg-10 col-md-9 col-7">
               <h3>{{user.name}}</h3>
               <label>{{workExperiences.length > 0 ? (workExperiences[0].is_current == 1 ? workExperiences[0].position : '' ) :''}}</label>
             </div>
@@ -150,14 +150,14 @@
                 <br>
               </div>
               <div style="margin-bottom: 20px;">
-                <icon-button v-if="authorizeEdit" data-toggle="modal" data-target="#work-experience-modal">
+                <icon-button v-if="authorizeEdit" @click.native="prepCreateWorkexperience">
                   ADD WORK EXPERIENCE
                 </icon-button>
               </div>
               <info-preview v-for="(experience, index) in workExperiences" icon="company" v-bind:key="index" :title="experience.company_name" :subtitle="experience.position">
                 {{experience.length}}
                 <template slot="options">
-                  <i class="option-btn fa fa-edit" v-on:click="prepEditWorkExperience(experience, index)"></i>
+                  <i class="option-btn fa fa-edit" v-on:click="prepEditWorkExperience(experience)"></i>
                   <i class="option-btn fa fa-close" v-on:click="prepDeleteWorkExperience(experience, index)"></i>
                 </template>
               </info-preview>
@@ -169,14 +169,14 @@
                 <br>
               </div>
               <div style="margin-bottom: 20px;">
-                <icon-button v-if="authorizeEdit" data-toggle="modal" data-target="#educational-background-modal">
+                <icon-button v-if="authorizeEdit" @click.native="prepCreateEducationalBackground">
                   ADD EDUCATIONAL BACKGROUND
                 </icon-button>
               </div>
               <info-preview v-for="(education, index) in educationalBackgrounds" v-bind:key="index" icon="school" :title="education.school_name" :subtitle="education.course">
                 {{education.from.split('-')[0]}} - {{education.to.split('-')[0]}}
                 <template slot="options" v-if="authorizeEdit">
-                  <i class="option-btn fa fa-edit"></i>
+                  <i class="option-btn fa fa-edit" v-on:click="prepEditEducationalBackground(education)"></i>
                   <i class="option-btn fa fa-close" v-on:click="prepDeleteEducationalBackground(education, index)"></i>
                 </template>
               </info-preview>
@@ -207,370 +207,6 @@
               </div>
             </form>
           </div>
-        </div>
-      </div>
-    </div>
-    <div class="modal fade" id="work-experience-modal" tabindex="-1" role="dialog">
-      <div v-if="authorizeEdit" class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-          <form @submit.prevent="createWorkExperience" @keydown="workExperienceForm.onKeydown($event)">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Add Work Experience</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
-                  <div style="text-align:center">
-                    <div style="width:200px; display:inline-block; background:#d9d9d9;">
-                      <div class="photo-preview-container">
-                        <div class="scaffold-div">
-                          <div class="scaffold-div">
-                            <img class="bg-holder" :src="public_path+'/images/bg-img.png'">
-                            <img ref="photo" class="absolute-center" :src="public_path+'/images/company.png'">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <br>
-                  <!-- Name -->
-                  <div class="form-group row">
-                    <label class="col-md-3 col-form-label text-md-right">Company Name</label>
-                    <div class="col-md-7">
-                      <input v-model="workExperienceForm.company_name" :class="{ 'is-invalid': workExperienceForm.errors.has('company_name') }" class="form-control" name="company_name">
-                      <has-error :form="workExperienceForm" field="company_name"/>
-                    </div>
-                  </div>
-
-                  <!-- Position -->
-                  <div class="form-group row">
-                    <label class="col-md-3 col-form-label text-md-right">Position</label>
-                    <div class="col-md-7">
-                      <input v-model="workExperienceForm.position" :class="{ 'is-invalid': workExperienceForm.errors.has('position') }" class="form-control" name="position">
-                      <has-error :form="workExperienceForm" field="position"/>
-                    </div>
-                  </div>
-
-                  <!-- current job -->
-                  <div class="form-group row">
-                    <label class="col-md-3 col-form-label text-md-right">Status</label>
-                    <div class="col-md-7">
-                      <div class="btn-group btn-group-toggle">
-                        <label class="btn btn-secondary" :class="workExperienceForm.current == 0 ? 'active': ''">
-                          <input type="radio" name="current" value="0" v-model="workExperienceForm.current" id="option2"> Previews Job
-                        </label>
-                        <label class="btn btn-secondary" :class="workExperienceForm.current == 1 ? 'active': ''">
-                          <input type="radio" name="current" value="1" v-model="workExperienceForm.current" id="option1" checked> Present Job
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- from -->
-                  <div class="form-group row">
-                    <label class="col-md-3 col-form-label text-md-right">From</label>
-                    <div class="col-md-7">
-                      <input type="date" v-model="workExperienceForm.from" :class="{ 'is-invalid': workExperienceForm.errors.has('from') }" class="form-control" name="from">
-                      <has-error :form="workExperienceForm" field="from"/>
-                    </div>
-                  </div>
-
-                  <!-- To -->
-                  <div class="form-group row" v-if="workExperienceForm.current == 0">
-                    <label class="col-md-3 col-form-label text-md-right">To</label>
-                    <div class="col-md-7">
-                      <input type="date" v-model="workExperienceForm.to" :class="{ 'is-invalid': workExperienceForm.errors.has('to') }" class="form-control" name="to">
-                      <has-error :form="workExperienceForm" field="to"/>
-                    </div>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <v-button :loading="workExperienceForm.busy" type="success">Save</v-button>
-                </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-    <div class="modal fade" id="educational-background-modal" tabindex="-1" role="dialog">
-      <div v-if="authorizeEdit" class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-          <form @submit.prevent="createEducationalBackground" @keydown="educationalBackgroundForm.onKeydown($event)">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Add Educational Background</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
-                  <div style="text-align:center">
-                    <div style="width:200px; display:inline-block; background:#d9d9d9;">
-                      <div class="photo-preview-container">
-                        <div class="scaffold-div">
-                          <div class="scaffold-div">
-                            <img class="bg-holder" :src="public_path+'/images/bg-img.png'">
-                            <img ref="photo" class="absolute-center" :src="public_path+'/images/school.png'">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <br>
-                  <!-- Name -->
-                  <div class="form-group row">
-                    <label class="col-md-3 col-form-label text-md-right">School Name</label>
-                    <div class="col-md-7">
-                      <input v-model="educationalBackgroundForm.school_name" :class="{ 'is-invalid': educationalBackgroundForm.errors.has('school_name') }" class="form-control" name="school_name">
-                      <has-error :form="educationalBackgroundForm" field="school_name"/>
-                    </div>
-                  </div>
-
-                  <!-- Address -->
-                  <div class="form-group row">
-                    <label class="col-md-3 col-form-label text-md-right">Address</label>
-                    <div class="col-md-7">
-                      <input v-model="educationalBackgroundForm.school_address" :class="{ 'is-invalid': educationalBackgroundForm.errors.has('school_address') }" class="form-control" name="school_address">
-                      <has-error :form="educationalBackgroundForm" field="school_address"/>
-                    </div>
-                  </div>
-
-                  <!-- Email -->
-                  <div class="form-group row">
-                    <label class="col-md-3 col-form-label text-md-right">Email</label>
-                    <div class="col-md-7">
-                      <input v-model="educationalBackgroundForm.school_email" :class="{ 'is-invalid': educationalBackgroundForm.errors.has('school_email') }" class="form-control" name="school_email">
-                      <has-error :form="educationalBackgroundForm" field="school_email"/>
-                    </div>
-                  </div>
-
-                  <!-- Number -->
-                  <div class="form-group row">
-                    <label class="col-md-3 col-form-label text-md-right">Contact Number</label>
-                    <div class="col-md-7">
-                      <input v-model="educationalBackgroundForm.school_number" :class="{ 'is-invalid': educationalBackgroundForm.errors.has('school_number') }" class="form-control" name="school_number">
-                      <has-error :form="educationalBackgroundForm" field="school_number"/>
-                    </div>
-                  </div>
-
-                  <!-- Course -->
-                  <div class="form-group row">
-                    <label class="col-md-3 col-form-label text-md-right">Course</label>
-                    <div class="col-md-7">
-                      <input type="text" v-model="educationalBackgroundForm.course" :class="{ 'is-invalid': educationalBackgroundForm.errors.has('course') }" class="form-control" name="course">
-                      <has-error :form="educationalBackgroundForm" field="course"/>
-                    </div>
-                  </div>
-
-                  <!-- From -->
-                  <div class="form-group row">
-                    <label class="col-md-3 col-form-label text-md-right">From</label>
-                    <div class="col-md-7">
-                      <input type="date" v-model="educationalBackgroundForm.from" :class="{ 'is-invalid': educationalBackgroundForm.errors.has('from') }" class="form-control" name="from">
-                      <has-error :form="educationalBackgroundForm" field="from"/>
-                    </div>
-                  </div>
-
-                  <!-- To -->
-                  <div class="form-group row">
-                    <label class="col-md-3 col-form-label text-md-right">To</label>
-                    <div class="col-md-7">
-                      <input type="date" v-model="educationalBackgroundForm.to" :class="{ 'is-invalid': educationalBackgroundForm.errors.has('to') }" class="form-control" name="to">
-                      <has-error :form="educationalBackgroundForm" field="to"/>
-                    </div>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <v-button :loading="educationalBackgroundForm.busy" type="success">Save</v-button>
-                </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-    <div class="modal fade" id="edit-work-experience-modal" tabindex="-1" role="dialog">
-      <div v-if="authorizeEdit" class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-          <form @submit.prevent="createWorkExperience" @keydown="editWorkExperienceForm.onKeydown($event)">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Update Work Experience</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
-                  <div style="text-align:center">
-                    <div style="width:200px; display:inline-block; background:#d9d9d9;">
-                      <div class="photo-preview-container">
-                        <div class="scaffold-div">
-                          <div class="scaffold-div">
-                            <img class="bg-holder" :src="public_path+'/images/bg-img.png'">
-                            <img ref="photo" class="absolute-center" :src="public_path+'/images/company.png'">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <br>
-                  <!-- Name -->
-                  <div class="form-group row">
-                    <label class="col-md-3 col-form-label text-md-right">Company Name</label>
-                    <div class="col-md-7">
-                      <input v-model="editWorkExperienceForm.company_name" :class="{ 'is-invalid': editWorkExperienceForm.errors.has('company_name') }" class="form-control" name="company_name">
-                      <has-error :form="editWorkExperienceForm" field="company_name"/>
-                    </div>
-                  </div>
-
-                  <!-- Position -->
-                  <div class="form-group row">
-                    <label class="col-md-3 col-form-label text-md-right">Position</label>
-                    <div class="col-md-7">
-                      <input v-model="editWorkExperienceForm.position" :class="{ 'is-invalid': editWorkExperienceForm.errors.has('position') }" class="form-control" name="position">
-                      <has-error :form="editWorkExperienceForm" field="position"/>
-                    </div>
-                  </div>
-
-                  <!-- current job -->
-                  <div class="form-group row">
-                    <label class="col-md-3 col-form-label text-md-right">Status</label>
-                    <div class="col-md-7">
-                      <div class="btn-group btn-group-toggle">
-                        <label class="btn btn-secondary" :class="editWorkExperienceForm.current == 0 ? 'active': ''">
-                          <input type="radio" name="current" value="0" v-model="editWorkExperienceForm.current" id="option2"> Previews Job
-                        </label>
-                        <label class="btn btn-secondary" :class="editWorkExperienceForm.current == 1 ? 'active': ''">
-                          <input type="radio" name="current" value="1" v-model="editWorkExperienceForm.current" id="option1" checked> Present Job
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- from -->
-                  <div class="form-group row">
-                    <label class="col-md-3 col-form-label text-md-right">From</label>
-                    <div class="col-md-7">
-                      <input type="date" v-model="editWorkExperienceForm.from" :class="{ 'is-invalid': editWorkExperienceForm.errors.has('from') }" class="form-control" name="from">
-                      <has-error :form="editWorkExperienceForm" field="from"/>
-                    </div>
-                  </div>
-
-                  <!-- To -->
-                  <div class="form-group row" v-if="editWorkExperienceForm.current == 0">
-                    <label class="col-md-3 col-form-label text-md-right">To</label>
-                    <div class="col-md-7">
-                      <input type="date" v-model="editWorkExperienceForm.to" :class="{ 'is-invalid': editWorkExperienceForm.errors.has('to') }" class="form-control" name="to">
-                      <has-error :form="editWorkExperienceForm" field="to"/>
-                    </div>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <v-button :loading="editWorkExperienceForm.busy" type="success">Save</v-button>
-                </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-    <div class="modal fade" id="edit-educational-background-modal" tabindex="-1" role="dialog">
-      <div v-if="authorizeEdit" class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-          <form @submit.prevent="createEducationalBackground" @keydown="educationalBackgroundForm.onKeydown($event)">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Update Educational Background</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
-                  <div style="text-align:center">
-                    <div style="width:200px; display:inline-block; background:#d9d9d9;">
-                      <div class="photo-preview-container">
-                        <div class="scaffold-div">
-                          <div class="scaffold-div">
-                            <img class="bg-holder" :src="public_path+'/images/bg-img.png'">
-                            <img ref="photo" class="absolute-center" :src="public_path+'/images/school.png'">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <br>
-                  <!-- Name -->
-                  <div class="form-group row">
-                    <label class="col-md-3 col-form-label text-md-right">School Name</label>
-                    <div class="col-md-7">
-                      <input v-model="educationalBackgroundForm.school_name" :class="{ 'is-invalid': educationalBackgroundForm.errors.has('school_name') }" class="form-control" name="school_name">
-                      <has-error :form="educationalBackgroundForm" field="school_name"/>
-                    </div>
-                  </div>
-
-                  <!-- Address -->
-                  <div class="form-group row">
-                    <label class="col-md-3 col-form-label text-md-right">Address</label>
-                    <div class="col-md-7">
-                      <input v-model="educationalBackgroundForm.school_address" :class="{ 'is-invalid': educationalBackgroundForm.errors.has('school_address') }" class="form-control" name="school_address">
-                      <has-error :form="educationalBackgroundForm" field="school_address"/>
-                    </div>
-                  </div>
-
-                  <!-- Email -->
-                  <div class="form-group row">
-                    <label class="col-md-3 col-form-label text-md-right">Email</label>
-                    <div class="col-md-7">
-                      <input v-model="educationalBackgroundForm.school_email" :class="{ 'is-invalid': educationalBackgroundForm.errors.has('school_email') }" class="form-control" name="school_email">
-                      <has-error :form="educationalBackgroundForm" field="school_email"/>
-                    </div>
-                  </div>
-
-                  <!-- Number -->
-                  <div class="form-group row">
-                    <label class="col-md-3 col-form-label text-md-right">Contact Number</label>
-                    <div class="col-md-7">
-                      <input v-model="educationalBackgroundForm.school_number" :class="{ 'is-invalid': educationalBackgroundForm.errors.has('school_number') }" class="form-control" name="school_number">
-                      <has-error :form="educationalBackgroundForm" field="school_number"/>
-                    </div>
-                  </div>
-
-                  <!-- Course -->
-                  <div class="form-group row">
-                    <label class="col-md-3 col-form-label text-md-right">Course</label>
-                    <div class="col-md-7">
-                      <input type="text" v-model="educationalBackgroundForm.course" :class="{ 'is-invalid': educationalBackgroundForm.errors.has('course') }" class="form-control" name="course">
-                      <has-error :form="educationalBackgroundForm" field="course"/>
-                    </div>
-                  </div>
-
-                  <!-- From -->
-                  <div class="form-group row">
-                    <label class="col-md-3 col-form-label text-md-right">From</label>
-                    <div class="col-md-7">
-                      <input type="date" v-model="educationalBackgroundForm.from" :class="{ 'is-invalid': educationalBackgroundForm.errors.has('from') }" class="form-control" name="from">
-                      <has-error :form="educationalBackgroundForm" field="from"/>
-                    </div>
-                  </div>
-
-                  <!-- To -->
-                  <div class="form-group row">
-                    <label class="col-md-3 col-form-label text-md-right">To</label>
-                    <div class="col-md-7">
-                      <input type="date" v-model="educationalBackgroundForm.to" :class="{ 'is-invalid': educationalBackgroundForm.errors.has('to') }" class="form-control" name="to">
-                      <has-error :form="educationalBackgroundForm" field="to"/>
-                    </div>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <v-button :loading="educationalBackgroundForm.busy" type="success">Save</v-button>
-                </div>
-            </div>
-          </form>
         </div>
       </div>
     </div>
@@ -607,6 +243,8 @@
     <user-basic-info-modal v-if="authorizeEdit" ref="user-basic-info-modal" @update="updateUser" :user="user"/>
     <user-address-info-modal v-if="authorizeEdit" ref="userAddInfoModal" @update="updateAddresses" :user="userAddresses"/>
     <user-contact-info-modal v-if="authorizeEdit" ref="userContactInfoModal" @update="updateContactInfos" :user="userAddresses"/>
+    <work-experience-modal v-if="authorizeEdit" ref="work-experience-modal" @update="updateWorkExperience"/>
+    <educational-background-modal v-if="authorizeEdit" ref="educational-background-modal" @update="updateEducationalBackground"/>
     <vue-photo-editor title="Profile Photo" ref="photo-editor" @update="updateUserPhoto"/>
   </div>
 </template>
@@ -616,13 +254,14 @@ import Vue from 'vue'
 import axios from 'axios'
 import swal from 'sweetalert2'
 import Form from 'vform'
-import userBasicInfoModal from './../../components/user-profile/basicInfoModal'
-import userAddressInfoModal from './../../components/user-profile/addressInfoModal'
-import userContactInfoModal from './../../components/user-profile/contactInfoModal'
-import cover from './Cover'
 import { mapGetters } from 'vuex'
+import cover from './Cover'
 import vuePhotoEditor from 'unick-vue-photo-editor';
-
+import userBasicInfoModal from './index-components/basicInfoModal'
+import userAddressInfoModal from './index-components/addressInfoModal'
+import userContactInfoModal from './index-components/contactInfoModal'
+import workExperienceModal from './index-components/workExperience'
+import educationalBackgroundModal from './index-components/educationalBackground'
 
 export default {
   layout: 'profile',
@@ -632,7 +271,9 @@ export default {
     userAddressInfoModal,
     userContactInfoModal,
     cover,
-    vuePhotoEditor
+    vuePhotoEditor,
+    workExperienceModal,
+    educationalBackgroundModal
   },
   data : () =>({
     public_path: location.origin,
@@ -653,54 +294,9 @@ export default {
         technologies: []
       }
     }),
-    workExperienceForm: new Form({
-      user_id: '',
-      company_name: '',
-      position: '',
-      from: '',
-      to: '',
-      current:0
-    }),
-    educationalBackgroundForm: new Form({
-      user_id: '',
-      school_name: '',
-      school_address: '',
-      school_email: '',
-      school_number: '',
-      course: '',
-      from: '',
-      to: '',
-    }),
-    editWorkExperienceForm: new Form({
-      id: 0,
-      user_id: '',
-      company_name: '',
-      position: '',
-      from: '',
-      to: '',
-      current:0
-    }),
-    editEducationalBackgroundForm: new Form({
-      id: 0,
-      user_id: '',
-      school_name: '',
-      school_address: '',
-      school_email: '',
-      school_number: '',
-      course: '',
-      from: '',
-      to: '',
-    }),
     userDescriptionForm: new Form({
       user_id: '',
       description: ''
-    }),
-    userBasicInfoForm: new Form({
-      user_id: '',
-      first_name: '',
-      last_name: '',
-      birth_date: '',
-      gender: '',
     }),
   }),
   methods: {
@@ -736,17 +332,6 @@ export default {
       this.userTechnologies = data.technologies;
       jQuery('#skill-modal').modal('hide');
     },
-    async createWorkExperience(){
-      const {data} = await this.workExperienceForm.post('/api/userInfo/add/work_experience');
-      this.workExperiences = data.workExperiences;
-      jQuery('#work-experience-modal').modal('hide');
-    },
-    async createEducationalBackground(){
-      const {data} = await this.educationalBackgroundForm.post('/api/userInfo/add/education_background');
-
-      this.educationalBackgrounds = data.educationalBackgrounds;
-      jQuery('#educational-background-modal').modal('hide');
-    },
     async updateDescription(){
       const {data} = await this.userDescriptionForm.post('/api/userInfo/update/user_description');
 
@@ -758,18 +343,19 @@ export default {
     updateUser(data){
       this.user = data;
     },
-    prepEditWorkExperience(data){
-      this.editWorkExperienceForm.id = data.id;
-      this.editWorkExperienceForm.user_id = this.$store.getters['auth/user'].id;
-      this.editWorkExperienceForm.company_name = data.company_name;
-      this.editWorkExperienceForm.position = data.position;
-      this.editWorkExperienceForm.from = data.from;
-      this.editWorkExperienceForm.current = data.is_current;
-      this.editWorkExperienceForm.to = data.to;
-      jQuery('#edit-work-experience-modal').modal('show');
-    },
     prepUpdateBasicInfo(){
       this.$refs['user-basic-info-modal'].prepUpdate(this.user);
+    },
+
+    // work experience methods
+    updateWorkExperience(data){
+      this.workExperiences = data;
+    },
+    prepEditWorkExperience(data){
+      this.$refs["work-experience-modal"].prepUpdate(data);
+    },
+    prepCreateWorkexperience(){
+      this.$refs["work-experience-modal"].prepCreate();
     },
     prepDeleteWorkExperience(data,index){
       var $this = this;
@@ -803,6 +389,14 @@ export default {
         }
       });
     },
+    
+    // educational background modal
+    prepEditEducationalBackground(data){
+      this.$refs["educational-background-modal"].prepUpdate(data);
+    },
+    prepCreateEducationalBackground(){
+      this.$refs["educational-background-modal"].prepCreate();
+    },
     prepDeleteEducationalBackground(data,index){
       var $this = this;
       swal({
@@ -835,6 +429,10 @@ export default {
         }
       });
     },
+    updateEducationalBackground(data){
+      this.educationalBackgrounds = data;
+    },
+    
     prepUpdateAddress(data){
       this.$refs.userAddInfoModal.prepUpdate(data);
     },
@@ -955,7 +553,8 @@ export default {
                 url: '/api/userInfo/add/resume_file',
                 data: formData
               }).then( data => {
-                console.log(data.data.status);
+                console.log(data.data);
+                $this.user = data.data.user
                 if(data.data.status == 'created'){
                   swal(
                     'Uploaded!',
@@ -980,8 +579,6 @@ export default {
       var $this = this;
       this.user_id = this.$route.params.id ? this.$route.params.id : this.$store.getters['auth/user'].id;
       this.skillsForm.user_id = this.$store.getters['auth/user'].id;
-      this.workExperienceForm.user_id = this.$store.getters['auth/user'].id;
-      this.educationalBackgroundForm.user_id = this.$store.getters['auth/user'].id;
       this.userDescriptionForm.user_id = this.$store.getters['auth/user'].id;
       this.userDescriptionForm.description = this.$store.getters['auth/user'].description;
       this.fetch('user');
@@ -1003,14 +600,6 @@ export default {
     jQuery('#skill-modal').on('show.bs.modal',function(){
       $this.$refs.skillsSelector.updateProgrammingLanguages($this.programmingLanguages);
       $this.$refs.skillsSelector.updateTechnologies($this.userTechnologies);
-    });
-    jQuery('#work-experience-modal').on('hide.bs.modal',function(){
-      $this.workExperienceForm.reset();
-      $this.workExperienceForm.user_id = $this.$store.getters['auth/user'].id;
-    });
-    jQuery('#educational-background-modal').on('hide.bs.modal',function(){
-      $this.educationalBackgroundForm.reset();
-      $this.educationalBackgroundForm.user_id = $this.$store.getters['auth/user'].id;
     });
   },
   watch: {
