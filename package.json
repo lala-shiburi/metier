@@ -45,7 +45,7 @@
     "@vue/eslint-config-standard": "^3.0.1",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "cross-env": "^5.1.5",
-    "laravel-mix": "^2.1.11",
+    "laravel-mix": "^2.1.14",
     "vue-template-compiler": "^2.5.17",
     "webpack-bundle-analyzer": "^2.11.2",
     "webpack-cli": "^3.1.0"
