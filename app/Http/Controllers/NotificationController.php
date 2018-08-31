@@ -19,12 +19,17 @@ class NotificationController extends Controller
     public function fetchNotifications(Request $request){
         $user = \Auth::user();
         $notifications = [];
-
-        foreach($user->notifications()->limit(3)->get() as $notification){
+        $left_to_load = 0;
+        $_notifications = $user->notifications()->limit(3)->get();
+        foreach($_notifications as $notification){
             array_push($notifications, new NotificationResource($notification));
         }
 
-        return ['notifications' => $notifications];
+        if(count($_notifications) > 1){
+            $left_to_load = $user->notifications()->where('notifications.created_at', '<', $_notifications->last()->created_at)->count();
+        }
+
+        return ['notifications' => $notifications, 'left_to_load' => $left_to_load];
     }
 
     /**
@@ -36,13 +41,18 @@ class NotificationController extends Controller
     public function fetchMoreNotifications(Request $request){
         $user = \Auth::user();
         $notifications = [];
+        $left_to_load = 0;
+        $_notifications = $user->notifications()->where('notifications.created_at', '<', $request->date)->limit(3)->get();
 
-
-        foreach($user->notifications()->where('notifications.created_at', '<', $request->date)->limit(3)->get() as $notification){
+        foreach($_notifications as $notification){
             array_push($notifications, new NotificationResource($notification));
         }
 
-        return ['notifications' => $notifications];
+        if(count($_notifications) > 1){
+            $left_to_load = $user->notifications()->where('notifications.created_at', '<', $_notifications->last()->created_at)->count();
+        }
+
+        return ['notifications' => $notifications, 'left_to_load' => $left_to_load];
     }
 
     /**

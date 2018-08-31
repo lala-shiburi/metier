@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Notification;
 class OpeningController extends Controller
 {
     public function fetch(Request $request){
-        return new OpeningResource(Opening::findOrFail($request->opening_id)->load('company')->load('programmingLanguages')->load('technologies'));
+        return new OpeningResource(Opening::findOrFail($request->opening_id));
     }
 
     public function update(Request $request){
