@@ -1,6 +1,6 @@
 <template>
   <div style="padding-bottom: 100px;">
-    <wizard ref="wizard" :currentPanel="0">
+    <wizard v-if="!existing_application && opening" ref="wizard" :currentPanel="0">
       <template slot="steps">
         <div class="step-container" name="Basic Info">
           <div class="step">
@@ -83,6 +83,14 @@
         </form>
       </template>
     </wizard>
+    <card v-else>
+      <div v-if="opening">
+        Your application to this opening already exist.
+      </div>
+      <div class="text-center text-muted" v-else>
+        Loading...
+      </div>
+    </card>
   </div>
 </template>
 
@@ -111,7 +119,7 @@ export default {
       user_id: null,
       opening_id: null
     }),
-    opening:{},
+    opening: null,
     public_path: location.origin,
     editorOption: {
       // some quill options
@@ -125,12 +133,22 @@ export default {
           [{ 'font': [] }],
         ],
       }
-    }
+    },
+    existing_application: null
   }),
 
   methods: {
     apply(){
       this.$refs.wizard.next();
+    },
+    async fetch_opening(){
+      const { data } = await axios({
+          method: 'get',
+          url: '/api/opening/fetch',
+          params: { opening_id: this.$route.params.opening_id }
+        })
+      this.opening = data.data;
+      this.existing_application = data.data.user_application;
     },
     async create () {
       this.form1.user_id = this.user.id;
@@ -162,15 +180,7 @@ export default {
     user: 'auth/user'
   }),
   mounted(){
-    var $this = this;
-    (async function(){
-      const { data } = await axios({
-          method: 'get',
-          url: '/api/opening/fetch',
-          params: { opening_id: $this.$route.params.opening_id }
-        })
-      $this.opening = data.data;
-    }())
+    this.fetch_opening();
   }
 }
 </script>

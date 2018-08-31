@@ -10,7 +10,7 @@
             </button>
             </div>
             <div class="modal-body">
-              <div class="list-group">
+              <div class="list-group" v-if="notifications.length > 0">
                 <router-link data-dismiss="modal" :to="returnNotificationRoute(notification)" v-for="(notification, index) in notifications" v-bind:key="index" class="list-group-item list-group-item-action flex-column align-items-start">
                   <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">{{notification.title}}</h5>
@@ -27,8 +27,11 @@
                   </div>
                 </router-link>
               </div>
+              <div v-else>
+                <p class="text-center text-muted"> Nothing to show </p>
+              </div>
               <div class="clearfix"></div>
-              <form @submit.prevent="fetchMore" class="text-center">
+              <form @submit.prevent="fetchMore" class="text-center" v-if="!loaded_all">
                 <br>
                 <v-button :loading="loading" type="success">Load More</v-button>
               </form>
@@ -53,20 +56,26 @@ export default {
   data : () =>({
     notifications: [],
     oldest_notification:{},
-    loading: false
+    loading: false,
+    loaded_all: false,
   }),
   methods: {
     async show(){
-      this.loading = true;
       jQuery(this.$refs.modal).modal('show');
-      const {data} = await axios({
-        method: 'get',
-        url: '/api/notification/fetch',
-      })
 
-      this.loading = false;
-      this.notifications = data.notifications
-      this.oldest_notification = data.notifications[data.notifications.length - 1];
+      // don't trigger initial fetch if loaded already
+      if(this.notifications.length == 0){
+        this.loading = true;
+        const {data} = await axios({
+          method: 'get',
+          url: '/api/notification/fetch',
+        })
+
+        this.loading = false;
+        this.notifications = data.notifications
+        this.oldest_notification = data.notifications[data.notifications.length - 1];
+        this.loaded_all = !data.left_to_load;
+      }
     },
     async fetchMore(){
       this.loading = true;
@@ -79,6 +88,7 @@ export default {
       this.loading = false;
       this.notifications = this.notifications.concat(data.notifications)
       this.oldest_notification = data.notifications[data.notifications.length - 1];
+      this.loaded_all = !data.left_to_load;
     },
     returnNotificationRoute(notification){
       switch(notification.type){
