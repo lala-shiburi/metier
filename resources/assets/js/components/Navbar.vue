@@ -263,6 +263,22 @@
           $this.notifications_count++
             $this.loadNotification(notification.id)
         });
+    },
+    async loadNotification(id){
+      const {data} = await axios({
+        method: 'get',
+        url: '/api/notification/fetch/one',
+        params: {notification_id: id}
+      });
+
+      this.$refs['notification-modal'].notifications.unshift(data.notification);
+
+      this.$notify({
+        group: 'foo',
+        title: data.notification.title,
+        text: data.notification.message,
+        animation: {enter: {'margin-right':['-100', 0], opacity: [1, 0]}, leave: {opacity: [0, 1]}}
+      })
     }
   }
 

@@ -76,6 +76,7 @@ export default {
       this.$refs['application-detail-modal'].show();
     },
     checkIfFinished(application){
+      console.log(application)
       var finished = true;
       for(var i = 0; i < application.opening.hiring_procedure.hiring_steps.length; i++){
         var foundStepResult = false;

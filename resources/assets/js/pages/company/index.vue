@@ -4,13 +4,13 @@
       <div class="profile-tile-view">
         <cover @update="updateCompany" :company="company" :authorizeEdit="authorizeEdit"/>
         <div class="row">
-          <div class="col-md-2 col-md-3 col-5">
+          <div class="col-lg-2 col-md-3 col-5">
             <logo @update="updateCompany" :company="company" :authorizeEdit="authorizeEdit"/>
           </div>
-          <div class="col-md-5 col-md-5 col-7">
+          <div class="col-lg-5 col-md-5 col-7">
             <h3>{{company.name}}</h3>
           </div>
-          <div class="col-md-5 col-md-4 col-12">
+          <div class="col-lg-5 col-md-4 col-12">
             <div class="btn-group pull-right" v-if="authorizeEdit">
               <router-link :to="{ name: 'opening.create', params: {company_id:company_id} }" class="btn btn-light">Create Opening</router-link>
               <span class="dvder"/>

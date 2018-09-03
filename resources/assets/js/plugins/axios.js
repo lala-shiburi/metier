@@ -48,6 +48,7 @@ axios.interceptors.response.use(response => response, error => {
       store.commit('auth/LOGOUT')
       store.commit('auth/SAVE_EXPIRED_URL',{ url: location.pathname })
       router.push({ name: 'login' })
+      jQuery('.modal-backdrop').remove();
     })
   }
 

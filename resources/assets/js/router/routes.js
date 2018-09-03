@@ -6,11 +6,18 @@ const PasswordReset = () => import('~/pages/auth/password/reset').then(m => m.de
 const NotFound = () => import('~/pages/errors/404').then(m => m.default || m)
 
 const Home = () => import('~/pages/home').then(m => m.default || m)
+
+// user pages
 const UserProfile = () => import('~/pages/user/index').then(m => m.default || m)
+const ApplicationProgress = () => import('~/pages/user/application-progress-page').then(m => m.default || m)
+
+// company pages
 const CompanyProfile = () => import('~/pages/company/index').then(m => m.default || m)
 const CompanyHiringApplicants = () => import('~/pages/company/hiringApplicants').then(m => m.default || m)
 const CompanyHiringProcesses = () => import('~/pages/company/hiringProcesses').then(m => m.default || m)
 const CompanyHiringProcessesCreate = () => import('~/pages/hiring-process/edit').then(m => m.default || m)
+
+// opening pages
 const OpeningProfile = () => import('~/pages/opening/index').then(m => m.default || m)
 const UserCompanies = () => import('~/pages/user/companies').then(m => m.default || m)
 const OpeningApply = () => import('~/pages/opening/apply').then(m => m.default || m)
@@ -58,6 +65,7 @@ export default [
   // user routes
   { path: '/profile/:id?', name: 'user.profile', component: UserProfile },
   { path: '/user/companies', name: 'user.companies', component: UserCompanies },
+  { path: '/user/application/progress/:application_id', name: 'user.application.progress', component: ApplicationProgress },
 
   // opening routes
   { path: '/opening/profile/:id', name: 'opening.profile', component: OpeningProfile },

@@ -23,6 +23,7 @@
           <div class="col-md-6 offset-md-3">
             <opening-card :noApply="true" v-if="opening.id" :opening="opening">
               <!-- Submit Button -->
+              <br>
               <div style="height: 50px;">
                 <v-button :loading="opening.busy" style="position:absolute; bottom: 15px; right:15px;" type="success">Continue</v-button>
               </div>
@@ -85,7 +86,7 @@
     </wizard>
     <card v-else>
       <div v-if="opening">
-        Your application to this opening already exist.
+        Your application to this Job Opening already exist.
       </div>
       <div class="text-center text-muted" v-else>
         Loading...

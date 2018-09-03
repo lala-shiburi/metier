@@ -1,10 +1,10 @@
 <template>
   <card class="opening-card">
     <div class="row">
-      <div class="col-md-2">
-          <img class="job-des-icon" :src="public_path+'/images/company.png'" alt="">
+      <div class="col-lg-2">
+          <img class="job-des-icon" :src="public_path+'/images/company.png'" alt="" style="max-width:100px">
       </div>
-      <div class="col-md-10">
+      <div class="col-lg-10 ">
           <h5>
             <router-link :to="{ name: 'opening.profile', params: { id: opening.id} }">
               {{opening.title}}

@@ -91,6 +91,10 @@
       right: 0px;
       transform: translateY(-50%);
     }
+    .line-half{
+      left: 0;
+      display: none;
+    }
     & .circle{
       position: relative;
       height: 20px;
@@ -104,6 +108,9 @@
     & .line{
       background: #007bff;
     }
+    & .line-half{
+      display: block;
+    }
     & .circle{
       background: #007bff;
     }
@@ -112,6 +119,9 @@
   &.finished{
     & .line{
       background: #28a745;
+    }
+    & .line-half{
+      display: none;
     }
     & .circle{
       background: #28a745;
