@@ -151,6 +151,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::group(['prefix' => 'fetch'], function(){
             Route::get('hiringApplications', 'HiringApplicationController@fetchApplications');
             Route::get('one', 'HiringApplicationController@fetchOneApplication');
+            Route::get('hiring/step/results', 'HiringApplicationController@fetchApplicationResults');
         });
     });
 
