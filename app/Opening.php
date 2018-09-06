@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Opening extends Model
 {
+    use SoftDeletes;
+    
     protected $fillable = ['title','details','company_id'];
     protected $appends = ['picture'];
 

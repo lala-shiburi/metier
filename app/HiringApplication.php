@@ -14,7 +14,7 @@ class HiringApplication extends Model
     }
 
     public function opening(){
-        return $this->belongsTo(Opening::class);
+        return $this->belongsTo(Opening::class)->withTrashed();
     }
 
     public function hiringStepResults(){
