@@ -74,11 +74,15 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::group(['prefix'=>'fetch'], function(){
             Route::get('/', 'CompanyController@fetch');
             Route::get('openings', 'CompanyController@fetch_openings');
-            Route::get('hiring/applications', 'CompanyController@fetchHiringApplications');
+            Route::get('applications', 'CompanyController@fetchHiringApplications');
             Route::get('hiring/applications2', 'CompanyController@fetchHiringApplications2');
             Route::get('collaborators', 'CompanyController@fetchCollaborators');
             Route::post('search', 'CompanyController@fetchCompanySearch');
             Route::get('isBookMarked', 'CompanyController@fetchIsBookMarked');
+            
+            Route::group(['prefix' => 'applicants'], function(){
+                Route::get('lazy_load', 'CompanyController@lazyFetchHiringApplication');
+            });
         });
 
         // add
@@ -131,9 +135,15 @@ Route::group(['middleware' => 'auth:api'], function () {
             Route::post('search', 'OpeningController@search');
         });
 
+        // validate
         Route::group(["prefix" => "validate"],function(){
             Route::post('basicInfo', 'OpeningController@validateBasicInfo');
             Route::post('description', 'OpeningController@validateDescription');
+        });
+
+        // delete
+        Route::group(["prefix" => "delete"], function(){
+            Route::delete('soft', 'OpeningController@softDelete');
         });
         
         Route::post('create', 'OpeningController@create');
@@ -151,7 +161,8 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::group(['prefix' => 'fetch'], function(){
             Route::get('hiringApplications', 'HiringApplicationController@fetchApplications');
             Route::get('one', 'HiringApplicationController@fetchOneApplication');
-            Route::get('hiring/step/results', 'HiringApplicationController@fetchApplicationResults');
+            Route::get('hiring/step/results', 'HiringApplicationController@fetchApplicationStepAndResults');
+            Route::get('results', 'HiringApplicationController@fetchApplicationResults');
         });
     });
 
