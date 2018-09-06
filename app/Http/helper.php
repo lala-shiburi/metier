@@ -1,4 +1,17 @@
 <?php
+use \Carbon\Carbon;
+
+function translateDateTime($date_time){
+    Carbon::setLocale('en');
+    $translator = Carbon::getTranslator();
+    $translator->setMessages('en', array(
+        'day' => ':count day ago|:count days ago',
+    ));
+    $date1 = Carbon::parse($date_time);
+    $now = Carbon::now();
+
+    return $date1->diffForHumans($now, true, false, 2);
+}
 
 function saveBase64Photo($base64data,$name){
     $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base64data));

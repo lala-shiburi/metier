@@ -14,7 +14,33 @@ class OpeningResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        $authorizeEdit = false;
+        $application = null;
+        if(\Auth::check()){
+            $application = $this->applications()->where("user_id", \Auth::user()->id)->first();
+
+            // check if auth is allowed to edit opening
+            $user = \Auth::user();
+            $owned_companies = $user->ownedCompanies()->where('companies.id', $this->company_id)->count();
+            $managed_companies = $user->managedCompanies()->where('companies.id', $this->company_id)->count();
+            $authorizeEdit = ($managed_companies + $owned_companies) > 0;
+        }
+
+        return [
+            "company" => $this->company,
+            "programming_languages" => $this->programmingLanguages,
+            "technologies" => $this->technologies,
+            "id" => $this->id,
+            "title" => $this->title,
+            "picture" => $this->picture,
+            "details" => $this->details,
+            "salary_range" => $this->salary_range,
+            "professional_years" => $this->professional_years,
+            "created_at" => $this->created_at,
+            "user_application" => $application,
+            "authorize_edit" => $authorizeEdit,
+            "posted_at" => translateDateTime($this->created_at)
+        ];
     }
 
     public function with($request){
@@ -29,7 +55,7 @@ class OpeningResource extends JsonResource
         return [
             'meta' => [
                 'version' => '0.001',
-                'author' => 'Gart',
+                'author' => 'Uelmar Ortega <a href="https://www.facebook.com/uelmar.ortega">https://www.facebook.com/uelmar.ortega</a>',
                 'authorizeEdit' => $authorizeEdit
             ]
         ];

@@ -7,7 +7,6 @@ use \App\User;
 use \App\Company;
 use \App\HiringApplication;
 use \App\Opening;
-use \Carbon\Carbon;
 
 class NotificationResource extends JsonResource
 {
@@ -22,13 +21,6 @@ class NotificationResource extends JsonResource
         $title = '';
         $message = '';
 
-        Carbon::setLocale('en');
-        $translator = Carbon::getTranslator();
-        $translator->setMessages('en', array(
-            'day' => ':count day ago|:count days ago',
-        ));
-        $date1 = Carbon::parse($this->created_at);
-        $now = Carbon::now();
         $data = $this->data;
         if(is_string($data)){
             $data = json_decode($data);
@@ -40,7 +32,7 @@ class NotificationResource extends JsonResource
                 $applicant = User::find($data->applicant_id);
                 return [
                     "created_at"=>$this->created_at,
-                    "submitted"=>$date1->diffForHumans($now, true, false, 2),
+                    "submitted"=>translateDateTime($this->created_at),
                     "applicant"=>$applicant,
                     "application"=>$application,
                     "company"=>Company::find($data->company_id),

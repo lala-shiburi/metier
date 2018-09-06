@@ -41,11 +41,19 @@ class HiringApplicationController extends Controller
     public function fetchOneApplication(Request $request){
         return ['application'=>HiringApplication::find($request->application_id)->load('user','opening','opening.company','opening.technologies','opening.programmingLanguages')];
     }
+    
+    /**
+     * Return application results
+     */
+    public function fetchApplicationResults(Request $request){
+        $application = HiringApplication::find($request->application_id);
+        return ['results'=>$application->hiringStepResults->load('notes','hiringStep')];
+    }
 
     /**
      * Return hiring process results
      */
-    public function fetchApplicationResults(Request $request){
+    public function fetchApplicationStepAndResults(Request $request){
         $application = HiringApplication::find($request->application_id);
         $hiring_step_results = $application->hiringStepResults;
         $hiring_steps = $application->opening->hiringProcedure->hiring_steps;

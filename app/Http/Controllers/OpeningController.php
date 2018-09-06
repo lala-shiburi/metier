@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Notification;
 
 class OpeningController extends Controller
 {
+    protected $openingService;
+
+    function __construct(){
+        $this->openingService = new \App\Services\OpeningService();
+    }
+
     public function fetch(Request $request){
         return new OpeningResource(Opening::findOrFail($request->opening_id));
     }
@@ -90,7 +96,18 @@ class OpeningController extends Controller
     }
 
     public function search(Request $request){
-        $openings = Opening::where('openings.title','like','%'.$request->keyword.'%');
-        return ['openings'=>$openings->with('company','programmingLanguages','technologies')->get()];
+        $openings = Opening::where('openings.title','like','%'.$request->keyword.'%')->orderBy('created_at','desc')->get();
+        return ['openings'=>$this->openingService->handleOpeningResource($openings)];
+    }
+
+    /**
+     * Soft delete opening
+     * 
+     * @return JsonResource
+     */
+    public function softDelete(Request $request){
+        Opening::findOrFail($request->opening_id)->delete();
+
+        return ['status'=>'success'];
     }
 }
