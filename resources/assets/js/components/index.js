@@ -17,6 +17,7 @@ import CompanyCard from './CompanyCard'
 import IconButton from './IconButton'
 import UnickTable from './UnickTable'
 import EntityHeader from './EntityHeader'
+import UnickLoader from './loaders/roller'
 import { HasError, AlertError, AlertSuccess } from 'vform'
 
 var mixins = {
@@ -71,7 +72,8 @@ Vue.mixin(mixins);
   OpeningCard,
   PhotoConverter,
   Wizard,
-  AlertSuccess
+  AlertSuccess,
+  UnickLoader
 ].forEach(Component => {
   Vue.component(Component.name, Component)
 })

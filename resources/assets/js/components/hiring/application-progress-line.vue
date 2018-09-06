@@ -1,9 +1,12 @@
 <template>
-  <ul class="progress-line" :class="finished ? 'finished' : ''" ref="steps">
-    <li class="step" :class="step.result ? 'active': ''" v-for="(step, index) in hiring_steps" v-bind:key="index">
-      <div class="circle" data-toggle="tooltip" data-html="true" :title="'<b>'+step.name+'</b><p>'+(step.description ? step.description : '')+'</p>'"></div>
-    </li>
-  </ul>
+  <div class="progress-line-container">
+    <ul v-if="hiring_steps.length" class="progress-line" :class="finished ? 'finished' : ''" ref="steps">
+      <li class="step" data-toggle="tooltip" data-html="true" :title="'<b>'+step.name+'</b><p>'+(step.description ? step.description : '')+'</p>'" :class="step.result ? 'active': ''" v-for="(step, index) in hiring_steps" v-bind:key="index">
+        <div class="circle"></div>
+      </li>
+    </ul>
+    <unick-loader v-else class="loader" />
+  </div>
 </template>
 
 <script>
@@ -59,6 +62,8 @@ export default {
       }
     },
     async fetchApplication(){
+      this.hiring_steps=[];
+
       const { data } = await axios({
         method: 'get',
         url: '/api/application/fetch/hiring/step/results',
@@ -107,7 +112,22 @@ export default {
     }
   },
   mounted(){
-    this.fetchApplication();
+    if(this.application.id){
+      this.fetchApplication();
+    }
   }
 }
 </script>
+<style lang="scss" scoped>
+.progress-line-container{
+  position: relative;
+  min-height: 50px;
+  .loader{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
+}
+</style>
+

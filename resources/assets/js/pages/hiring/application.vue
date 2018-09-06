@@ -3,7 +3,10 @@
     <div class="row">
       <div class="col-md-4">
         <p data-v-6f379cea=""><strong data-v-6f379cea="">Job Opening</strong></p>
-        <opening-card :noApply="true" :opening="application.opening"/>
+        <opening-card v-if="application.opening" :noApply="true" :opening="application.opening"/>
+        <p class="lead" v-else>
+          Opening is no longer active.
+        </p>
       </div>
       <div class="col-md-8 border-left-md">
         <div class="media">

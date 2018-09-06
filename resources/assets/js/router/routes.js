@@ -14,6 +14,7 @@ const ApplicationProgress = () => import('~/pages/user/application-progress-page
 // company pages
 const CompanyProfile = () => import('~/pages/company/index').then(m => m.default || m)
 const CompanyHiringApplicants = () => import('~/pages/company/hiringApplicants').then(m => m.default || m)
+const CompanyApplicants = () => import('~/pages/hiring/application-list').then(m => m.default || m)
 const CompanyHiringProcesses = () => import('~/pages/company/hiringProcesses').then(m => m.default || m)
 const CompanyHiringProcessesCreate = () => import('~/pages/hiring-process/edit').then(m => m.default || m)
 
@@ -61,6 +62,7 @@ export default [
   { path: '/company/:id/hiringprocceses', name: 'company.hiringprocceses', component: CompanyHiringProcesses },
   { path: '/company/:company_id/hiringprocceses/create/:id?', name: 'company.hiringprocceses.create', component: CompanyHiringProcessesCreate },
   { path: '/company/search', name: 'company.search', component: SearchCompanyPage },
+  { path: '/company/:id/applications', name: 'company.applicants', component: CompanyApplicants},
 
   // user routes
   { path: '/profile/:id?', name: 'user.profile', component: UserProfile },

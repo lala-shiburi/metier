@@ -27,10 +27,9 @@ $config = [
       ],
 
       'programming_languages' => \App\ProgrammingLanguage::all(),
-
       'technologies' => \App\Technology::all(),
-      
       'provinces' => \DB::table('provinces')->get(),
+      'author' => 'Hinimo ni nako. Umar ni.',
 ];
 
 $polyfills = [
@@ -80,5 +79,16 @@ $polyfills = [
     <script src="{{ mix('js/app.js') }}"></script>
     <script src="https://unpkg.com/vue-ckeditor2"></script>
   @endif
+  <script>
+  function panelManager(target){
+    this.showPanel = function(panel){
+      this.hideAll();
+      jQuery(panel).show();
+    },
+    this.hideAll = function(){
+      jQuery(target).find('.panel').hide();
+    }
+  }
+  </script>
 </body>
 </html>

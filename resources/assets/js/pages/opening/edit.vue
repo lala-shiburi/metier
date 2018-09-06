@@ -146,7 +146,6 @@ import axios from 'axios'
 import vuePhotoEditor from 'unick-vue-photo-editor';
 export default {
   middleware: 'auth',
-  scrollToTop: false,
   components: {
     vuePhotoEditor
   },

@@ -87,6 +87,9 @@
     <card v-else>
       <div v-if="opening">
         Your application to this Job Opening already exist.
+        <router-link :to="{ name: 'user.application.progress', params: { application_id : existing_application.id } }">
+          See application
+        </router-link>
       </div>
       <div class="text-center text-muted" v-else>
         Loading...

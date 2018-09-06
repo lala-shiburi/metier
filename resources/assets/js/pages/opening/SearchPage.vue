@@ -15,9 +15,9 @@
       </card>
     </div>
     <div class="col-md-12">
-      <br>
       <div class="row">
         <div class="col-md-12" v-for="(opening,index) in openings" v-bind:key="index">
+          <div class="card-bd-top"></div>
           <opening-card :opening="opening"></opening-card>
         </div>
       </div>
@@ -67,5 +67,10 @@ export default {
 <style>
 .settings-card .card-body {
   padding: 0;
+}
+.card-bd-top{
+  background: linear-gradient(135deg, #f02fc2 0%, #6094ea 100%);
+  height: 4px;
+  width: 100%;
 }
 </style>

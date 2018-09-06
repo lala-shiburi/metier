@@ -19,7 +19,7 @@
           <router-link :to="{ name: 'company.profile', params: { id: company.id} }">
             {{company.name}}
           </router-link>
-          </h5>
+        </h5>
         <ellipsis-text class="job-des" v-if="company.employee_count">
           <template slot="icon">
             <img class="job-des-icon" :src="public_path+'/images/employees.png'" alt="">

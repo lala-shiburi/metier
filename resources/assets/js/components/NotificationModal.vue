@@ -18,12 +18,14 @@
                   </div>
                   <div v-if="notification.type == 'application'">
                     <p class="mb-1">{{notification.applicant.name}}</p>
-                    <small>{{notification.opening.title}}</small>
+                    <small v-if="notification.opening">{{notification.opening.title}}</small>
+                    <small v-else>Opening was deleted</small>
                     <footer class="blockquote-footer">{{notification.company.name}}</footer>
                   </div>
                   <div v-if="notification.type == 'new_opening'">
                     <p class="mb-1">{{notification.company.name}} posted a new opening</p>
-                    <small>{{notification.opening.title}}</small>
+                    <small v-if="notification.opening">{{notification.opening.title}}</small>
+                    <small v-else>Opening was deleted</small>
                   </div>
                 </router-link>
               </div>
@@ -55,7 +57,6 @@ export default {
   }),
   data : () =>({
     notifications: [],
-    oldest_notification:{},
     loading: false,
     loaded_all: false,
   }),
@@ -73,7 +74,6 @@ export default {
 
         this.loading = false;
         this.notifications = data.notifications
-        this.oldest_notification = data.notifications[data.notifications.length - 1];
         this.loaded_all = !data.left_to_load;
       }
     },
@@ -82,12 +82,11 @@ export default {
       const {data} = await axios({
         method: 'get',
         url: '/api/notification/fetch/more',
-        params: { date : this.oldest_notification.created_at.date }
+        params: { date : this.notifications[this.notifications.length - 1].created_at.date }
       });
 
       this.loading = false;
       this.notifications = this.notifications.concat(data.notifications)
-      this.oldest_notification = data.notifications[data.notifications.length - 1];
       this.loaded_all = !data.left_to_load;
     },
     returnNotificationRoute(notification){

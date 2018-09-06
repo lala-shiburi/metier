@@ -1,9 +1,9 @@
 <template>
   <div class="row">
-    <div class="col-md-12" id="opening-cover-fluid">
+    <div class="col-md-12" id="opening-cover-fluid" v-if="opening">
       <div class="profile-tile-view">
         <div class="profile-cover" style="height: 300px;">
-          <img class="absolute-center" :src="public_path+'/images/opening-background.jpg'">
+          <img class="absolute-center" :src="opening.company.cover">
         </div>
         <div class="row" style="margin-top: -10%;">
           <div class="col-md-6 offset-md-3">
@@ -27,7 +27,7 @@
                   <h5>
                     {{opening.title}}
                   </h5>
-                  <ellipsis-text class="job-des">
+                  <ellipsis-text class="job-des job-des-add">
                     <h5>
                       {{opening.company.address}}
                     </h5>
@@ -66,7 +66,7 @@
 
     <div class="container">
       <card class="m-tb-10">
-        <div v-if="opening">
+        <div>
           <h5>Description</h5>
           {{opening.details}}
           We are seeking an experienced engineer with a can-do attitude to hit ground running when they join our web
@@ -75,7 +75,6 @@
         </div>
         <br>
       </card>
-
       <div class="row" v-if="opening">
         <div class="col-md-4">
           <card class="opening-card" title="Company">
@@ -208,4 +207,9 @@
     background: transparent;
   }
 
+  .job-des-add h5{
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 300;
+  }
 </style>
