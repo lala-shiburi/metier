@@ -12,6 +12,12 @@ use \App\HiringStepResultNote;
 
 class HiringProcessController extends Controller
 {
+    protected $applicationService;
+
+    function __construct(){
+        $this->applicationService = new \App\Services\ApplicationService();
+    }
+
     public function validate_process_step(Request $request){
         $this->validate($request, [
             'name' => 'required'
@@ -108,20 +114,6 @@ class HiringProcessController extends Controller
             'result' => 'required'
         ]);
 
-        $hiringStepResult = new HiringStepResult;
-        $hiringStepResult->result = $request->result;
-        $hiringStepResult->hiring_step_id = $request->hiring_step_id;
-        $hiringStepResult->hiring_application_id = $request->hiring_application_id;
-        $hiringStepResult->save();
-
-        foreach($request->notes as $note){
-            $hiringStepResultNote = new HiringStepResultNote;
-            $hiringStepResultNote->title = $note['title'];
-            $hiringStepResultNote->note = $note['note'];
-            $hiringStepResultNote->hiring_step_result_id = $hiringStepResult->id;
-            $hiringStepResultNote->save();
-        }
-
-        return [ 'hiringStepResult' => $hiringStepResult->load('notes') ];
+        return [ 'hiringStepResult' => $this->applicationService->handleStepResultCreation($request)->load('notes','hiringApplication','hiringApplication.user','hiringApplication.opening') ];
     }
 }

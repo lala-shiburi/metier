@@ -9,8 +9,7 @@ use App\Http\Resources\ApplicationResource;
 
 class CompanyController extends Controller
 {
-    protected $openingService;
-    protected $applicationService;
+    protected $openingService,$applicationService;
 
     function __construct(){
         $this->openingService = new \App\Services\OpeningService();

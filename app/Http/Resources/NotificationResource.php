@@ -49,7 +49,7 @@ class NotificationResource extends JsonResource
                 $company = $opening->company;
                 return [
                     "created_at"=>$this->created_at,
-                    "submitted"=>$date1->diffForHumans($now, true, false, 2),
+                    "submitted"=>translateDateTime($this->created_at),
                     "opening"=>$opening,
                     "company"=>$company,
                     "message"=>$company->name." posted a new opening - ".$opening->title,

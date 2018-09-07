@@ -22,7 +22,8 @@ class ApplicationResource extends JsonResource
             "hiring_step_results" => $this->hiringStepResults->load('notes'),
             "opening" => $this->opening->load('hiringProcedure', 'hiringProcedure.hiring_steps'),
             "posted_at" => translateDateTime($this->created_at),
-            "updated_at" => $this->updated_at
+            "updated_at" => $this->updated_at,
+            "status" => $this->status
         ];
     }
 }

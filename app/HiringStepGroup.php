@@ -8,7 +8,7 @@ class HiringStepGroup extends Model
 {
     //
     public function hiring_steps(){
-        return $this->hasMany("\App\HiringStep");
+        return $this->hasMany("\App\HiringStep")->orderBy('hiring_steps.level','asc');
     }
 
     /**

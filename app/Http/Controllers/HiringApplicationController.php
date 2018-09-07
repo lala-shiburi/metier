@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Notification;
 
 class HiringApplicationController extends Controller
 {
+    protected $applicationService;
+
+    function __construct(){
+        $this->applicationService = new  \App\Services\ApplicationService();
+    }
+
     public function createApplication(Request $request){
 
         $this->validate($request,[
@@ -62,5 +68,16 @@ class HiringApplicationController extends Controller
             'hiring_step_results'=>$hiring_step_results,
             'hiring_steps'=>$hiring_steps
         ];
+    }
+
+    /**
+     * Set Application Status to dismiss/
+     */
+    public function dismissApplication(Request $request){
+        $application = HiringApplication::find($request->application_id);
+
+        $this->applicationService->setApplicationInactive($application);
+
+        return ['status'=>'success', 'message'=>'Application Dismissed'];
     }
 }
