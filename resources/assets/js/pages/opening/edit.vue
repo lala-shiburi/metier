@@ -191,7 +191,7 @@ export default {
   methods: {
     updatePhoto(photo_data){
       this.form1.photo = photo_data;
-      this.$refs['opening-photo'].src = photo_data;
+      this.$refs['opening-picture'].src = photo_data;
     },
     showPhotoEditor(){
       this.$refs['photo-editor'].show(this.form1.photo);

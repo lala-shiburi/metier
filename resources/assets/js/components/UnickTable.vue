@@ -57,9 +57,7 @@ export default {
     // 
   },
   mounted(){
-    jQuery(function () {
-      jQuery('[data-toggle="tooltip"]').tooltip()
-    })
+    jQuery(this.$el).find('[data-toggle="tooltip"]').tooltip()
   }
 }
 </script>

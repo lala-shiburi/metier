@@ -75,7 +75,7 @@
           <!-- Submit Button -->
           <div class="form-group row" style="margin-top: 30px;">
             <div class="col-md-12" style="text-align:center;">
-              <router-link :to="{ name: 'company.profile', params: { id : opening.company_id } }" class="navbar-brand">
+              <router-link :to="{ name: 'company.profile', params: { id : opening.company.id } }" class="navbar-brand">
                 <!-- {{ appName }} -->
                 See other openings
               </router-link>

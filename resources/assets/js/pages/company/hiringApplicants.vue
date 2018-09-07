@@ -159,9 +159,7 @@ export default {
     jQuery(this.$el).find('[data-toggle="tooltip"]').tooltip();
   },
   mounted(){
-    jQuery(function () {
-      jQuery('[data-toggle="tooltip"]').tooltip()
-    })
+    jQuery(this.$el).find('[data-toggle="tooltip"]').tooltip()
   }
 }
 </script>

@@ -2,16 +2,16 @@
   <div class="simple-card">
     <nav>
       <div class="nav nav-tabs" id="nav-tab" role="tablist">
-        <a class="nav-item nav-link active" data-toggle="tab" href="#active-application" role="tab" aria-controls="nav-home" aria-selected="true">Active Applications</a>
-        <a class="nav-item nav-link" data-toggle="tab" href="#inactive-application" role="tab" aria-controls="nav-profile" aria-selected="false">Inactive Applications</a>
+        <router-link active-class="active" :to="{ name: tab.route }" v-for="tab in tabs" :key="tab.route" class="nav-item nav-link">
+          {{tab.name}}
+        </router-link>
       </div>
     </nav>
     <div class="tab-content" id="nav-tabContent">
       <div class="tab-pane fade show active" id="active-application" role="tabpanel" aria-labelledby="nav-home-tab">
-        <active-applications/>
-      </div>
-      <div class="tab-pane fade show" id="inactive-application" role="tabpanel" aria-labelledby="nav-home-tab">
-        <!--  -->
+        <transition name="fade" mode="out-in">
+          <router-view/>
+        </transition>
       </div>
     </div>
   </div>
@@ -19,12 +19,14 @@
 
 <script>
 import axios from 'axios'
-import ActiveApplications from './application-list-components/active-applications';
+import SubmittedApplications from './application-list-components/submitted-applications';
+import InProgressApplications from './application-list-components/in-progress-applications';
 
 export default {
   middleware: 'auth',
   components: {
-    ActiveApplications
+    SubmittedApplications,
+    InProgressApplications
   },
   data : () =>({
     public_path: location.origin,
@@ -36,16 +38,29 @@ export default {
     // 
   },
   computed:{
-    // 
+    tabs() {
+      return [
+        {
+          name: 'Submitted Applications',
+          route: 'company.applicants.submitted'
+        },
+        {
+          name: 'In Progress',
+          route: 'company.applicants.in_progress'
+        },
+        {
+          name: 'Finished',
+          route: 'company.applicants.finished'
+        },
+        {
+          name: 'Inactive',
+          route: 'company.applicants.inactive'
+        }
+      ]
+    }
   },
   created: function(){
     this.company_id = this.$route.params.id;
-    jQuery(this.$el).find('[data-toggle="tooltip"]').tooltip();
   },
-  mounted(){
-    jQuery(function () {
-      jQuery('[data-toggle="tooltip"]').tooltip()
-    })
-  }
 }
 </script>

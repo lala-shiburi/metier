@@ -1,7 +1,7 @@
 <template>
   <div class="progress-line-container">
-    <ul v-if="hiring_steps.length" class="progress-line" :class="finished ? 'finished' : ''" ref="steps">
-      <li class="step" data-toggle="tooltip" data-html="true" :title="'<b>'+step.name+'</b><p>'+(step.description ? step.description : '')+'</p>'" :class="step.result ? 'active': ''" v-for="(step, index) in hiring_steps" v-bind:key="index">
+    <ul v-if="hiring_steps.length" class="progress-line" :class="application.status == 2 ? 'finished' : ''" ref="steps">
+      <li class="step" :class="step.result ? ((application.status == 3) ? 'inactive' : 'active'): ''" data-toggle="tooltip" data-html="true" :title="'<b>'+step.name+'</b><p>'+(step.description ? step.description : '')+'</p>'" v-for="(step, index) in hiring_steps" v-bind:key="index">
         <div class="circle"></div>
       </li>
     </ul>
@@ -58,7 +58,9 @@ export default {
 
         jQuery(steps.children[i]).css({ 'z-index' : steps.children.length - i });
 
-        jQuery('[data-toggle="tooltip"]').tooltip()
+        jQuery(this.$el).find('[data-toggle="tooltip"]').tooltip({
+          trigger: 'hover'
+        })
       }
     },
     async fetchApplication(){
@@ -92,27 +94,50 @@ export default {
     },
     getCurrentStep(data){
       this.finished = true;
-      var step = null;
       var current_step = null;
+
       for(var i = 0; i < data.hiring_steps.length; i++){
-        step = data.hiring_steps[i];
-        var matched_result = null;
-        for(var x = 0; x < data.hiring_step_results.length; x++){
-          if(data.hiring_step_results[x].hiring_step_id == data.hiring_steps[i].id){
-            matched_result = data.hiring_step_results[x]
+        var result_found = this.getStepMatchedResult(data.hiring_steps[i], data.hiring_step_results);
+
+        if(result_found){
+          if(data.hiring_steps.length - 1 == i ){
+            this.finished = true;
+          }
+          else{
+            if(!this.getStepMatchedResult(data.hiring_steps[i], data.hiring_step_results)){
+              current_step = data.hiring_steps[i]
+              i = data.hiring_steps.length;
+              this.finished = false;
+            }
           }
         }
-        
-        if(!matched_result){
+        else{
+          current_step = data.hiring_steps[i]
+          i = data.hiring_steps.length;
           this.finished = false;
-          current_step = step;
         }
       }
+      
       this.$emit('update', {'step':current_step, finished: this.finished});
+    },
+    getStepMatchedResult(step, hiring_step_results){
+      var result_found;
+      for(var x = 0; x <  hiring_step_results.length; x++){
+        if(step.id == hiring_step_results[x].hiring_step_id){
+          result_found = step;
+        }
+      }
+
+      return result_found;
     }
   },
   mounted(){
     if(this.application.id){
+      this.fetchApplication();
+    }
+  },
+  watch:{
+    application(){
       this.fetchApplication();
     }
   }

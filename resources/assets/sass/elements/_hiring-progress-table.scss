@@ -135,7 +135,17 @@
       background: #007bff;
     }
   }
-
+  & .inactive{
+    & .line{
+      background: #dc3545;
+    }
+    & .line-half{
+      display: block;
+    }
+    & .circle{
+      background: #dc3545;
+    }
+  }
   &.finished{
     & .line{
       background: #28a745;

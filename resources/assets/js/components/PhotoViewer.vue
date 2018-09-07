@@ -58,9 +58,7 @@ export default {
     }
   },
   mounted(){
-    jQuery(function () {
-      jQuery('[data-toggle="tooltip"]').tooltip()
-    })
+    jQuery(this.$el).find('[data-toggle="tooltip"]').tooltip()
 
     if(this.$refs.images.children.length > 1){
       for(var i = 0; i < this.$refs.images.children.length; i++){

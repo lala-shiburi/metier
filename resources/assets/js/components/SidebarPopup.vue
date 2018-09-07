@@ -28,7 +28,12 @@ export default {
     }
   },
   mounted(){
-    // 
+    const $this = this;
+    jQuery(document).keydown(function(ev){
+      if(ev.which == 27){
+        $this.hide();
+      }
+    })
   }
 }
 </script>

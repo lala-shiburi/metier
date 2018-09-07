@@ -85,7 +85,6 @@ export default {
     },
     rerenderProgressLine(){
       var $this = this;
-      console.log(this);
       Vue.nextTick(function () {
         $this.$refs['progress-component'].fetchApplication();
       })

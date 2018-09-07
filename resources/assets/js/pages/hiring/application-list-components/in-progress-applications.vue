@@ -2,7 +2,7 @@
   <div>
     <div class="simple-card-header row">
       <div class="col-md-9">
-        Dismissed Applications
+        Applications In Progress
       </div>
       <div class="col-md-3">
         <div class="input-group input-group-sm mb-3">
@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="body">
-        <application-item @show="showApplicationResults" @prepUpdate="prepApplicationUpdate" :application="application" :ref="'application-item-'+application.id" v-for="(application, index) in applications" v-bind:key="index"/>
+        <application-item @remove="removeApplication" @show="showApplicationResults" @prepUpdate="prepApplicationUpdate" :application="application" :ref="'application-item-'+application.id" v-for="(application, index) in applications" v-bind:key="index"/>
         <div class="row item-row" v-if="applications.length == 0">
           <div class="col-md-12 p-10 p-r-50 h-d-f-r">
             <center> Nothing to show </center>
@@ -49,7 +49,7 @@ import ApplicationUpdate from './application-update'
 import ApplicationResults from './application-results'
 import ApplicationItem from './application-item'
 export default {
-  name: "InactiveApplications",
+  name: "InProgressApplications",
   components: {
     ApplicationUpdate,
     ApplicationResults,
@@ -70,7 +70,7 @@ export default {
       var query = [
         {
           column: 'status',
-          value: 3
+          value: 1
         }
       ];
       var updated_at = this.applications.length ? this.applications[this.applications.length-1].updated_at.date : null;
@@ -101,7 +101,7 @@ export default {
       })
     },
     updateApplicationResult(data){
-      this.$refs['application-item-'+data.hiring_application_id][0].refresh();
+      this.applications[this.returnApplicationIndex(data.hiring_application)] = data.hiring_application;
     },
     showApplicationResults(data){
       this.$refs['application-application-results-component'].showApplicationResults(data);

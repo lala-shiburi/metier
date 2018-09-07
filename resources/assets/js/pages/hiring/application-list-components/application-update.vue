@@ -70,7 +70,7 @@
           </div>
         </div>
         <div class="panel has-footer submit-form">
-          <form @submit.prevent="submitResult" @keydown="stepResultForm.onKeydown($event)">
+          <form @submit.prevent="submitResult" @keydown="submitForm.onKeydown($event)">
             <div class="container-body">
               Result is {{rateForm.result}} out of 10.
               <div>
@@ -88,7 +88,7 @@
             </div>
             <div class="footer">
               <button type="button" v-on:click="showNoteForm" class="btn btn-secondary">Back</button>
-              <v-button :loading="stepResultForm.busy" type="success">Submit</v-button>
+              <v-button :loading="submitForm.busy" type="success">Submit</v-button>
             </div>
           </form>
         </div>
@@ -138,7 +138,7 @@ export default {
     rateForm: new Form({
       result: ''
     }),
-    stepResultForm: new Form({
+    submitForm: new Form({
       result: '',
       hiring_step_id: '',
       hiring_application_id: '',
@@ -167,16 +167,27 @@ export default {
       this.fetchProcedure();
     },
     async submitResult(){
-      this.stepResultForm.result = this.rateForm.result;
-      this.stepResultForm.notes = this.notes;
-      this.stepResultForm.hiring_step_id = this.currentStep.id;
-      this.stepResultForm.hiring_application_id = this.application.id;
-      const {data} = await this.stepResultForm.post('/api/company/hiringprocess/create/step/result');
+
+      // fill submit-form
+      this.fillSubmitForm();
+
+      const {data} = await this.submitForm.post('/api/company/hiringprocess/create/step/result');
 
       this.showDonePanel();
       this.hiring_step_results.push(data.hiringStepResult);
-      this.reset();
       this.$emit('update', data.hiringStepResult);
+      this.application = data.hiringStepResult.hiring_application;
+
+      // reset all forms and attributes for filling the next step result
+      this.reset();
+    },
+    fillSubmitForm(){
+      // fill submit-form with the other result form attributes
+      // fill with result form notes
+      this.submitForm.result = this.rateForm.result;
+      this.submitForm.notes = this.notes;
+      this.submitForm.hiring_step_id = this.currentStep.id;
+      this.submitForm.hiring_application_id = this.application.id;
     },
     showAppropriatePanel(){
       if(this.procedure_done){
@@ -199,7 +210,7 @@ export default {
     },
     reset(){
       this.rateForm.reset()
-      this.stepResultForm.reset();
+      this.submitForm.reset();
       this.notes = [],
       this.findCurrentStep();
       this.rerenderProgressLine();
@@ -238,19 +249,15 @@ export default {
         var result_found = this.getStepMatchedResult(this.hiring_steps[i]);
 
         if(result_found){
+          // this triggers if the procedure is finished already
           if(this.hiring_steps.length - 1 == i ){
             this.procedure_done = true;
-            console.log('finished')
-          }
-          else{
-            if(!this.getStepMatchedResult(this.hiring_steps[i])){
-              this.currentStep = this.hiring_steps[i]
-              i = this.hiring_steps.length;
-              this.procedure_done = false;
-            }
           }
         }
         else{
+          // if matched result is not found,
+          // the current looped step will be set as current step
+          // then the loop will be terminated
           this.currentStep = this.hiring_steps[i]
           i = this.hiring_steps.length;
           this.procedure_done = false;

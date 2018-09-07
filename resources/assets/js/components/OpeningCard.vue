@@ -160,12 +160,11 @@
         })
       }
     },
-    mounted() {
-      jQuery(function () {
-        jQuery('[data-toggle="tooltip"]').tooltip()
-      })
-    }
+  mounted(){
+    jQuery(this.$el).find('[data-toggle="tooltip"]').tooltip()
   }
+  }
+
 
 </script>
 <style lang="scss" scoped>

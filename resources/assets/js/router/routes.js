@@ -15,6 +15,10 @@ const ApplicationProgress = () => import('~/pages/user/application-progress-page
 const CompanyProfile = () => import('~/pages/company/index').then(m => m.default || m)
 const CompanyHiringApplicants = () => import('~/pages/company/hiringApplicants').then(m => m.default || m)
 const CompanyApplicants = () => import('~/pages/hiring/application-list').then(m => m.default || m)
+const CompanyApplicantsSubmitted = () => import('~/pages/hiring/application-list-components/submitted-applications').then(m => m.default || m)
+const CompanyApplicantsInProgress = () => import('~/pages/hiring/application-list-components/in-progress-applications').then(m => m.default || m)
+const CompanyApplicantsInActive = () => import('~/pages/hiring/application-list-components/inactive-applications').then(m => m.default || m)
+const CompanyApplicantsFinished = () => import('~/pages/hiring/application-list-components/finished-applications').then(m => m.default || m)
 const CompanyHiringProcesses = () => import('~/pages/company/hiringProcesses').then(m => m.default || m)
 const CompanyHiringProcessesCreate = () => import('~/pages/hiring-process/edit').then(m => m.default || m)
 
@@ -62,7 +66,15 @@ export default [
   { path: '/company/:id/hiringprocceses', name: 'company.hiringprocceses', component: CompanyHiringProcesses },
   { path: '/company/:company_id/hiringprocceses/create/:id?', name: 'company.hiringprocceses.create', component: CompanyHiringProcessesCreate },
   { path: '/company/search', name: 'company.search', component: SearchCompanyPage },
-  { path: '/company/:id/applications', name: 'company.applicants', component: CompanyApplicants},
+  { path: '/company/:id/applications', component: CompanyApplicants,
+    children: [
+      {path: '', redirect: { name: 'company.applicants.submitted' }},
+      {path: 'submitted', name: 'company.applicants.submitted', component: CompanyApplicantsSubmitted},
+      {path: 'in-progress', name: 'company.applicants.in_progress', component: CompanyApplicantsInProgress},
+      {path: 'finished', name: 'company.applicants.finished', component: CompanyApplicantsFinished},
+      {path: 'inactive', name: 'company.applicants.inactive', component: CompanyApplicantsInActive},
+    ]
+  },
 
   // user routes
   { path: '/profile/:id?', name: 'user.profile', component: UserProfile },

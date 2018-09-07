@@ -164,6 +164,11 @@ Route::group(['middleware' => 'auth:api'], function () {
             Route::get('hiring/step/results', 'HiringApplicationController@fetchApplicationStepAndResults');
             Route::get('results', 'HiringApplicationController@fetchApplicationResults');
         });
+
+        // update
+        Route::group(['prefix'=>'update'], function(){
+            Route::patch('dismiss', 'HiringApplicationController@dismissApplication');
+        });
     });
 
     // notification routes
