@@ -55,7 +55,7 @@ class OpeningResource extends JsonResource
         return [
             'meta' => [
                 'version' => '0.001',
-                'author' => 'Uelmar Ortega <a href="https://www.facebook.com/uelmar.ortega">https://www.facebook.com/uelmar.ortega</a>',
+                'author' => 'Gart <a href="#">Facebook</a>',
                 'authorizeEdit' => $authorizeEdit
             ]
         ];
