@@ -1,10 +1,10 @@
 <template>
   <div class="row">
     <div class="col-md-12">
-      <card title="Company Search">
+      <card title="Company Search" class="company-search">
         <form @submit.prevent="initSearch" @keydown="searchForm.onKeydown($event)">
           <div class="input-group mb-3">
-            <input type="text" class="form-control" v-model="searchForm.keyword" placeholder="Company Seach">
+            <input type="text" class="form-control" v-model="searchForm.keyword" placeholder="Search companies">
             <div class="input-group-prepend">
               <label class="input-group-text">
                 <input type="checkbox" v-model="searchForm.search_province" aria-label="Checkbox for following text input">
@@ -84,5 +84,17 @@ export default {
 <style>
 .settings-card .card-body {
   padding: 0;
+}
+
+.company-search {
+      background: linear-gradient(135deg, #f02fc2 0%, #6094ea 100%);
+}
+
+.input-group-append .btn {
+  border: 1px solid #ffffff;
+}
+
+.input-group-append .btn .fa {
+  color: #fff;
 }
 </style>

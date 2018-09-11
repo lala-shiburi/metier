@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-md-12">
-      <card title="Opening Search">
+      <card title="Opening Search" class="opening-search">
         <form @submit.prevent="initSearch" @keydown="searchForm.onKeydown($event)">
           <div class="input-group mb-3">
             <input type="text" class="form-control" v-model="searchForm.keyword" placeholder="Opening Seach">
@@ -73,4 +73,17 @@ export default {
   height: 4px;
   width: 100%;
 }
+
+.opening-search{
+    background: linear-gradient(135deg, #f02fc2 0%, #6094ea 100%);
+}
+
+.opening-search .input-group-append .btn {
+  border: 1px solid #ffffff;
+}
+
+.opening-search .input-group-append .btn .fa {
+  color: #ffffff;
+}
+
 </style>
