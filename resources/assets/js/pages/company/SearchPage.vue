@@ -87,7 +87,7 @@ export default {
 }
 
 .company-search {
-      background: linear-gradient(135deg, #f02fc2 0%, #6094ea 100%);
+    background: linear-gradient(135deg, #f02fc2 0%, #6094ea 100%);
 }
 
 .input-group-append .btn {
@@ -97,4 +97,5 @@ export default {
 .input-group-append .btn .fa {
   color: #fff;
 }
+
 </style>
