@@ -21,8 +21,7 @@ class UserController extends Controller
      */
     public function fetch_companies(Request $request){
         $user = \Auth::user();
-        $owned_company = $user->ownedCompanies;
-        $managed_company = $owned_company->merge($user->managedCompanies);
+        $managed_company = $user->managedCompanies->load('owner');
         $companies = [];
         foreach($managed_company as $company){
             $company->hiring_application_count = $company->applications()->count();

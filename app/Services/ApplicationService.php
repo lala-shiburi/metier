@@ -4,19 +4,29 @@ namespace App\Services;
 
 use \App\Opening;
 use \App\Company;
+use \App\HiringStepResult;
+use \App\Notifications\NewApplication;
+use \App\HiringApplication;
+use \App\HiringStepResultNote;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Collection;
 use \App\Http\Resources\ApplicationResource;
-
+use \App\UserContactNumber;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class ApplicationService
 {
+    use \App\Traits\FileManager;
+    use AuthenticatesUsers;
+    
     protected $application_statuses = [
         'submitted' => 0,
         'in-progress' => 1,
         'finished' => 2,
         'dismissed' => 3
     ];
-    
+    protected $log_name = 'application-status';
+
     function handleResource( Collection $collection){
         $_result = collect();
         foreach($collection as $application){
@@ -52,14 +62,14 @@ class ApplicationService
 
     function handleStepResultCreation( $request ){
 
-        $hiringStepResult = new \App\HiringStepResult;
+        $hiringStepResult = new HiringStepResult;
         $hiringStepResult->result = $request->result;
         $hiringStepResult->hiring_step_id = $request->hiring_step_id;
         $hiringStepResult->hiring_application_id = $request->hiring_application_id;
         $hiringStepResult->save();
 
         foreach($request->notes as $note){
-            $hiringStepResultNote = new \App\HiringStepResultNote;
+            $hiringStepResultNote = new HiringStepResultNote;
             $hiringStepResultNote->title = $note['title'];
             $hiringStepResultNote->note = $note['note'];
             $hiringStepResultNote->hiring_step_result_id = $hiringStepResult->id;
@@ -89,6 +99,74 @@ class ApplicationService
         }
 
         return $queryBuilder;
+    }
+    
+    function create($request){
+        $user = \Auth::check() ? \Auth::user() : null;
+        if($request->applicant){
+            $userService = new UserService;
+            $user = $userService->saveUser([
+                'first_name' => $request->applicant['first_name'],
+                'last_name' => $request->applicant['last_name'],
+                'birth_date' => $request->applicant['birth_date'],
+                'gender' => $request->applicant['gender'],
+                'email' => $request->applicant['email'],
+                'password' => $request->applicant["password"],
+            ]);
+
+            $number = new UserContactNumber;
+            $number->number = $request->applicant['number'];
+            $number->user_id = $user->id;
+            $number->save();
+
+            $resume_file = $this->moveTempDoc($request->applicant['resume_file'], $user->id.'-');
+            $user->resume_file = $resume_file;
+            $user->save();
+
+            $this->guard()->setToken(
+                $token = $this->guard()->login($user)
+            );
+            
+        }
+
+        $hiringApplication = new HiringApplication;
+
+        $hiringApplication->application_letter = $request->application_letter;
+        $hiringApplication->expected_salary = $request->expected_salary;
+        $hiringApplication->user_id = $user->id;
+        $hiringApplication->opening_id = $request->opening_id;
+
+        $hiringApplication->save();
+
+        $notifiable = $hiringApplication->opening->company->collaborators()->get();
+
+        Notification::send($notifiable, new NewApplication($hiringApplication));
+
+        return [
+            "hiringApplication" => $hiringApplication,
+            "token" => [
+                'token' => $token,
+                'token_type' => 'bearer',
+                'expires_in' => $this->guard()->getPayload()->get('exp') - time(),
+            ]
+        ];
+    }
+
+    /**
+     * Returns recent or last five applications of the current Auth
+     */
+    function getRecentApplications(){
+        $user = \Auth::user();
+        return $user->hiringApplications()
+        ->orderBy('hiring_applications.created_at','desc')
+        ->limit(5)->get();
+    }
+
+    // methods for setting application status
+
+    function setApplicationSubmitted($application){
+        $application->status = $this->application_statuses['submitted'];
+        $application->save();
     }
 
     function setApplicationInProgress($application){

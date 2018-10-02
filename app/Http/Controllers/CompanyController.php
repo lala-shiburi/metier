@@ -44,7 +44,7 @@ class CompanyController extends Controller
         $auth = \Auth::user();
         $company->owner_id = $auth->id;
         $company->save();
-        $company->addCollaborator($auth->id);
+        $company->addCollaborator($auth->id, 2);
 
         if($request->photo){
             $company->saveProfilePhoto($request->photo);

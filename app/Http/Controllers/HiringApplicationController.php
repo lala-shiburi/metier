@@ -18,25 +18,13 @@ class HiringApplicationController extends Controller
     }
 
     public function createApplication(Request $request){
-
         $this->validate($request,[
             'application_letter' => 'required',
         ]);
 
-        $hiringApplication = new HiringApplication;
+        $result = $this->applicationService->create($request);
 
-        $hiringApplication->application_letter = $request->application_letter;
-        $hiringApplication->expected_salary = $request->expected_salary;
-        $hiringApplication->user_id = $request->user_id;
-        $hiringApplication->opening_id = $request->opening_id;
-
-        $hiringApplication->save();
-
-        $notifiable = $hiringApplication->opening->company->collaborators()->get();
-
-        Notification::send($notifiable, new NewApplication($hiringApplication));
-
-        return ['status'=>'created', 'hiringApplication'=>$hiringApplication];
+        return ['status'=>'created', 'hiringApplication'=> $result["hiringApplication"], "token" => isset($result["token"]) ? $result["token"] : null];
     }
     
     public function fetchApplications(Request $request){
@@ -79,5 +67,32 @@ class HiringApplicationController extends Controller
         $this->applicationService->setApplicationInactive($application);
 
         return ['status'=>'success', 'message'=>'Application Dismissed'];
+    }
+
+    /**
+     * Validate Guest Onsite Registration
+     */
+    public function guestOnsiteRegistrationValidate(Request $request){
+        $this->validate($request, [
+            'first_name' => 'required|max:255',
+            'last_name' => 'required|max:255',
+            'gender' => 'required|max:255',
+            'birth_date' => 'required|max:255|date',
+            'email' => 'required|email|max:255|unique:users',
+            "number" => "required",
+            "resume_file" => "required",
+            "password" => "required|min:6|confirmed"
+        ]);
+
+        return ["status"=>"success"];
+    }
+
+    /**
+     * Handles resume file temporary upload
+     */
+    public function uploadTempResumeFile(Request $request){
+        $filename = $this->applicationService->handleTempDocUploadRequest($request);
+
+        return ["status" => "success", "filename"=> $filename];
     }
 }

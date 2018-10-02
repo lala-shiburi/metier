@@ -82,7 +82,7 @@ class NotificationController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return String
      */
-    public function marReadAll(Request $request){
+    public function markReadAll(Request $request){
         $user = \Auth::user();
         $user->unreadNotifications->markAsRead();
 

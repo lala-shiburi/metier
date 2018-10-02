@@ -39,7 +39,8 @@ class OpeningResource extends JsonResource
             "created_at" => $this->created_at,
             "user_application" => $application,
             "authorize_edit" => $authorizeEdit,
-            "posted_at" => translateDateTime($this->created_at)
+            "posted_at" => translateDateTime($this->created_at),
+            "hiring_step_group_id" => $this->hiring_step_group_id
         ];
     }
 
@@ -55,7 +56,7 @@ class OpeningResource extends JsonResource
         return [
             'meta' => [
                 'version' => '0.001',
-                'author' => 'Gart <a href="#">Facebook</a>',
+                'author' => 'Uelmar Ortega <a href="https://www.facebook.com/uelmar.ortega">https://www.facebook.com/uelmar.ortega</a>',
                 'authorizeEdit' => $authorizeEdit
             ]
         ];

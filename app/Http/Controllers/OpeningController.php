@@ -96,8 +96,7 @@ class OpeningController extends Controller
     }
 
     public function search(Request $request){
-        $openings = Opening::where('openings.title','like','%'.$request->keyword.'%')->orderBy('created_at','desc')->get();
-        return ['openings'=>$this->openingService->handleOpeningResource($openings)];
+        return ['openings'=>$this->openingService->handleSearch($request)['openings']];
     }
 
     /**

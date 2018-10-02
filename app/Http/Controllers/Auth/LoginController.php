@@ -32,6 +32,7 @@ class LoginController extends Controller
 
         if ($token) {
             $this->guard()->setToken($token);
+
             return true;
         }
 
