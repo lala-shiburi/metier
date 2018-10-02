@@ -102,7 +102,6 @@ export default {
     },
     updateApplicationResult(data){
       this.applications[this.returnApplicationIndex(data.hiring_application)] = data.hiring_application;
-      console.log(this.applications);
       this.$forceUpdate();
     },
     showApplicationResults(data){

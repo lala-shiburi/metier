@@ -136,18 +136,20 @@
         </form>
       </template>
     </wizard>
-    <vue-photo-editor title="Company Cover" ref="photo-editor" @update="updatePhoto"></vue-photo-editor>
+    <profile-picture-modal ref="photo-editor" @update="updatePhoto"/>
   </div>
 </template>
 
 <script>
 import Form from 'vform'
 import axios from 'axios'
-import vuePhotoEditor from 'unick-vue-photo-editor';
+import ProfilePictureModal from '~/components/photo-editors/profilePictureModal'
+import SkillSelector from './../../components/SkillSelector'
 export default {
   middleware: 'auth',
   components: {
-    vuePhotoEditor
+    ProfilePictureModal,
+    SkillSelector
   },
 
   metaInfo () {
@@ -194,10 +196,9 @@ export default {
       this.$refs['opening-picture'].src = photo_data;
     },
     showPhotoEditor(){
-      this.$refs['photo-editor'].show(this.form1.photo);
+      this.$refs['photo-editor'].prepUpdate(this.form1.photo);
     },
     async validateForm1 () {
-      console.log(this.form1);
       const {data} = await this.form1.post('/api/opening/validate/basicInfo')
       this.$refs.wizard.next();
     },
@@ -246,6 +247,7 @@ export default {
           params: { opening_id: this.$route.params.id }
         })
       this.opening = data.data;
+      console.log(this.opening)
       this.form1.title = this.opening.title;
       this.form1.photo = this.opening.picture;
       this.form1.salary_range = this.opening.salary_range;
@@ -262,8 +264,6 @@ export default {
       this.opening.technologies.map(item=>{
         $this.$refs.skillSelector.addTech(item)
       });
-
-      console.log(this.form3)
 
       this.fetchHiringProcesses();
     },

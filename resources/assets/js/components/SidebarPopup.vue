@@ -2,6 +2,9 @@
   <div class="side-popup hidden" ref="popup">
     <div v-on:click="hide" class="side-background"></div>
     <div class="popup">
+      <div class="top-right">
+        <slot name="options"/>
+      </div>
       <slot/>
     </div>
   </div>
@@ -20,11 +23,11 @@ export default {
   methods: {
     show(){
       jQuery(this.$refs.popup).removeClass('hidden');
-      jQuery('body').css({overflow:'hidden'});
+      jQuery('.sidebar-scroll-cancelled, body').css({overflow:'hidden'});
     },
     hide(){
       jQuery(this.$refs.popup).addClass('hidden');
-      jQuery('body').css({overflow:'auto'});
+      jQuery('.sidebar-scroll-cancelled, body').css({overflow:'auto'});
     }
   },
   mounted(){
@@ -34,6 +37,16 @@ export default {
         $this.hide();
       }
     })
+  },
+  beforeDestroy(){
+    this.hide()
   }
 }
 </script>
+<style lang="scss" scoped>
+.top-right{
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+</style>

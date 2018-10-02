@@ -1,5 +1,5 @@
 <template>
-  <div data-toggle="tooltip" data-html="true" :data-placement="pos?pos:'top'" :title="'<b>'+upperCaseFirst(icon)+'</b>'" class="skill-icon" :class="size? size: 'small-icon'">
+  <div data-toggle="tooltip" data-html="true" :data-placement="pos?pos:'top'" :title="upperCaseFirst(icon)" class="skill-icon" :class="size? size: 'small-icon'">
     <div class="bg-color" :style="icons[icon].background ? 'background:'+icons[icon].background : ''"></div>
     <img :src="icons[icon].img">
   </div>
@@ -45,11 +45,16 @@ export default {
   }),
   methods: {
     upperCaseFirst: function(string){
-      return string.charAt(0).toUpperCase() + string.slice(1);
+      return '<b>'+string.charAt(0).toUpperCase() + string.slice(1)+'</b>';
+    }
+  },
+  watch:{
+    icon(){
+      jQuery(this.$el).tooltip()
     }
   },
   mounted(){
-    jQuery(this.$el).find('[data-toggle="tooltip"]').tooltip()
+    jQuery(this.$el).tooltip()
   }
 }
 </script>

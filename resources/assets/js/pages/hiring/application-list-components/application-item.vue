@@ -25,12 +25,17 @@
     </div>
     <div class="col-md-12 part">
       <div style="margin-bottom: 5px; display:inline-block;" v-if="application.status < 2">
-        <button type="button" class="btn btn-primary btn-sm" v-on:click="prepUpdate">Proceed To Next Step</button>
+        <button v-if="application.status == 1" type="button" class="btn btn-primary btn-sm" v-on:click="prepUpdate">
+          Proceed To Next Step
+        </button>
+        <button v-if="application.status == 0" type="button" class="btn btn-success btn-sm" v-on:click="prepUpdate">
+          Start Hiring Procedure
+        </button>
       </div>
       <div class="pull-right">
         <button type="button" v-if="application.status > 0" @click="show" target="_blank" data-toggle="tooltip" data-html="true" title="View Results" class="btn btn-light btn-sm"><i class="fa fa-expand" aria-hidden="true"></i></button>
         <button type="button" v-if="application.status != 3" @click="prepDismiss" target="_blank" data-toggle="tooltip" data-html="true" title="Dismiss Application" class="btn btn-light btn-sm"><i class="fa fa-window-close" aria-hidden="true"></i></button>
-        <a :href="application.user.resume_file" target="_blank" data-toggle="tooltip" data-html="true" title="Download Resume" class="btn btn-light btn-sm"><i class="fa fa-cloud-download" aria-hidden="true"></i></a>
+        <a :href="application.user.resume_file" v-if="application.user.resume_file" target="_blank" data-toggle="tooltip" data-html="true" title="Download Resume" class="btn btn-light btn-sm"><i class="fa fa-cloud-download" aria-hidden="true"></i></a>
       </div>
     </div>
   </div>

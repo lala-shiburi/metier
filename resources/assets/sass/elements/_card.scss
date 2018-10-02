@@ -1,5 +1,5 @@
 .card {
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
   .small-option-btn{
     opacity: 0;
     transform: translateX(50%);
@@ -10,6 +10,57 @@
   &:hover .small-option-btn{
     opacity: 1;
     transform: initial;
+  }
+}
+
+.logo-list{
+  ul{
+    padding: 0px;
+    list-style: none;
+    font-size: 12px;
+  }
+
+  li{
+    width: 25%;
+    padding: 10px;
+    text-align: center;
+    display: inline-block;
+    img{
+      border-radius: 50%;
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #d6d6d6;
+      background: #efefef;
+    }
+    .title{
+      font-weight: 500;
+      color: inherit;
+      display: block;
+    }
+    .sub-title{
+      color: #999;
+    }
+  }
+
+  @media(min-width: 768px) {
+    .md-2{
+      li{
+        width: 50%;
+      }
+    }
+  }
+
+  @media(min-width: 1024px) {
+    .lg-6{
+      li{
+        width: 16.666%;
+      }
+    }
+    .lg-3{
+      li{
+        width: 33.333%;
+      }
+    }
   }
 }
 
@@ -24,8 +75,65 @@
 
   .simple-card-header{
     font-size: 18px;
-    font-weight: 500;
     padding: 10px;
+    border-bottom: 1px solid #f4f4f4;
+    position: relative;
+  }
+
+  .simple-card-body{
+    position: relative;
+  }
+
+  &.flex{
+    display: flex;
+    .logo{
+      display: flex;
+      padding: 20px;
+    }
+
+    .content{
+      display: flex;
+      flex: 1;
+      position: relative;
+
+      & > *{
+        position: absolute;
+        width: 100%;
+      }
+    }
+
+    $yellow: #f39c12;
+    $skyblue: #00c0ef;
+    $green: #00a65a;
+    $red: #DD4A39;
+
+    &.yellow{
+      border-color: $yellow;
+      .logo{
+        color: $yellow;
+      }
+    }
+
+    &.skyblue{
+      border-color: $skyblue;
+      .logo{
+        color: $skyblue;
+      }
+    }
+
+    &.green{
+      border-color: $green;
+      .logo{
+        color: $green;
+      }
+    }
+
+    &.red{
+      border-color: $red;
+      .logo{
+        color: $red;
+      }
+    }
   }
 }
 
@@ -50,21 +158,16 @@
 
 .profile-card-2 .profile {
 // border-radius: B50%;
-position: absolute;
-top: -42px;
-left: 20%;
 max-width: 100px;
 border: 3px solid rgba(255, 255, 255, 1);
--webkit-transform: translate(-50%, 0%);
-transform: translate(-50%, 0%);
 }
 .profile-card-2 h5{
   font-weight:600;
   color:#311c8a;
 }
 .profile-card-2 .card-text{
-  font-weight:normal;
-  font-size:14px;
+  font-weight:300;
+  font-size:15px;
 }
 .profile-card-2 .icon-block{
   float:left;
@@ -104,7 +207,6 @@ color:#fff;
 
 }
 
-
 // Bootstrap Company Card WelcomeVue
 /*Profile card 4*/
 .profile-card-4 .card-img-block{
@@ -127,24 +229,6 @@ color:#fff;
 }
 .profile-card-4 .card-img-block{
   position:relative;
-}
-.profile-card-4 .card-img-block > .info-box{
-  position:absolute;
-  background:rgba(217,11,225,0.6);
-  width:100%;
-  height:100%;
-  color:#fff;
-  padding:20px;
-  text-align:center;
-  font-size:14px;
- -webkit-transition: 1s ease;
-  transition: 1s ease;
-  opacity:0;
-}
-.profile-card-4 .card-img-block:hover > .info-box{
-  opacity:1;
-  -webkit-transition: all 1s ease;
-  transition: all 1s ease;
 }
 .profile-card-4 h5{
   font-weight:600;
@@ -178,130 +262,14 @@ display: inline-block;
 background-color:#311c8a;
 color:#fff;
 }
-
-
 .profile-card-4 .btn-outline-secondary {
-    font-size: 16px;
-    color: #311c8a;
-    text-align: center;
-    border: 1px solid #311c8a;
-    margin:0 5px;
-  }
-  .profile-card-4 .btn-outline-secondary:hover {
+  font-size: 16px;
+  color: #311c8a;
+  text-align: center;
+  border: 1px solid #311c8a;
+  margin:0 5px;
+}
+.profile-card-4 .btn-outline-secondary:hover {
   background-color:#311c8a;
   color:#fff;
-  }
-
-  // 
-  /*Profile Card 1*/
-.profile-card-1 {
-  font-family: 'Open Sans', Arial, sans-serif;
-  position: relative;
-  float: left;
-  overflow: hidden;
-  width: 100%;
-  color: #ffffff;
-  border: 1px solid #fff;
-  text-align: center;
-  height:150px;
-  border:none;
 }
-.profile-card-1 .background {
-  width:100%;
-  vertical-align: top;
-  opacity: 0.9;
-  -webkit-filter: blur(5px);
-  filter: blur(5px);
-   -webkit-transform: scale(1.8);
-  // transform: scale(2.8);
-}
-.profile-card-1 .card-content {
-  width: 100%;
-  padding: 15px 25px;
-  position: absolute;
-  left: 0;
-  top: 50%;
-}
-.profile-card-1 .profile {
-  // border-radius: 50%;
-  position: absolute;
-  bottom: 50%;
-  left: 50%;
-  max-width: 50px; //100px
-  opacity: 1;
-  // box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.5);
-  // border: 2px solid rgba(255, 255, 255, 1);
-  -webkit-transform: translate(-50%, 0%);
-  transform: translate(-50%, 0%);
-}
-.profile-card-1 h2 {
-  margin: 0 0 5px;
-  font-weight: 600;
-  font-size:25px;
-}
-.profile-card-1 h2 small {
-  display: block;
-  font-size: 15px;
-  margin-top:10px;
-}
-.profile-card-1 i {
-  display: inline-block;
-    font-size: 16px;
-    color: #ffffff;
-    text-align: center;
-    border: 1px solid #fff;
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    border-radius: 50%;
-    margin:0 5px;
-}
-.profile-card-1 .icon-block{
-    float:left;
-    width:100%;
-    margin-top:15px;
-}
-.profile-card-1 .icon-block a{
-    text-decoration:none;
-}
-.profile-card-1 i:hover {
-  background-color:#fff;
-  color:#2E3434;
-  text-decoration:none;
-}
-
-
-// Programming languages grouplists
-
-#prog-php{
-  background:linear-gradient(135deg, #ba6dff 0%,#7367F0 100%);
-  }
-  #prog-python{
-  background:linear-gradient(135deg, #ffd341 0%,#3475a7 100%);
-  }
-  #prog-javascript{
-  background:linear-gradient(135deg, #fad961 0%,#f76b1c 100%);
-  }
-  #prog-ruby{
-  background:linear-gradient(135deg, #F5515F 0%,#A1051D 100%);
-  }
-  #prog-java{
-  background:linear-gradient(135deg, #E3E3E3 0%,#5D6874 100%);
-  }
-  #prog-nodejs{
-  background:linear-gradient(135deg, #b1ea4d 0%,#459522 100%);
-  }
-  #prog-cplus{
-  background:linear-gradient(135deg, #0FF0B3 0%,#036ED9 100%);
-  }
-  #prog-go{
-  background:linear-gradient(135deg, #fcdf8a 0%,#f38381 100%);
-  }
-  #prog-swift{
-  background:linear-gradient(135deg, #fc3123 0%,#d97052 100%);
-  }
-  #prog-csharp{
-  background:linear-gradient(135deg, #C56CD6 0%,#3425AF 100%);
-  }
-
-  

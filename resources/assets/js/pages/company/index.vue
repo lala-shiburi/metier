@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-md-12" id="company-cover-fluid">
+    <div class="col-md-12">
       <div class="profile-tile-view">
         <cover @update="updateCompany" :company="company" :authorizeEdit="authorizeEdit"/>
         <div class="row">
@@ -9,6 +9,7 @@
           </div>
           <div class="col-lg-5 col-md-5 col-7">
             <h3>{{company.name}}</h3>
+            <!-- <label>Software Developer</label> -->
           </div>
           <div class="col-lg-5 col-md-4 col-12">
             <div class="btn-group pull-right" v-if="authorizeEdit">
@@ -32,7 +33,7 @@
         </div>
         <br>
       </card>
-
+      
       <div class="row">
         <div class="col-md-4">
           <card class="m-tb-10" title="Basic Info">
@@ -94,29 +95,11 @@ import Logo from './logo'
 import Cover from './cover'
 
 export default {
-  layout: 'profile',
-  middleware: 'auth',
   components: {
     BasicInfoModal,
     WebsiteInfoModal,
     Logo,
     Cover,
-  },
-  computed: {
-    tabs () {
-      return [
-        {
-          icon: 'user',
-          name: this.$t('profile'),
-          route: 'settings.profile'
-        },
-        {
-          icon: 'lock',
-          name: this.$t('password'),
-          route: 'settings.password'
-        }
-      ]
-    }
   },
   data : () =>({
     public_path: location.origin,
@@ -171,12 +154,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.settings-card .card-body {
-  padding: 0;
-}
-#company-cover-fluid{
-  padding: 0;
-}
-</style>

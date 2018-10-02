@@ -4,7 +4,7 @@
   height: 100%;
   top: 0px;
   left: 0px;
-  z-index: 1000;
+  z-index: 1040;
   transition: visibility 0s;
   .side-background{
     background: black;
@@ -25,6 +25,7 @@
     background: white;
     transform: initial;
     transition: 400ms ease all;
+    overflow: auto;
   }
 
   @media (max-width: 768px){

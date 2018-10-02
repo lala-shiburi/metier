@@ -28,6 +28,7 @@
     transition: 200ms ease all;
     top: 50%;
     transform: translateX(50%) translateY(-50%);
+    visibility: hidden;
     & .bttn{
       cursor: pointer;
     }
@@ -36,6 +37,7 @@
   &:hover .d-bttns{
     opacity: 1;
     transform: translateY(-50%);
+    visibility: visible;
   }
 }
 

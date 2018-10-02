@@ -12,12 +12,12 @@ import OpeningCard from './OpeningCard'
 import PhotoConverter from './PhotoConverter'
 import IconizedPhoto from './IconizedPhoto'
 import Wizard from './Wizard'
-import SkillSelector from './SkillSelector'
 import CompanyCard from './CompanyCard'
 import IconButton from './IconButton'
 import UnickTable from './UnickTable'
 import EntityHeader from './EntityHeader'
 import UnickLoader from './loaders/roller'
+import DocumentUploadInput from './input/document-upload'
 import { HasError, AlertError, AlertSuccess } from 'vform'
 
 var mixins = {
@@ -33,7 +33,7 @@ var mixins = {
         'Apr.',
         'May',
         'Jun.',
-        'Jul',
+        'Jul.',
         'Aug.',
         'Sep.',
         'Oct.',
@@ -45,11 +45,6 @@ var mixins = {
 
       return (withTime ? time : '' ) + ' ' + months[parseInt(_date[1]) - 1] + ' ' + parseInt(_date[2]) + ', ' + parseInt(_date[0])
     }
-  },
-  setNexTick(callback){
-    Vue.nextTick(function () {
-      callback();
-    })
   },
 }
 
@@ -66,7 +61,6 @@ Vue.mixin(mixins);
   Checkbox,
   HasError,
   LineInput,
-  SkillSelector,
   EllipsisText,
   AlertError,
   SkillIcon,
@@ -78,7 +72,8 @@ Vue.mixin(mixins);
   PhotoConverter,
   Wizard,
   AlertSuccess,
-  UnickLoader
+  UnickLoader,
+  DocumentUploadInput
 ].forEach(Component => {
   Vue.component(Component.name, Component)
 })

@@ -28,6 +28,7 @@ function wiz_actives(elms, index){
     }
   }
 }
+import Vue from 'vue'
 export default {
   name: 'Wizard',
 
@@ -69,49 +70,74 @@ export default {
       jQuery(this.panels[this.current_index-1]).show();
       wiz_actives(this.steps,this.current_index-1)
       this.current_index -= 1;
+    },
+    appendLines(){
+      var steps = this.$refs.steps;
+      var width = jQuery(this.$refs.steps).width();
+      for(var i = 0; i < steps.children.length; i++){
+        if(i > 0)
+        {
+          var line = document.createElement('div');
+          jQuery(line).addClass('line');
+          jQuery(steps.children[i]).prepend(line);
+        }
+        var text = document.createElement('span');
+        jQuery(text).addClass('text');
+        jQuery(text).html(jQuery(steps.children[i]).attr('name'));
+        jQuery(steps.children[i]).append(text);
+
+        jQuery(steps.children[i]).css({ 'z-index' : steps.children.length - i });
+
+        this.renderLines();
+      }
+    },
+    renderLines(){
+      var $this = this
+      Vue.nextTick(function () {
+        $this.loadPanels();
+
+        var steps = $this.$refs.steps;
+        $this.steps = steps.children;
+        var width = jQuery($this.$refs.steps).width();
+        var length_unit = (width / steps.children.length);
+        var line_width = (width / (steps.children.length-1))
+        for(var i = 0; i < steps.children.length; i++){
+          if(i > 0)
+          {
+            jQuery(steps.children[i]).find('.line').css({width: line_width});
+            jQuery(steps.children[i]).css({ 
+              left: ((length_unit * i) + ((length_unit / (steps.children.length - 1)) * (i) )),
+            });
+          }
+          $this.show(0);
+        }
+      });
+    },
+    loadPanels(){
+      this.panels = [];
+      for(var i = 0; i < this.$refs.wizard.children.length; i++){
+        this.panels.push(this.$refs.wizard.children[i]);
+        if(i > 0)
+        {
+          jQuery(this.$refs.wizard.children[i]).hide();
+        }
+      }
     }
   },
   mounted(){
     this.current_index = this.currentPanel;
-    for(var i = 0; i < this.$refs.wizard.children.length; i++){
-      this.panels.push(this.$refs.wizard.children[i]);
-      if(i > 0)
-      {
-        jQuery(this.$refs.wizard.children[i]).hide();
-      }
-    }
 
-    var steps = this.$refs.steps;
-    this.steps = steps.children;
-    var width = jQuery(this.$refs.steps).width();
-    console.log(width);
-    var length_unit = (width / steps.children.length);
-    for(var i = 0; i < steps.children.length; i++){
-      if(i > 0)
-      {
-        var line = document.createElement('div');
-        jQuery(line).addClass('line');
-        jQuery(line).css({width: (length_unit * 2 * ((1 / steps.children.length) * (steps.children.length - 1))) + ((length_unit / (steps.children.length - 1)) * (i) / 2 )});
-        jQuery(steps.children[i]).prepend(line);
-        jQuery(steps.children[i]).css({ 
-          left: ((length_unit * i) + ((length_unit / (steps.children.length - 1)) * (i) )),
-        });
-      }
-      var text = document.createElement('span');
-      jQuery(text).addClass('text');
-      jQuery(text).html(jQuery(steps.children[i]).attr('name'));
-      jQuery(steps.children[i]).append(text);
-
-      jQuery(steps.children[i]).css({ 'z-index' : steps.children.length - i });
-
-      this.show(0);
-    }
+    this.appendLines()
 
     // remove error indecation when select changed
     jQuery(this.$el).find('select').change(function(){
       jQuery(this).removeClass('is-invalid');
       jQuery(this).closest('.invalid-feedback').remove();
     });
+
+    windowResizeDetector.addEvent(this.renderLines)
+    layout_events.push(this.renderLines)
+    console.log(this)
   }
 }
 </script>

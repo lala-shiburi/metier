@@ -1,4 +1,3 @@
-const Welcome = () => import('~/pages/welcome').then(m => m.default || m)
 const Login = () => import('~/pages/auth/login').then(m => m.default || m)
 const Register = () => import('~/pages/auth/register').then(m => m.default || m)
 const PasswordEmail = () => import('~/pages/auth/password/email').then(m => m.default || m)
@@ -21,11 +20,12 @@ const CompanyApplicantsInActive = () => import('~/pages/hiring/application-list-
 const CompanyApplicantsFinished = () => import('~/pages/hiring/application-list-components/finished-applications').then(m => m.default || m)
 const CompanyHiringProcesses = () => import('~/pages/company/hiringProcesses').then(m => m.default || m)
 const CompanyHiringProcessesCreate = () => import('~/pages/hiring-process/edit').then(m => m.default || m)
+const FollowedCompanies = () => import('~/pages/user/followed-companies/index').then(m => m.default || m)
 
 // opening pages
 const OpeningProfile = () => import('~/pages/opening/index').then(m => m.default || m)
-const UserCompanies = () => import('~/pages/user/companies').then(m => m.default || m)
-const OpeningApply = () => import('~/pages/opening/apply').then(m => m.default || m)
+const UserCompanies = () => import('~/pages/user/companies/index').then(m => m.default || m)
+const OpeningApply = () => import('~/pages/opening/apply/index').then(m => m.default || m)
 const HiringApplications = () => import('~/pages/user/hiringApplications').then(m => m.default || m)
 const CompanyCreate = () => import('~/pages/company/create').then(m => m.default || m)
 const OpeningCreate = () => import('~/pages/opening/create').then(m => m.default || m)
@@ -33,24 +33,29 @@ const OpeningEdit = () => import('~/pages/opening/edit').then(m => m.default || 
 const Settings = () => import('~/pages/settings/index').then(m => m.default || m)
 const SettingsProfile = () => import('~/pages/settings/profile').then(m => m.default || m)
 const SettingsPassword = () => import('~/pages/settings/password').then(m => m.default || m)
-const SearchCompanyPage = () => import('~/pages/company/SearchPage').then(m => m.default || m)
-const SearchOpeningPage = () => import('~/pages/opening/SearchPage').then(m => m.default || m)
-const About = () => import('~/pages/about').then(m => m.default || m)
-const Contact = () => import('~/pages/contact').then(m => m.default || m)
-const HiringApplication = () => import('~/pages/hiring/application').then(m => m.default || m)
+const SearchCompanyPage = () => import('~/pages/company/search').then(m => m.default || m)
+const SearchOpeningPage = () => import('~/pages/opening/search/index').then(m => m.default || m)
+
+// dashboard
+const RecruiterDashboard = () => import('~/pages/dashboard/recruiter').then(m => m.default || m)
+const ApplicantDashboard = () => import('~/pages/dashboard/applicant').then(m => m.default || m)
+
+const Welcome = () => import('~/pages/guest/welcome').then(m => m.default || m)
 
 export default [
   { path: '/', name: 'welcome', component: Welcome },
-
-  { path: '/about', name: 'about', component: About },
-  { path: '/contact', name: 'contact', component: Contact },
 
   { path: '/login', name: 'login', component: Login },
   { path: '/register', name: 'register', component: Register },
   { path: '/password/reset', name: 'password.request', component: PasswordEmail },
   { path: '/password/reset/:token', name: 'password.reset', component: PasswordReset },
 
-  { path: '/home', name: 'home', component: Home },
+  { path: '/home', name: 'home', component: ApplicantDashboard },
+
+  // dashboards
+  { path: '/dashboard/recruiter', name: 'dashboard.recruiter', component: RecruiterDashboard },
+  { path: '/dashboard/applicant', name: 'dashboard.applicant', component: ApplicantDashboard },
+
   { path: '/settings',
     component: Settings,
     children: [
@@ -79,6 +84,7 @@ export default [
   // user routes
   { path: '/profile/:id?', name: 'user.profile', component: UserProfile },
   { path: '/user/companies', name: 'user.companies', component: UserCompanies },
+  { path: '/user/followed/companies', name: 'user.followed.companies', component: FollowedCompanies },
   { path: '/user/application/progress/:application_id', name: 'user.application.progress', component: ApplicationProgress },
 
   // opening routes
@@ -86,9 +92,10 @@ export default [
   { path: '/opening/search', name: 'opening.search', component: SearchOpeningPage },
   { path: '/opening/:id/edit', name: 'opening.edit', component: OpeningEdit },
   { path: '/company/:company_id/opening/create', name: 'opening.create', component: OpeningCreate },
+  
   // application
   { path: '/applications', name: 'hiringApplication.applications', component: HiringApplications },
-  { path: '/applications/:application_id', name: 'hiringApplication.application', component: HiringApplication },
+  { path: '/applications/:application_id', name: 'hiringApplication.application', component: ApplicationProgress },
   { path: '/opening/apply/:opening_id/:applicant_id?', name: 'hiringApplication.create', component: OpeningApply },
 
   { path: '*', component: NotFound }

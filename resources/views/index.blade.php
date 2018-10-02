@@ -27,7 +27,9 @@ $config = [
       ],
 
       'programming_languages' => \App\ProgrammingLanguage::all(),
+
       'technologies' => \App\Technology::all(),
+      
       'provinces' => \DB::table('provinces')->get(),
       'author' => 'Hinimo ni nako. Umar ni.',
 ];
@@ -51,8 +53,6 @@ $polyfills = [
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <title>{{ config('app.name') }}</title>
-
-  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
   <meta name="auth_id" content="{{Auth::check() ?? Auth::user()->id}}">
   
   <link rel="stylesheet" href="{{ mix('css/app.css') }}">
@@ -71,9 +71,7 @@ $polyfills = [
   {{-- Load the application scripts --}}
   @if (app()->isLocal())
     <script src="{{ mix('js/app.js') }}"></script>
-    <script src="{{ asset('js/gart.js') }}"></script>
   @else
-    <script src="{{ asset('js/gart.js') }}"></script>
     <script src="{{ mix('js/manifest.js') }}"></script>
     <script src="{{ mix('js/vendor.js') }}"></script>
     <script src="{{ mix('js/app.js') }}"></script>

@@ -1,54 +1,31 @@
 <template>
   <div class="company-card">
-    <div class="row">
-
-      <div class="col-md-2">
-        <h4>Hello</h4>
-        <!-- <img src="http://localhost:8000/images/bg-img.png" class="bg-holder">  -->
-        <!-- <img :src="company.photo" class="absolute-center"> -->
-      </div>
-      <div class="col-md-9">
-         <h4>Hello</h4> 
-      </div>
-
-
-      <div class="col-md-4 col-sm-6 company-photo">
-        <div class="photo-preview-container">
-          <div class="scaffold-div">
-            <!-- <img src="http://localhost:8000/images/bg-img.png" class="bg-holder"> 
-            <img :src="company.photo" class="absolute-center"> -->
-
-              <photo-viewer>
-                <img class="absolute-center" :src="public_path+'/images/Group 244.png'">
-                <img class="absolute-center" :src="public_path+'/images/register-background.png'">
-                <img class="absolute-center" :src="public_path+'/images/bg-img.png'">
-                <img class="absolute-center" :src="public_path+'/images/angular.png'">
-                <img class="absolute-center" :src="public_path+'/images/register-background.png'">
-                <img class="absolute-center" :src="public_path+'/images/register-background.png'">
-              </photo-viewer>
-
-          </div>
-
-        </div>
-        <div class="buttons">
-          <i class="fa fa-bookmark-o follow-btn" v-on:click="followCompany" :class="company.current_user_followed ? 'active' : ''" ref="bookmark" aria-hidden="true"></i>
+    <div class="col-md-4 col-sm-6 company-photo">
+      <div class="photo-preview-container">
+        <div class="scaffold-div">
+          <img src="http://localhost:8000/images/bg-img.png" class="bg-holder"> 
+          <img :src="company.photo" class="absolute-center">
         </div>
       </div>
-      <div class="col-md-8 col-sm-6 company-details">
-        <h5>
-          <router-link :to="{ name: 'company.profile', params: { id: company.id} }">
-            {{company.name}}
-          </router-link>
-        </h5>
-        <div class="text-justify company-description">
-          {{company.description}}
-        </div>
-        <div class="text-muted company-employees">
-          1-50 employees
-        </div>
-        <div class="text-muted company-openings">
-          3 openings
-        </div>
+      <div class="buttons">
+        <button v-if="company.current_user_followed" v-on:click="followCompany" type="button" class="btn btn-outline-warning btn-sm">Unfollow</button>
+        <button v-else type="button" v-on:click="followCompany" class="btn btn-outline-secondary btn-sm">Follow</button>
+      </div>
+    </div>
+    <div class="col-md-8 col-sm-6 company-details">
+      <h5>
+        <router-link :to="{ name: 'company.profile', params: { id: company.id} }">
+          {{company.name}}
+        </router-link>
+      </h5>
+      <div class="text-justify company-description">
+        {{company.description}}
+      </div>
+      <div class="text-muted company-employees">
+        1-50 employees
+      </div>
+      <div class="text-muted company-openings">
+        3 openings
       </div>
     </div>
   </div>
@@ -77,6 +54,7 @@ export default {
       const {data} = await axios({
         method: 'post',
         url: '/api/userInfo/add/follow/company',
+        params:{company_id:this.company.id, follow: this.company.current_user_followed ? 1 : 0}
       });
     }
   },
@@ -90,7 +68,7 @@ export default {
   border: 1px solid #e8eced;
   margin-bottom: 15px;
   .buttons{
-    padding: 0px 10px;
+    padding: 5px;
     & .follow-btn{
       cursor: pointer;
       &.active{
@@ -114,8 +92,5 @@ export default {
       font-size: 12px;
     }
   }
-}
-.company-card:hover{
-  border-top: 2px solid #f02fc2;
 }
 </style>

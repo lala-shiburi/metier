@@ -27,6 +27,7 @@ export default {
   }),
   methods: {
     renderProgressLine(){
+
       // remove lines
       jQuery(this.$el).find('.line').remove();
       
@@ -35,6 +36,7 @@ export default {
       var width = jQuery(this.$refs.steps).width();
       var length_unit = (width / steps.children.length);
       for(var i = 0; i < steps.children.length; i++){
+        jQuery(steps.children[i]).find('.line').remove()
         if(i > 0)
         {
           var line = document.createElement('div');
@@ -64,6 +66,7 @@ export default {
       }
     },
     async fetchApplication(){
+      var $this = this
       this.hiring_steps=[];
 
       const { data } = await axios({
@@ -74,6 +77,14 @@ export default {
       
       this.mergeStepWithResult(data)
       this.getCurrentStep(data)
+      Vue.nextTick(function () {
+        layout_events.push(function(){
+          $this.renderProgressLine()
+        })
+        setRenderEvent(function(){
+          $this.renderProgressLine()
+        })
+      });
     },
     mergeStepWithResult(data){
       var result = [];
@@ -132,13 +143,35 @@ export default {
     }
   },
   mounted(){
+    var $this = this
     if(this.application.id){
-      this.fetchApplication();
+      this.fetchApplication()
     }
   },
   watch:{
     application(){
       this.fetchApplication();
+    }
+  }
+}
+
+function setRenderEvent(event){
+  var rtime;
+  var timeout = false;
+  var delta = 200;
+  jQuery(window).resize(function(){
+    rtime = new Date();
+    if (timeout === false) {
+        timeout = true;
+        setTimeout(resizeend, delta);
+    }
+  })
+  function resizeend() {
+    if (new Date() - rtime < delta) {
+      setTimeout(resizeend, delta);
+    } else {
+      timeout = false;
+      event()
     }
   }
 }

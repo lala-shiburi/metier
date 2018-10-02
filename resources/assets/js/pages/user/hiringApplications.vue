@@ -13,11 +13,10 @@
         </div>
       </div>
     </div>
-    <table class="table table-hover simple-table table-responsive-sm table-hover table-outline mb-0">
-      <thead class="thead-light">
+    <table class="table table-hover simple-table">
+      <thead>
         <tr>
-          <th class="text-center">
-            <i class="fa fa-clipboard"></i>
+          <th>
             Job
           </th>
           <th>

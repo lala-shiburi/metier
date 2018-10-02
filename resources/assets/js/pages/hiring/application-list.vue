@@ -41,7 +41,7 @@ export default {
     tabs() {
       return [
         {
-          name: 'Submitted Applications',
+          name: 'Pending Applications',
           route: 'company.applicants.submitted'
         },
         {

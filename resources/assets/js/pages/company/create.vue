@@ -3,15 +3,9 @@
     <form @submit.prevent="create" @keydown="form.onKeydown($event)">
       <alert-success :form="form" message="Registration Successful"/>
 
-      <div class="row">
-        <div class="col-lg-6">
-          <div class="text-center">
-            <img ref="company-logo" v-on:click="showPhotoEditor" :src="form.photo" class="rounded img-thumbnail">
-          </div>
-        </div>
-
-        <div class="col-lg-6">
-
+      <div class="text-center">
+        <img ref="company-logo" v-on:click="showPhotoEditor" :src="form.photo" class="rounded img-thumbnail" width="200px">
+      </div>
       <br>
       <!-- Name -->
       <div class="form-group row">
@@ -67,23 +61,19 @@
           <v-button :loading="form.busy" type="success">Save</v-button>
         </div>
       </div>
-        </div>
-      </div>
-
-
     </form>
-    <vue-photo-editor title="Company Cover" ref="photo-editor" @update="updateLogo"></vue-photo-editor>
+    <profile-picture-modal ref="photo-editor" @update="updateLogo"/>
   </card>
 </template>
 
 <script>
 import Form from 'vform'
-import vuePhotoEditor from 'unick-vue-photo-editor';
+import ProfilePictureModal from '~/components/photo-editors/profilePictureModal'
 export default {
   middleware: 'auth',
   scrollToTop: false,
   components: {
-    vuePhotoEditor
+    ProfilePictureModal
   },
   metaInfo () {
     return { title: 'Create Company' }
@@ -98,20 +88,26 @@ export default {
       website_url: '',
       province: ''
     }),
+    company_photo_added: false,
     provinces: window.config.provinces,
   }),
 
   methods: {
     async create () {
+      if(!this.company_photo_added)
+      {
+        this.form.photo = null
+      }
       const {data} = await this.form.post('/api/company/create')
       this.$router.push("/company/profile/"+data.company_id);
     },
     updateLogo(photo_data){
       this.form.photo = photo_data;
       this.$refs['company-logo'].src = photo_data;
+      this.form.photo = true
     },
     showPhotoEditor(){
-      this.$refs['photo-editor'].show(this.form.photo);
+      this.$refs['photo-editor'].prepUpdate(this.form.photo);
     },
   }
 }

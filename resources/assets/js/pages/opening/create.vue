@@ -136,19 +136,21 @@
         </form>
       </template>
     </wizard>
-    <vue-photo-editor title="Company Cover" ref="photo-editor" @update="updatePhoto"></vue-photo-editor>
+    <profile-picture-modal ref="photo-editor" @update="updatePhoto"/>
   </div>
 </template>
 
 <script>
 import Form from 'vform'
 import axios from 'axios'
-import vuePhotoEditor from 'unick-vue-photo-editor';
+import ProfilePictureModal from '~/components/photo-editors/profilePictureModal'
+import SkillSelector from './../../components/SkillSelector'
 export default {
   middleware: 'auth',
   scrollToTop: false,
   components: {
-    vuePhotoEditor
+    SkillSelector,
+    ProfilePictureModal
   },
 
   metaInfo () {
@@ -193,7 +195,7 @@ export default {
       this.$refs['opening-picture'].src = photo_data;
     },
     showPhotoEditor(){
-      this.$refs['photo-editor'].show(this.form1.photo ? this.form1.photo : this.public_path+'/images/photo.png');
+      this.$refs['photo-editor'].prepUpdate(this.form1.photo ? this.form1.photo : this.public_path+'/images/photo.png');
     },
     async validateForm1 () {
       console.log(this.form1);
