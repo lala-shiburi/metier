@@ -72,17 +72,14 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::group(['prefix' => "company"], function(){
         Route::post('create', 'CompanyController@create');
         Route::group(['prefix'=>'fetch'], function(){
-            Route::get('/', 'CompanyController@fetch');
-            Route::get('openings', 'CompanyController@fetch_openings');
             Route::get('applications', 'CompanyController@fetchHiringApplications');
             Route::get('hiring/applications2', 'CompanyController@fetchHiringApplications2');
             Route::get('collaborators', 'CompanyController@fetchCollaborators');
-            Route::post('search', 'CompanyController@fetchCompanySearch');
             Route::get('isBookMarked', 'CompanyController@fetchIsBookMarked');
-            
             Route::group(['prefix' => 'applicants'], function(){
                 Route::get('lazy_load', 'CompanyController@lazyFetchHiringApplication');
             });
+            Route::get('managed/companies', 'UserController@fetch_companies');
         });
 
         // add
@@ -129,11 +126,6 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     // opening routes
     Route::group([ "prefix" => "opening" ], function(){
-        // fetch
-        Route::group(['prefix'=>'fetch'], function(){
-            Route::get('/', 'OpeningController@fetch');
-            Route::post('search', 'OpeningController@search');
-        });
 
         // validate
         Route::group(["prefix" => "validate"],function(){
@@ -152,11 +144,6 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     // application routes
     Route::group(['prefix' => 'application'], function(){
-        // create
-        Route::group(['prefix' => 'create'], function(){
-            Route::post('application', 'HiringApplicationController@createApplication');
-        });
-
         // fetch
         Route::group(['prefix' => 'fetch'], function(){
             Route::get('hiringApplications', 'HiringApplicationController@fetchApplications');
@@ -182,7 +169,25 @@ Route::group(['middleware' => 'auth:api'], function () {
         });
         // update
         Route::group(['prefix'=>'update'], function(){
-            Route::patch('mark_read_all', 'NotificationController@marReadAll');
+            Route::patch('mark_read_all', 'NotificationController@markReadAll');
+        });
+    });
+
+    // reporting routes
+    Route::group(['prefix' => 'reporting'], function(){
+        // recruiter
+        Route::group(['prefix'=>'recruiter'], function(){
+            Route::get('companies', 'ReportController@fetch_companies');
+            Route::get('application/count', 'ReportController@fetchApplicationCount');
+            Route::get('opening/count', 'ReportController@fetchOpeningCount');
+            Route::get('application/count/per/company', 'ReportController@fetchApplicationCountPerCompany');
+            Route::get('application/count/per/day', 'ReportController@fetchApplicationChartDataPerDay');
+        });
+        // applicant
+        Route::group(['prefix'=>'applicant'], function(){
+            Route::get('application/count', 'ReportController@fetchApplicantApplicationCount');
+            Route::get('followed/companies', 'ReportController@fetchFollowedCompanies');
+            Route::get('recent/applications', 'ReportController@fetchRecentApplications');
         });
     });
 });
@@ -195,4 +200,39 @@ Route::group(['middleware' => 'guest:api'], function () {
 
     Route::post('oauth/{driver}', 'Auth\OAuthController@redirectToProvider');
     Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
+});
+
+/**
+ * public accessible
+ */
+// opening
+Route::group([ "prefix" => "opening" ], function(){
+    // fetch
+    Route::group(['prefix'=>'fetch'], function(){
+        Route::get('/', 'OpeningController@fetch');
+        Route::post('search', 'OpeningController@search');
+    });
+});
+//company
+Route::group(['prefix' => "company"], function(){
+    Route::group(['prefix'=>'fetch'], function(){
+        Route::get('/', 'CompanyController@fetch');
+        Route::post('search', 'CompanyController@fetchCompanySearch');
+        Route::get('openings', 'CompanyController@fetch_openings');
+    });
+});
+// user
+Route::group(['prefix'=>'application'], function(){
+    // validation
+    Route::group(['prefix'=>'validate'], function(){
+        Route::post('guest/onsite/registration/validation', 'HiringApplicationController@guestOnsiteRegistrationValidate');
+    });
+    // file upload
+    Route::group(['prefix'=>'upload'], function(){
+        Route::post('resume_file', 'HiringApplicationController@uploadTempResumeFile');
+    });
+    // create
+    Route::group(['prefix' => 'create'], function(){
+        Route::post('application', 'HiringApplicationController@createApplication');
+    });
 });
