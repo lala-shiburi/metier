@@ -12,6 +12,11 @@ use \App\Company;
 
 class UserController extends Controller
 {
+    protected $userService;
+
+    function __construct(){
+        $this->userService = new \App\Services\UserService;
+    }
 
     /**
      * Return a filtered list of companies
@@ -31,6 +36,16 @@ class UserController extends Controller
         return ["data"=>$companies];
     }
 
+    /**
+     * Return a Openings privileged for user 
+     * 
+     * @param \Illuminate\Http\Request
+     * @return \Illuminate\Http\Resources\JsonResource
+     */
+    public function fetchOpenings(Request $request){
+        return ["openings" => $this->userService->fetchUserOpenings()->load('company')];
+    }
+
     public function followCompany(Request $request){
         $company = Company::find($request->company_id);
         $user = \Auth::user();
@@ -44,6 +59,15 @@ class UserController extends Controller
         }
 
         return ['status'=>'success'];
+    }
+
+    public function saveOpening(Request $request){
+        $this->userService->saveOpening($request);
+        return ['status'=>'success'];
+    }
+
+    public function fetchSavedOpenings(Request $request){
+        return ['openings'=>$this->userService->fetchSavedOpenings()->load('company')];
     }
     
     public function fetch_user(Request $request){

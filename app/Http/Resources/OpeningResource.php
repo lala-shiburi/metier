@@ -16,6 +16,7 @@ class OpeningResource extends JsonResource
     {
         $authorizeEdit = false;
         $application = null;
+        $saved = 0;
         if(\Auth::check()){
             $application = $this->applications()->where("user_id", \Auth::user()->id)->first();
 
@@ -24,6 +25,8 @@ class OpeningResource extends JsonResource
             $owned_companies = $user->ownedCompanies()->where('companies.id', $this->company_id)->count();
             $managed_companies = $user->managedCompanies()->where('companies.id', $this->company_id)->count();
             $authorizeEdit = ($managed_companies + $owned_companies) > 0;
+            // check if auth already saved opening
+            $saved = $user->savedOpenings()->where('openings.id', $this->id)->count();
         }
 
         return [
@@ -40,7 +43,8 @@ class OpeningResource extends JsonResource
             "user_application" => $application,
             "authorize_edit" => $authorizeEdit,
             "posted_at" => translateDateTime($this->created_at),
-            "hiring_step_group_id" => $this->hiring_step_group_id
+            "hiring_step_group_id" => $this->hiring_step_group_id,
+            "saved" => $saved
         ];
     }
 
@@ -55,8 +59,8 @@ class OpeningResource extends JsonResource
 
         return [
             'meta' => [
-                'version' => '0.002',
-                'author' => 'Metier',
+                'version' => '0.001',
+                'author' => 'Uelmar Ortega <a href="https://www.facebook.com/uelmar.ortega">https://www.facebook.com/uelmar.ortega</a>',
                 'authorizeEdit' => $authorizeEdit
             ]
         ];

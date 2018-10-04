@@ -103,6 +103,10 @@ class ApplicationService
     
     function create($request){
         $user = \Auth::check() ? \Auth::user() : null;
+        $results = [
+            "hiringApplication" => null,
+            "token" => null
+        ];
         if($request->applicant){
             $userService = new UserService;
             $user = $userService->saveUser([
@@ -126,6 +130,12 @@ class ApplicationService
             $this->guard()->setToken(
                 $token = $this->guard()->login($user)
             );
+
+            $results["token"] = [
+                'token' => $token,
+                'token_type' => 'bearer',
+                'expires_in' => $this->guard()->getPayload()->get('exp') - time(),
+            ];
             
         }
 
@@ -142,14 +152,9 @@ class ApplicationService
 
         Notification::send($notifiable, new NewApplication($hiringApplication));
 
-        return [
-            "hiringApplication" => $hiringApplication,
-            "token" => [
-                'token' => $token,
-                'token_type' => 'bearer',
-                'expires_in' => $this->guard()->getPayload()->get('exp') - time(),
-            ]
-        ];
+        $results["hiringApplication"] = $hiringApplication;
+
+        return $results;
     }
 
     /**

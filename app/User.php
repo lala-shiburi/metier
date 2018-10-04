@@ -118,6 +118,25 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
+     * Saved opening
+     * 
+     * @param integer
+     * @return \App\User
+     */
+    public function saveOpening($opening_id){
+        $this->savedOpenings()->attach($opening_id);
+        return $this;
+    }
+
+    /**
+     * Un-save opening
+     */
+    public function unSaveOpening($opening_id){
+        $this->savedOpenings()->detach($opening_id);
+        return $this;
+    }
+
+    /**
      * Get the oauth providers.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -365,6 +384,15 @@ class User extends Authenticatable implements JWTSubject
      */
     public function programmingLanguages(){
         return $this->belongsToMany('\App\ProgrammingLanguage','user_languages','user_id','language_id')->withPivot('expertise_level')->withTimeStamps();
+    }
+
+    /**
+     * Get saved openings
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function savedOpenings(){
+        return $this->belongsToMany(Opening::class, 'saved_openings', 'user_id', 'opening_id');
     }
 
     /**
