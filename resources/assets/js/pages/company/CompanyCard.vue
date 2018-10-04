@@ -7,13 +7,13 @@
           <img :src="company.photo" class="absolute-center">
         </div>
       </div>
-      <div class="buttons">
+      <div class="buttons" v-if="user">
         <button v-if="company.current_user_followed" v-on:click="followCompany" type="button" class="btn btn-outline-warning btn-sm">Unfollow</button>
         <button v-else type="button" v-on:click="followCompany" class="btn btn-outline-secondary btn-sm">Follow</button>
       </div>
     </div>
     <div class="col-md-8 col-sm-6 company-details">
-      <h5>
+      <h5 class="text-truncate">
         <router-link :to="{ name: 'company.profile', params: { id: company.id} }">
           {{company.name}}
         </router-link>
@@ -33,9 +33,12 @@
 
 <script>
 import axios from 'axios'
+import { mapGetters } from 'vuex'
 export default {
   name: 'CompanyCard',
-
+  computed: mapGetters({
+    user: 'auth/user'
+  }),
   props: {
     company: {
       type: Object,

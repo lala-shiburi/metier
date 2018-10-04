@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="text-center simple-card">
+    <div class="text-center simple-card" @click="goToApplications">
       <div class="card-body">
         <div v-if="finished" class="h1">{{count}}</div>
         <unick-loader v-else class="loader" />
@@ -29,6 +29,9 @@ export default {
       })
       this.finished = true;
       this.count = data.count;
+    },
+    goToApplications(){
+      this.$router.push({ name: "hiringApplication.applications" })
     }
   },
   created(){

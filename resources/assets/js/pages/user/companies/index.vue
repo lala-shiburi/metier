@@ -64,7 +64,7 @@
               You
             </template>
             <template v-else>
-              <router-link :to="{ name: 'user.profile', params:{id:company.owner.id} }">
+              <router-link class="text-dark font-weight-bold" :to="{ name: 'user.profile', params:{id:company.owner.id} }">
                 {{company.owner.name}}
               </router-link>
             </template>
@@ -96,7 +96,6 @@ export default {
   data : () =>({
     public_path: location.origin,
     companies:[],
-    followed_companies:[],
   }),
   computed: mapGetters({
     user: 'auth/user'

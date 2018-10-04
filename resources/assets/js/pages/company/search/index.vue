@@ -6,7 +6,7 @@
     <div class="col-md-12">
       <br>
       <div class="row">
-        <div class="col-md-4 col-sm-6" v-for="(company, index) in companies" v-bind:key="index">
+        <div class="col-md-6 col-lg-4" v-for="(company, index) in companies" v-bind:key="index">
           <company-card :company="company"></company-card>
         </div>
       </div>

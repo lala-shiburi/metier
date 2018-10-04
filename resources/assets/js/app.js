@@ -27,7 +27,9 @@ global.jQuery = jQuery
 global.windowResizeDetector = windowResizeDetector
 global.moment = moment
 global.Vue = Vue
-let Bootstrap = require('bootstrap');
+
+require('bootstrap');
+require('overlayscrollbars');
 require("bootstrap-datepicker")
 
 import '~/plugins'

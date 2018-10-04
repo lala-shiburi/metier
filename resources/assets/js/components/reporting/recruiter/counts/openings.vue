@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="text-center simple-card">
+    <div class="text-center simple-card" @click="goOpenings">
       <div class="card-body">
         <div v-if="loaded" class="h1">{{count}}</div>
         <unick-loader v-else class="loader" />
@@ -29,6 +29,9 @@ export default {
 
        this.count = data.count
        this.loaded = true
+    },
+    goOpenings(){
+      this.$router.push({ name: "user.openings" })
     }
   },
   created(){

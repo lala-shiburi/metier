@@ -31,26 +31,28 @@
         </div>
       </div>
     </div>
-    <div class="col-md-9" v-if="!selectOnly">
-      <div class="col-md-12">
-        <div class="selected-round-item d-i" :class="lang.tag_name" v-for="(lang, index) in programming_languages" v-bind:key="index">
-          <div class="close-bttn" v-on:click="removeLang(lang)">
-            <i class="fa fa-close"></i>
+    <div :class="selectOnly ? 'col-md-12' : 'col-md-9'">
+      <div v-if="!selectOnly">
+        <div class="col-md-12">
+          <div class="selected-round-item d-i" :class="lang.tag_name" v-for="(lang, index) in programming_languages" v-bind:key="index">
+            <div class="close-bttn" v-on:click="removeLang(lang)">
+              <i class="fa fa-close"></i>
+            </div>
+            <skill-icon :icon="lang.tag_name" pos="left" size="medium-icon"></skill-icon>
           </div>
-          <skill-icon :icon="lang.tag_name" pos="left" size="medium-icon"></skill-icon>
         </div>
-      </div>
-      <div class="col-md-12">
-        <div class="selected-round-item d-i" :class="tech.tag_name" v-for="(tech, index) in technologies" v-bind:key="index">
-          <div class="close-bttn" v-on:click="removeTech(tech)">
-            <i class="fa fa-close"></i>
+        <div class="col-md-12">
+          <div class="selected-round-item d-i" :class="tech.tag_name" v-for="(tech, index) in technologies" v-bind:key="index">
+            <div class="close-bttn" v-on:click="removeTech(tech)">
+              <i class="fa fa-close"></i>
+            </div>
+            <skill-icon :icon="tech.tag_name" pos="left" size="medium-icon"></skill-icon>
           </div>
-          <skill-icon :icon="tech.tag_name" pos="left" size="medium-icon"></skill-icon>
         </div>
-      </div>
-      <div class="col-md-12" v-if="form.skills.programming_languages.length == 0 && form.skills.technologies.length == 0">
-        <div class="alert alert-light" role="alert">
-          Select skills from skill sidebar.
+        <div class="col-md-12" v-if="form.skills.programming_languages.length == 0 && form.skills.technologies.length == 0">
+          <div class="alert alert-light" role="alert">
+            Select skills from skill sidebar.
+          </div>
         </div>
       </div>
       <slot/>

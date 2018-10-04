@@ -1,14 +1,7 @@
 <template>
   <card class="opening-card">
-    <div v-if="opening.authorize_edit" class="options dropdown">
-      <i class="button fa-ellipsis-h fa" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="javaScript:void(0)" @click="prepDelete"> Delete</a>
-        <router-link class="dropdown-item" :to="{ name: 'opening.edit', params:{id:opening.id} }"> Edit </router-link>
-      </div>
-    </div>
     <div class="row">
-      <div class="col-md-4 col-5">
+      <div class="col-md-12">
         <div class="photo-preview-container opening-photo">
           <div class="scaffold-div">
             <img class="bg-holder" :src="public_path+'/images/bg-img.png'">
@@ -21,17 +14,14 @@
           </div>
         </div>
       </div>
-      <div class="col-md-8 col-7">
-        <h5>
+      <div class="col-md-12">
+        <h5 class="text-truncate">
           <router-link :to="{ name: 'opening.profile', params: { id: opening.id} }">
             {{opening.title}}
           </router-link>
         </h5>
-        <ellipsis-text class="job-des">
-          <template slot="icon">
-            <img class="job-des-icon" :src="public_path+'/images/company.png'" alt="">
-          </template>
-          <router-link :to="{ name: 'company.profile', params: { id: opening.company.id} }">
+        <div class="text-truncate mb-3">
+          <router-link class="text-muted" :to="{ name: 'company.profile', params: { id: opening.company.id} }">
             <div class="company-logo">
               <div class="photo-preview-container">
                 <div class="scaffold-div">
@@ -42,22 +32,20 @@
             </div>
             {{opening.company.name}}
           </router-link>
-        </ellipsis-text>
-        <ellipsis-text class="job-des">
-          <template slot="icon">
-            <img class="job-des-icon" :src="public_path+'/images/opening-description.png'" alt="">
-          </template>
-          {{opening.details}}
-        </ellipsis-text>
+        </div>
         <ellipsis-text class="job-des" v-if="opening.salary_range">
           <template slot="icon">
-            <img class="job-des-icon" :src="public_path+'/images/salary.png'" alt="">
+            <div class="prop-icon bg-info">
+              <i class="fa fa-usd" aria-hidden="true"></i>
+            </div>
           </template>
           {{opening.salary_range}}
         </ellipsis-text>
         <ellipsis-text class="job-des" v-if="opening.programming_languages.length > 0 || opening.technologies.length > 0">
           <template slot="icon">
-            <img class="job-des-icon" :src="public_path+'/images/code.png'" alt="">
+            <div class="prop-icon bg-info">
+              <i class="fa fa-code" aria-hidden="true"></i>
+            </div>
           </template>
           <span class="skills"> 
             <span>
@@ -70,14 +58,31 @@
         </ellipsis-text>
         <ellipsis-text class="job-des">
           <template slot="icon">
-            <img class="job-des-icon" :src="public_path+'/images/calendar.png'" alt="">
+            <div class="prop-icon bg-info">
+              <i class="fa fa-calendar-o" aria-hidden="true"></i>
+            </div>
           </template>
           {{opening.posted_at}}
         </ellipsis-text>
         <div style="margin-top:10px;" v-if="!noApply">
-          <router-link class="btn btn-primary" :to="{ name: 'hiringApplication.create', params: { opening_id: opening.id} }">
+          <router-link class="btn btn-sm btn-primary btn-block" :to="{ name: 'hiringApplication.create', params: { opening_id: opening.id} }">
             Apply
           </router-link>
+          <template v-if="user">
+            <button @click="saveOpening" v-if="opening.saved" class="btn btn-sm btn-outline-warning btn-block">
+              Un-save
+            </button>
+            <button @click="saveOpening" v-else class="btn btn-sm btn-outline-secondary btn-block">
+              Save
+            </button>
+          </template>
+          <div v-if="opening.authorize_edit" class="dropdown btn-block">
+            <button type="button" class="btn btn-sm btn-outline-info btn-block" data-toggle="dropdown">Edit</button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="javaScript:void(0)" @click="prepDelete"> Delete</a>
+              <router-link class="dropdown-item" :to="{ name: 'opening.edit', params:{id:opening.id} }"> Edit </router-link>
+            </div>
+          </div>
         </div>
         <div>
           <slot/>
@@ -90,9 +95,12 @@
 <script>
 import swal from 'sweetalert2'
 import axios from 'axios'
+import { mapGetters } from 'vuex'
 export default {
   name: 'OpeningCard',
-
+  computed: mapGetters({
+    user: 'auth/user'
+  }),
   props: {
     opening: {
       type: Object,
@@ -139,6 +147,15 @@ export default {
           })
         }
       })
+    },
+    async saveOpening(){
+      var save = this.opening.saved == 1 ? 0 : 1
+      this.opening.saved = save
+      const {data} = await axios({
+        method: 'patch',
+        url: '/api/user/update/opening/save',
+        params:{opening_id:this.opening.id, save: save}
+      });
     }
   },
   mounted(){
@@ -149,9 +166,7 @@ export default {
 <style lang="scss" scoped>
 .opening-card{
   .options{
-    position: absolute;
-    top: 0px;
-    right: 5px;
+    // 
 
     .button{
       color: #828181;
@@ -159,6 +174,26 @@ export default {
 
     .button:hover{
       color: #212529;
+    }
+  }
+
+  .job-des{
+    margin-bottom: 5px;
+  }
+
+  .prop-icon{
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    color: white;
+    .fa{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      font-size: 10px;
     }
   }
 }

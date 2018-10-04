@@ -5,48 +5,52 @@
         <img :src="public_path+'/images/logo_brand.png'">
         <div class="transparent-cover v-small" @click="showSidebar"></div>
       </div>
-      <div class="p-2 bg-light"><small>Main Navigation</small></div>
-      <div class="list-group list-group-flush">
-        <collapsible>
-          <template slot="toggle-content">
-            Dashboard
-          </template>
-          <template slot="collapse-content">
-            <router-link :to="{ name: 'dashboard.applicant' }" class="sub-link sidebar-nav" active-class="active">
-              <i class="fa fa-user-o" aria-hidden="true"></i> Applicant
+      <div class="sidebar-menu" ref="sidebar-menu">
+        <div class="menu">
+          <div class="p-2 bg-light"><small>Main Navigation</small></div>
+          <div class="list-group list-group-flush">
+            <collapsible>
+              <template slot="toggle-content">
+                Dashboard
+              </template>
+              <template slot="collapse-content">
+                <router-link :to="{ name: 'dashboard.applicant' }" class="sub-link sidebar-nav" active-class="active">
+                  <i class="fa fa-user-o" aria-hidden="true"></i> Applicant
+                </router-link>
+                <router-link :to="{ name: 'dashboard.recruiter' }" class="sub-link sidebar-nav" active-class="active">
+                  <i class="fa fa-building-o" aria-hidden="true"></i> Recruiter
+                </router-link>
+              </template>
+            </collapsible>
+            <router-link :to="{ name: 'opening.search' }" class="list-group-item list-group-item-action sidebar-nav" active-class="active">
+              Openings
             </router-link>
-            <router-link :to="{ name: 'dashboard.recruiter' }" class="sub-link sidebar-nav" active-class="active">
-              <i class="fa fa-building-o" aria-hidden="true"></i> Recruiter
+            <router-link :to="{ name: 'company.search' }" class="list-group-item list-group-item-action sidebar-nav" active-class="active">
+              Companies
             </router-link>
-          </template>
-        </collapsible>
-        <router-link :to="{ name: 'opening.search' }" class="list-group-item list-group-item-action sidebar-nav" active-class="active">
-          Openings
-        </router-link>
-        <router-link :to="{ name: 'company.search' }" class="list-group-item list-group-item-action sidebar-nav" active-class="active">
-          Companies
-        </router-link>
-      </div>
-      <div class="p-2 bg-light"><small>User Business</small></div>
-      <div class="list-group list-group-flush">
-        <router-link :to="{ name: 'opening.search' }" class="list-group-item list-group-item-action sidebar-nav" active-class="active">
-          User Openings
-        </router-link>
-        <router-link :to="{ name: 'user.companies' }" class="list-group-item list-group-item-action sidebar-nav" active-class="active">
-          User Companies
-        </router-link>
-        <router-link :to="{ name: 'user.followed.companies' }" class="list-group-item list-group-item-action sidebar-nav" active-class="active">
-          Companies You Followed
-        </router-link>
-        <router-link :to="{ name: 'company.search' }" class="list-group-item list-group-item-action sidebar-nav" active-class="active">
-          Openings You Saved
-        </router-link>
+          </div>
+          <div class="p-2 bg-light"><small>User Business</small></div>
+          <div class="list-group list-group-flush">
+            <router-link :to="{ name: 'user.openings' }" class="list-group-item list-group-item-action sidebar-nav" active-class="active">
+              User Openings
+            </router-link>
+            <router-link :to="{ name: 'user.companies' }" class="list-group-item list-group-item-action sidebar-nav" active-class="active">
+              User Companies
+            </router-link>
+            <router-link :to="{ name: 'user.followed.companies' }" class="list-group-item list-group-item-action sidebar-nav" active-class="active">
+              Companies You Followed
+            </router-link>
+            <router-link :to="{ name: 'user.saved.openings' }" class="list-group-item list-group-item-action sidebar-nav" active-class="active">
+              Openings You Saved
+            </router-link>
+          </div>
+        </div>
       </div>
     </div>
     <div class="sidebar-backdrop" @click="showSidebar"></div>
     <div class="main-layout sidebar-scroll-cancelled" data-addScrollTopBehavior ref="main-layout">
       <navbar @toggle="showSidebar" ref="navigation"/>
-      <div class="container mt-4" @click="hideUserOption">
+      <div class="mt-4 m-3" @click="hideUserOption">
         <child/>
       </div>
     </div>
@@ -93,6 +97,16 @@ export default {
         $this.showSidebar();
       }
     })
+
+    jQuery(function() {
+        //The passed argument has to be at least a empty object or a object with your desired options
+        jQuery($this.$refs['sidebar-menu']).overlayScrollbars({ 
+          className       : "os-theme-dark",
+          scrollbars: {
+            autoHide : "leave"
+          }
+        });
+    });
   }
 }
 
@@ -118,6 +132,13 @@ $transition:300ms ease all;
   box-shadow:  2px 0px 6px -4px rgba(150,150,150,1);
   transition: $transition;
   overflow: auto;
+  .sidebar-menu{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    top: 56px;
+  }
   &.visible{
     visibility: visible;
     left: 0px;
@@ -193,6 +214,9 @@ $transition:300ms ease all;
   }
   .sidebar.visible{
     right: 25px;
+    .menu{
+      padding-left: 25px;
+    }
     &+.sidebar-backdrop{
       visibility: visible;
       opacity: 0.75;

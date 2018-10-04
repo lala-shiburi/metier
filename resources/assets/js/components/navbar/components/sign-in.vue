@@ -71,6 +71,12 @@ export default {
 
           // Fetch the user.
           await $this.$store.dispatch('auth/fetchUser')
+
+          var user = $this.$store.getters['auth/user'];
+
+          if(user.role == 1){
+            $this.$router.app.setLayout('company_owner')
+          }
         }
       });
     },
@@ -80,6 +86,6 @@ export default {
     close(){
       this.$refs.modal.hide();
     }
-  }
+  },
 }
 </script>

@@ -5,18 +5,35 @@
         <div class="profile-cover" style="height: 300px;">
           <img class="absolute-center" :src="opening.company.cover">
         </div>
-        <div class="row" style="margin-top: -15%;">
-          <div class="col-md-6 offset-md-3">
-            <opening-card :opening="opening" :noApply="true">
-              <div style="margin-top: 10px;">
-                <router-link class="btn btn-primary" :to="{ name: 'hiringApplication.create', params: { opening_id: opening.id} }">
-                  Apply
-                </router-link>
-                <router-link v-if="authorizeEdit" class="btn btn-success" :to="{ name: 'opening.edit', params: { id: opening.id} }">
-                  Edit  
-                </router-link>
+        <div class="p-15">
+          <div class="d-inline-block align-top">
+            <img :src="opening.picture" width="200" class="img-thumbnail">
+          </div>
+          <div class="d-inline-block p-1 align-top">
+            <div class="h4 padding-bottom">{{opening.title}}</div>
+            <p>
+              <router-link class="text-muted" :to="{ name: 'company.profile', params: { id: opening.company.id} }">
+                {{opening.company.name}}
+              </router-link>
+            </p>
+            <div class="mb-3">
+              <div class="text-truncate" v-if="parseInt(opening.salary_range)">
+                <span class="badge badge-secondary prop-w"><i class="fa fa-usd" aria-hidden="true"></i></span> {{opening.salary_range}}
               </div>
-            </opening-card>
+              <div class="text-truncate" v-if="opening.salary_range">
+                <span class="badge badge-secondary"><i class="fa fa-code" aria-hidden="true"></i></span>
+                <skill-icon v-for="(lang,index) in opening.programming_languages" v-bind:key="index" size="x-small-icon" :icon="lang.tag_name"/>
+                <skill-icon v-for="(tech,index) in opening.technologies" v-bind:key="index" size="x-small-icon" :icon="tech.tag_name"/>
+              </div>
+            </div>
+            <div>
+              <router-link class="btn btn-primary" :to="{ name: 'hiringApplication.create', params: { opening_id: opening.id} }">
+                Apply
+              </router-link>
+              <router-link v-if="authorizeEdit" class="btn btn-success" :to="{ name: 'opening.edit', params: { id: opening.id} }">
+                Edit  
+              </router-link>
+            </div>
           </div>
         </div>
       </div>
@@ -27,64 +44,6 @@
         </div>
         <br>
       </card>
-      
-      <div class="row">
-        <div class="col-md-4">
-          <card class="opening-card" title="Company">
-            <div class="row">
-              <div class="col-md-4">
-                <div class="photo-preview-container opening-photo">
-                  <div class="scaffold-div">
-                    <img class="bg-holder" :src="public_path+'/images/bg-img.png'">
-                    <img class="absolute-center" :src="opening.company.photo">
-                    <div class="company-name">
-                      <!-- <ellipsis-text>
-                          {{opening.company.name}}
-                      </ellipsis-text> -->
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-8">
-                <h5>
-                  <router-link :to="{ name: 'company.profile', params: { id: opening.company.id} }">
-                    {{opening.company.name}}
-                  </router-link>
-                  </h5>
-                <ellipsis-text class="job-des" v-if="opening.company.employee_count">
-                  <template slot="icon">
-                    <img class="job-des-icon" :src="public_path+'/images/employees.png'" alt="">
-                  </template>
-                  {{opening.company.employee_count}}
-                </ellipsis-text>
-                <ellipsis-text class="job-des">
-                  <template slot="icon">
-                    <img class="job-des-icon" :src="public_path+'/images/location.png'" alt="">
-                  </template>
-                  {{opening.company.address}}
-                </ellipsis-text>
-              </div>
-            </div>
-          </card>
-        </div>
-        <div class="col-md-8">
-          <card title="Skills Requirements">
-            <div v-if="opening.programming_languages.length > 0">
-              <label>Programming Languages</label>
-              <br>
-              <skill-icon v-for="(lang,index) in opening.programming_languages" v-bind:key="index" :icon="lang.tag_name"></skill-icon>
-            </div>
-            <div v-if="opening.technologies.length > 0">
-              <label>Frameworks</label>
-              <br>
-              <skill-icon v-for="(tech,index) in opening.technologies" v-bind:key="index" :icon="tech.tag_name"></skill-icon>
-            </div>
-            <div v-if="opening.programming_languages.length == 0 && opening.technologies.length == 0">
-              <label> No Skill Requirements </label>
-            </div>
-          </card>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -118,3 +77,8 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.prop-w{
+  width: 23px;
+}
+</style>

@@ -77,7 +77,11 @@
           </card>
         </div>
         <div class="col-md-8">
-          <opening-card @delete="removeOpening" v-for="(opening,index) in openings" v-bind:key="index" :opening="opening"></opening-card>
+          <div class="row">
+            <div class="col-md-6" v-for="(opening,index) in openings" v-bind:key="index">
+              <opening-card @delete="removeOpening" :opening="opening"/>
+            </div>
+          </div>
         </div>
       </div>
     </div>

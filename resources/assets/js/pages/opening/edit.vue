@@ -92,8 +92,12 @@
           <div class="form-group row">
             <label class="col-md-3 col-form-label text-md-right">Details</label>
             <div class="col-md-7">
-              <textarea rows="5" v-model="form2.details" :class="{ 'is-invalid': form2.errors.has('details') }" class="form-control" name="details">
-              </textarea>
+              <quill-editor class="form-control" style="height:initial;" :class="{ 'is-invalid': form2.errors.has('details') }" v-model="form2.details"
+                :options="editorOption"
+                @blur="onEditorBlur($event)"
+                @focus="onEditorFocus($event)"
+                @ready="onEditorReady($event)">
+              </quill-editor>
               <has-error :form="form2" field="details"/>
             </div>
           </div>
@@ -145,11 +149,13 @@ import Form from 'vform'
 import axios from 'axios'
 import ProfilePictureModal from '~/components/photo-editors/profilePictureModal'
 import SkillSelector from './../../components/SkillSelector'
+import VueQuillEditor from 'vue-quill-editor'
 export default {
   middleware: 'auth',
   components: {
     ProfilePictureModal,
-    SkillSelector
+    SkillSelector,
+    'quill-editor':VueQuillEditor.quillEditor
   },
 
   metaInfo () {
@@ -188,6 +194,19 @@ export default {
     salary_ranges: window.config.salary_ranges,
     work_experiences: window.config.work_experiences,
     hiringProcesses:[],
+    editorOption: {
+      // some quill options
+      modules: {
+        toolbar: [
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ 'header': 1 }, { 'header': 2 }],
+          [{ 'indent': '-1' }, { 'indent': '+1' }],
+          [{ 'direction': 'rtl' }],
+          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+          [{ 'font': [] }],
+        ],
+      }
+    },
   }),
 
   methods: {
@@ -213,6 +232,19 @@ export default {
         $this.form3.busy = false;
         $this.$refs.wizard.next();
       },100);
+    },
+    onEditorBlur(quill) {
+      console.log('editor blur!', quill)
+    },
+    onEditorFocus(quill) {
+      console.log('editor focus!', quill)
+    },
+    onEditorReady(quill) {
+      console.log('editor ready!', quill)
+    },
+    onEditorChange({ quill, html, text }) {
+      console.log('editor change!', quill, html, text)
+      this.content = html
     },
     async validateForm4 () {
       // 
@@ -283,7 +315,7 @@ export default {
 </script>
 
 <style>
-.settings-card .card-body {
-  padding: 0;
+.ql-editor{
+  min-height: 200px;
 }
 </style>
