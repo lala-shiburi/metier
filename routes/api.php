@@ -16,12 +16,31 @@ use Illuminate\Http\Request;
 Route::group(['middleware' => 'auth:api'], function () {
     Route::post('logout', 'Auth\LoginController@logout');
 
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
-
     Route::patch('settings/profile', 'Settings\ProfileController@update');
     Route::patch('settings/password', 'Settings\PasswordController@update');
+
+    Route::group(["prefix" => "user"], function(){
+        Route::get('/', function(Request $request){
+            return $request->user();
+        });
+
+        // fetch
+        Route::group(["prefix"=>"fetch"], function(){
+            Route::group(["prefix" => "openings"], function(){
+                Route::get('/', 'UserController@fetchOpenings');
+                Route::get('saved', "UserController@fetchSavedOpenings");
+            });
+        });
+
+        // update
+        Route::group(["prefix" => "update"], function(){
+
+            // opening
+            Route::group(["prefix"=>"opening"], function(){
+                Route::patch('save', 'UserController@saveOpening');
+            });
+        });
+    });
 
     // user routes
     Route::group(['prefix' => 'userInfo'], function(){
@@ -137,9 +156,13 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::group(["prefix" => "delete"], function(){
             Route::delete('soft', 'OpeningController@softDelete');
         });
+
+        // update
+        Route::group(["prefix" => "update"], function(){
+            Route::patch('/', 'OpeningController@update');
+        });
         
         Route::post('create', 'OpeningController@create');
-        Route::patch('update', 'OpeningController@update');
     });
 
     // application routes
