@@ -193,6 +193,15 @@ class Company extends Model
     }
 
     /**
+     * Relationship of company saved users
+     * 
+     * @return \Illuminate\Database\Eloquent\Relationship\BelongsToMany
+     */
+    public function savedUsers(){
+        return $this->belongsToMany(User::class, 'saved_user_profiles', 'company_id', 'user_id')->withTimeStamps();
+    }
+
+    /**
      * update photo attribute
      * 
      * @return String

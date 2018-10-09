@@ -4,6 +4,7 @@ namespace App\Services;
 
 use \App\User;
 use \App\Opening;
+use \App\Http\Resources\UserResource;
 
 class UserService
 {
@@ -24,6 +25,21 @@ class UserService
         $user->save();
 
         return $user;
+    }
+
+    /**
+     * Converts User Collections to API Resource
+     * 
+     * @return Collection
+     */
+    function handleUserResources($users){
+        $result = [];
+
+        foreach($users as $user){
+            array_push($result, new UserResource($user));
+        }
+
+        return $result;
     }
 
     /**
@@ -62,5 +78,24 @@ class UserService
         $openings = Opening::whereIn('company_id', $company_ids)->get();
 
         return $openings;
+    }
+
+    /**
+     * Search User
+     * 
+     * @return Collection
+     */
+    public function searchUser($request){
+        $query = User::searchKeyword($request->keyword)->searchSkill($request->skills);
+        return $query->get();
+    }
+
+    /**
+     * Fetch Managed Companies
+     * 
+     * @return Collection
+     */
+    public function fetchManagedCompanies(){
+        return $this->auth->managedCompanies;
     }
 }

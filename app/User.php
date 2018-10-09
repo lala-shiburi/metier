@@ -369,11 +369,34 @@ class User extends Authenticatable implements JWTSubject
     /**
      * Search user through name keyword
      * 
-     * @param string
-     * @return \App\User
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param mixed $keyword
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public static function searchKeyword($keyword){
-        return User::whereRaw('concat(users.first_name," ",users.last_name) like "%'.$keyword.'%"');
+    public static function scopeSearchKeyword($query, $keyword){
+        return $query->whereRaw('concat(users.first_name," ",users.last_name) like "%'.$keyword.'%"');
+    }
+
+    /**
+     * Search using skills
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param mixed $skills
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public static function scopeSearchSkill($query, $skills){
+        if(count($skills['programming_languages'])){
+            $query->whereHas('programmingLanguages', function ($query) use ($skills){
+                $query->whereIn('programming_languages.id',$skills['programming_languages']);
+            });
+        }
+        if(count($skills['technologies'])){
+            $query->whereHas('technologies', function ($query) use ($request){
+                $query->whereIn('technologies.id', $skills['technologies']);
+            });
+        }
+
+        return $query;
     }
 
 
@@ -411,6 +434,13 @@ class User extends Authenticatable implements JWTSubject
      */
     public function workExperiences(){
         return $this->hasMany('\App\WorkExperience')->orderBy('from','desc');
+    }
+
+    /**
+     * Get current work experiences
+     */
+    public function currentWorkExperience(){
+        return $this->workExperiences()->where('is_current', 1)->limit(1);
     }
 
     /**
