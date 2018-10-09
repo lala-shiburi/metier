@@ -30,11 +30,14 @@ Route::group(['middleware' => 'auth:api'], function () {
                 Route::get('/', 'UserController@fetchOpenings');
                 Route::get('saved', "UserController@fetchSavedOpenings");
             });
+            Route::group(["prefix" => "companies"], function(){
+                Route::get('managed', 'UserController@fetchManagedCompanies');
+                Route::get('saved/users', 'CompanyController@fetchSavedUsers');
+            });
         });
 
         // update
         Route::group(["prefix" => "update"], function(){
-
             // opening
             Route::group(["prefix"=>"opening"], function(){
                 Route::patch('save', 'UserController@saveOpening');
@@ -90,6 +93,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     // company routes
     Route::group(['prefix' => "company"], function(){
         Route::post('create', 'CompanyController@create');
+
+        // fetch
         Route::group(['prefix'=>'fetch'], function(){
             Route::get('applications', 'CompanyController@fetchHiringApplications');
             Route::get('hiring/applications2', 'CompanyController@fetchHiringApplications2');
@@ -104,6 +109,11 @@ Route::group(['middleware' => 'auth:api'], function () {
         // add
         Route::group(['prefix'=>'add'], function(){
             Route::post('collaborator','CompanyController@addCollaborator');
+        });
+
+        // save
+        Route::group(['prefix'=>'save'], function(){
+            Route::post('user', 'CompanyController@saveUser');
         });
 
         // delete
@@ -244,7 +254,14 @@ Route::group(['prefix' => "company"], function(){
         Route::get('openings', 'CompanyController@fetch_openings');
     });
 });
-// user
+//user
+Route::group(['prefix'=>'user'], function(){
+    // fetch
+    Route::group(['prefix'=>'fetch'], function(){
+        Route::post('search', 'UserController@searchUser');
+    });
+});
+// applications
 Route::group(['prefix'=>'application'], function(){
     // validation
     Route::group(['prefix'=>'validate'], function(){
