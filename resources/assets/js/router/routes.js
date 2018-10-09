@@ -11,6 +11,8 @@ const UserProfile = () => import('~/pages/user/index').then(m => m.default || m)
 const ApplicationProgress = () => import('~/pages/user/application-progress-page').then(m => m.default || m)
 const UserSavedOpenings = () => import('~/pages/user/saved-openings/index').then(m => m.default || m)
 const UserOpenings = () => import('~/pages/user/openings/index').then(m => m.default || m)
+const UserSearch = () => import('~/pages/user/search/index').then(m => m.default || m)
+const UserCompanySavedUsers = () => import('~/pages/user/saved-users/index').then(m => m.default || m)
 
 // company pages
 const CompanyProfile = () => import('~/pages/company/index').then(m => m.default || m)
@@ -90,7 +92,8 @@ export default [
   { path: '/user/application/progress/:application_id', name: 'user.application.progress', component: ApplicationProgress },
   { path: '/user/saved/openings', name: 'user.saved.openings', component: UserSavedOpenings },
   { path: '/user/openings', name: 'user.openings', component: UserOpenings },
-  // { path: '/user/search', name: 'user.openings', component: UserOpenings },
+  { path: '/user/search', name: 'user.search', component: UserSearch },
+  { path: '/user/company/saved/user', name: 'user.company.saved.user', component: UserCompanySavedUsers },
 
   // opening routes
   { path: '/opening/profile/:id', name: 'opening.profile', component: OpeningProfile },

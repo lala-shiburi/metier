@@ -1,5 +1,5 @@
 <template>
-  <card title="Company Search">
+  <div>
     <form @submit.prevent="search" @keydown="searchForm.onKeydown($event)">
       <div class="input-group mb-3">
         <input type="text" class="form-control" v-model="searchForm.keyword" placeholder="Company Seach">
@@ -22,7 +22,7 @@
           </div>
       </div>
     </form>
-  </card>
+  </div>
 </template>
 
 <script>

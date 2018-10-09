@@ -1,16 +1,14 @@
 <template>
   <div>
-    <card title="Opening Search">
       <form @submit.prevent="search" @keydown="searchForm.onKeydown($event)">
         <div class="input-group mb-3">
-          <input type="text" class="form-control" v-model="searchForm.keyword" placeholder="Opening Seach">
+          <input type="text" class="form-control" v-model="searchForm.keyword" placeholder="Search">
           <div class="input-group-append">
             <v-button :loading="searchForm.busy" class="btn btn-outline-secondary" type="success">
               <i class="fa fa-search" aria-hidden="true"></i>
             </v-button>
           </div>
         </div>
-        <p class="border-bottom">Skills Filter</p>
         <div>
           <div class="mb-2" v-if="programming_languages.length || technologies.length">
             <span>
@@ -25,7 +23,6 @@
           </button>
         </div>
       </form>
-    </card>
     <skill-selector-modal @update="updateSkillFilter" :form="searchForm" ref="skill-selector-modal"/>
   </div>
 </template>

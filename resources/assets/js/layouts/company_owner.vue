@@ -28,6 +28,9 @@
             <router-link :to="{ name: 'company.search' }" class="list-group-item list-group-item-action sidebar-nav" active-class="active">
               Companies
             </router-link>
+            <router-link :to="{ name: 'user.search' }" class="list-group-item list-group-item-action sidebar-nav" active-class="active">
+              People
+            </router-link>
           </div>
           <div class="p-2 bg-light"><small>User Business</small></div>
           <div class="list-group list-group-flush">
@@ -42,6 +45,9 @@
             </router-link>
             <router-link :to="{ name: 'user.saved.openings' }" class="list-group-item list-group-item-action sidebar-nav" active-class="active">
               Openings You Saved
+            </router-link>
+            <router-link :to="{ name: 'user.company.saved.user' }" class="list-group-item list-group-item-action sidebar-nav" active-class="active">
+              Users You Saved
             </router-link>
           </div>
         </div>

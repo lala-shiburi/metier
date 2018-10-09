@@ -68,6 +68,9 @@ async function beforeEach (to, from, next) {
 
   // Call each middleware.
   callMiddleware(middleware, to, from, async (...args) => {
+
+    // remove tool tips
+    jQuery('.tooltip').remove()
     
     // Set the application layout to admin if current user role is equal to 1 which means current user is company owner
     if(store.getters['auth/user'] && store.getters['auth/user'].role == 1){
