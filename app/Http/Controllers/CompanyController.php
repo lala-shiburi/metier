@@ -9,11 +9,12 @@ use App\Http\Resources\ApplicationResource;
 
 class CompanyController extends Controller
 {
-    protected $openingService,$applicationService;
+    protected $openingService,$applicationService,$companyService;
 
     function __construct(){
-        $this->openingService = new \App\Services\OpeningService();
-        $this->applicationService = new  \App\Services\ApplicationService();
+        $this->openingService = new \App\Services\OpeningService;
+        $this->applicationService = new  \App\Services\ApplicationService;
+        $this->companyService = new \App\Services\CompanyService;
     }
 
     /**
@@ -194,5 +195,31 @@ class CompanyController extends Controller
         $company = Company::find($request->company_id);
         $company->saveCoverPhoto($request->photo_data);
         return $company;
+    }
+
+    /**
+     * Save user
+     * 
+     * @param \Illuminate\Http\Request
+     * @return Array
+     */
+    public function saveUser(Request $request){
+        if($request->save){
+            $this->companyService->saveUser($request);
+        }
+        else{
+            $this->companyService->unSaveUser($request);
+        }
+        return ['status'=>'success'];
+    }
+
+    /**
+     * fetch saved Users
+     * 
+     * @param \Illuminate\Http\Request
+     * @return Array
+     */
+    public function fetchSavedUsers(Request $request){
+        return ['users'=> $this->companyService->getCompanySavedUsers()];
     }
 }

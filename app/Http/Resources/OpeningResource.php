@@ -17,6 +17,7 @@ class OpeningResource extends JsonResource
         $authorizeEdit = false;
         $application = null;
         $saved = 0;
+        $openingService = new \App\Services\OpeningService;
         if(\Auth::check()){
             $application = $this->applications()->where("user_id", \Auth::user()->id)->first();
 
@@ -37,7 +38,7 @@ class OpeningResource extends JsonResource
             "title" => $this->title,
             "picture" => $this->picture,
             "details" => $this->details,
-            "salary_range" => $this->salary_range,
+            "salary_range" => $openingService->getSalaryRangeCorrespondingText($this->salary_range),
             "professional_years" => $this->professional_years,
             "created_at" => $this->created_at,
             "user_application" => $application,

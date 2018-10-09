@@ -37,6 +37,16 @@ class UserController extends Controller
     }
 
     /**
+     * Return a filtered list of companies
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @return Illuminate\Http\Resources\JsonResource
+     */
+    public function fetchManagedCompanies(Request $request){
+        return ["companies"=>$this->userService->fetchManagedCompanies()];
+    }
+
+    /**
      * Return a Openings privileged for user 
      * 
      * @param \Illuminate\Http\Request
@@ -349,6 +359,10 @@ class UserController extends Controller
         $user = \Auth::user();
         $user->saveCoverPhoto($request->photo_data);
         return $user;
+    }
+
+    public function searchUser(Request $request){
+        return ['users'=>$this->userService->handleUserResources($this->userService->searchUser($request))];
     }
     
 }

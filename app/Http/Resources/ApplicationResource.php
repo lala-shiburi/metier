@@ -14,9 +14,11 @@ class ApplicationResource extends JsonResource
      */
     public function toArray($request)
     {
+        $openingService = new \App\Services\OpeningService;
+
         return [
             "id" => $this->id,
-            "expected_salary" => $this->application_letter,
+            "expected_salary" => $this->expected_salary,
             "application_letter" => $this->application_letter,
             "user" => $this->user,
             "hiring_step_results" => $this->hiringStepResults->load('notes'),
