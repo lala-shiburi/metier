@@ -243,7 +243,9 @@ Route::group([ "prefix" => "opening" ], function(){
     // fetch
     Route::group(['prefix'=>'fetch'], function(){
         Route::get('/', 'OpeningController@fetch');
+        Route::get('/raw', 'OpeningController@fetchRaw');
         Route::post('search', 'OpeningController@search');
+        Route::get('/recent', 'OpeningController@fetchRecentApplication');
     });
 });
 //company
@@ -252,6 +254,7 @@ Route::group(['prefix' => "company"], function(){
         Route::get('/', 'CompanyController@fetch');
         Route::post('search', 'CompanyController@fetchCompanySearch');
         Route::get('openings', 'CompanyController@fetch_openings');
+        Route::get('popular', 'CompanyController@fetchPopularCompanies');
     });
 });
 //user
