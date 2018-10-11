@@ -1,5 +1,6 @@
 @php
 $openingService = new App\Services\OpeningService;
+$companyService = new App\Services\CompanyService;
 $config = [
     'appName' => config('app.name'),
     'locale' => $locale = app()->getLocale(),
@@ -8,6 +9,7 @@ $config = [
     'githubAuth' => config('services.github.client_id'),
 
     'salary_ranges'=> $openingService->salary_ranges,
+    'employee_counts' => $companyService->employee_counts,
 
     'work_experiences'=> [
       "No Experience",
@@ -75,6 +77,22 @@ $polyfills = [
     },
     this.hideAll = function(){
       jQuery(target).find('.panel').hide();
+    }
+  }
+  function getParameterByName(name, url) {
+      if (!url) url = window.location.href;
+      name = name.replace(/[\[\]]/g, '\\$&');
+      var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+          results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, ' '));
+  }
+  function getSkills(skill, id){
+    for(var i = 0; i < window.config[skill].length; i++){
+      if(window.config[skill][i].id == id){
+        return window.config[skill][i]
+      }
     }
   }
   </script>
