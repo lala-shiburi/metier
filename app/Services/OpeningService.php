@@ -50,4 +50,9 @@ class OpeningService
         
         return ['openings'=> $this->handleOpeningResource($openings)];
     }
+    function getRecentApplications(){
+        $openings = Opening::orderBy('created_at', 'desc')->limit(8)->get();
+
+        return $this->handleOpeningResource($openings);
+    }
 }
