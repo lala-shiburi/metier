@@ -16,7 +16,7 @@
     <div class="p-10" style="padding: 0px 10px;">
       <ul class="list-inline">
         <li class="list-inline-item">
-          <router-link :to="{ name: 'company.hiringprocceses.create', params: { company_id: company_id } }" class="btn btn-primary btn-sm">
+          <router-link :to="{ name: 'company.hiringprocceses.create', params: { company_id: company_id } }" class="mt-3 btn btn-primary btn-sm">
             ADD PROCEDURE
           </router-link>
         </li>
@@ -92,21 +92,8 @@ import Vue from 'vue'
 
 export default {
   middleware: 'auth',
-  computed: {
-    tabs () {
-      return [
-        {
-          icon: 'user',
-          name: this.$t('profile'),
-          route: 'settings.profile'
-        },
-        {
-          icon: 'lock',
-          name: this.$t('password'),
-          route: 'settings.password'
-        }
-      ]
-    }
+  metaInfo () {
+    return { title: 'Hiring Processes' }
   },
   data : () =>({
     public_path: location.origin,

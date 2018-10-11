@@ -20,6 +20,9 @@ RecentApplications
 } from '~/components/reporting/applicant'
 export default {
   middleware: 'auth',
+  metaInfo () {
+    return { title: "Applicant Dashboard" }
+  },
   components: {
     ApplicationCount,
     FollowedCompanies,

@@ -33,25 +33,7 @@ class CompanyController extends Controller
             'province' => 'required',
         ]);
 
-
-        $company = Company::create([
-            "name" => $request->name,
-            "email" => $request->email,
-            "owner_id" => \Auth::user()->id,
-            "address" => $request->address,
-            "website_url" => $request->website_url,
-            "province" => $request->province
-        ]);
-        $auth = \Auth::user();
-        $company->owner_id = $auth->id;
-        $company->save();
-        $company->addCollaborator($auth->id, 2);
-
-        if($request->photo){
-            $company->saveProfilePhoto($request->photo);
-        }
-
-        return ["status" => "success", "company_id" => $company->id];
+        return ["status" => "success", "company_id" => $this->companyService->create($request)->id];
 
     }
 
@@ -165,12 +147,7 @@ class CompanyController extends Controller
      * @return \Illuminate\Http\Resources\JsonResource
      */
     public function fetchCompanySearch(Request $request){
-        $companies = Company::where('companies.name','like','%'.$request->keyword.'%');
-        if($request->search_province){
-            $companies->where('province',$request->province);
-        }
-
-        return ['companies'=>$companies->get()];
+        return ['companies'=>$this->companyService->fetchCompanySearch($request)];
     }
 
     /**
@@ -221,5 +198,15 @@ class CompanyController extends Controller
      */
     public function fetchSavedUsers(Request $request){
         return ['users'=> $this->companyService->getCompanySavedUsers()];
+    }
+
+    /**
+     * Fetch Popular Companies
+     * 
+     * @param \Illuminate\Http\Request
+     * @return \Illuminate\Http\Resources\JsonResource
+     */
+    public function fetchPopularCompanies(Request $request){
+        return ["companies"=>$this->companyService->getMostPopularCompanies()];
     }
 }

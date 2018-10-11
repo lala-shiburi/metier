@@ -9,6 +9,11 @@ use \App\Notification;
 
 class NotificationController extends Controller
 {
+    protected $notificationService;
+
+    function __construct(){
+        $this->notificationService = new \App\Services\NotificationService;
+    }
 
     /**
      * Return Auth User Notifications
@@ -17,19 +22,10 @@ class NotificationController extends Controller
      * @return Illuminate\Http\Resources\JsonResource
      */
     public function fetchNotifications(Request $request){
-        $user = \Auth::user();
-        $notifications = [];
-        $left_to_load = 0;
-        $_notifications = $user->notifications()->limit(3)->get();
-        foreach($_notifications as $notification){
-            array_push($notifications, new NotificationResource($notification));
-        }
 
-        if(count($_notifications) > 1){
-            $left_to_load = $user->notifications()->where('notifications.created_at', '<', $_notifications->last()->created_at)->count();
-        }
+        $result = $this->notificationService->fetchNotification();
 
-        return ['notifications' => $notifications, 'left_to_load' => $left_to_load];
+        return ['notifications' => $result['notifications'], 'left_to_load' => $result['left_to_load']];
     }
 
     /**

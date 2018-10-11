@@ -4,10 +4,17 @@ namespace App\Services;
 
 use \App\User;
 use \App\Company;
+use \App\Http\Resources\CompanyResource;
 
 class CompanyService
 {
     protected $auth;
+    public $employee_counts = [
+        "10-50 employees",
+        "50-100 employees",
+        "100-500 employees",
+        "500 plus employees",
+    ];
 
     function __construct(){
         $this->auth = \Auth::user();
@@ -55,5 +62,79 @@ class CompanyService
         }
         
         return $saved_users;
+    }
+
+    /**
+     * create
+     * 
+     * @param Object
+     * @return Collection
+     */
+    public function create($request){
+
+        $this->auth->role = 1;
+        $this->auth->save();
+
+        $company = new Company;
+        $company->name = $request->name;
+        $company->email = $request->email;
+        $company->owner_id = \Auth::user()->id;
+        $company->address = $request->address;
+        $company->website_url = $request->website_url;
+        $company->province = $request->province;
+        $company->employee_count = $request->employee_count;
+        $company->save();
+
+        $auth = \Auth::user();
+        $company->owner_id = $this->auth->id;
+        $company->save();
+        $company->addCollaborator($this->auth->id, 1);
+
+        if($request->photo){
+            $company->saveProfilePhoto($request->photo);
+        }
+
+        return $company;
+    }
+
+    /**
+     * get Most Popular Companies
+     * 
+     * @return Collection
+     */
+    public function getMostPopularCompanies(){
+        $companies = Company::limit(3)->get()->sortBy(function($company){
+            return $company->followers->count();
+        });
+        return $companies;
+    }
+
+    /**
+     * Convert Company model to CompanyResource
+     * 
+     * @param Collection
+     * @return Collection
+     */
+    public function covertToResource($companies){
+        $collect = collect();
+        foreach($companies as $company){
+            $collect = $collect->merge([new CompanyResource($company)]);
+        }
+        return $collect;
+    }
+
+    /**
+     * search company
+     * 
+     * @param Object
+     * @return Collection
+     */
+    public function fetchCompanySearch($request){
+        $companies = Company::where('companies.name','like','%'.$request->keyword.'%');
+        if($request->search_province){
+            $companies->where('province',$request->province);
+        }
+        
+        return $this->covertToResource($companies->get());
     }
 }

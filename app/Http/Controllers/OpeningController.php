@@ -20,6 +20,10 @@ class OpeningController extends Controller
         return new OpeningResource(Opening::findOrFail($request->opening_id));
     }
 
+    public function fetchRaw(Request $request){
+        return ["opening"=>Opening::findOrFail($request->opening_id)->load('programmingLanguages','technologies','company')];
+    }
+
     public function update(Request $request){
         $opening = Opening::findOrFail($request->opening_id);
         $opening->title = $request->title;
@@ -108,5 +112,15 @@ class OpeningController extends Controller
         Opening::findOrFail($request->opening_id)->delete();
 
         return ['status'=>'success'];
+    }
+
+    /**
+     * fetch recent openings
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @return Illuminate\Http\Resources\JsonResource
+     */
+    public function fetchRecentApplication(){
+        return ['openings'=>$this->openingService->getRecentApplications()];
     }
 }

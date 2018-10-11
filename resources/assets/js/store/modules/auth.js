@@ -6,6 +6,7 @@ import Echo from "laravel-echo"
 // state
 export const state = {
   user: null,
+  companies: null,
   expired_url: null,
   token: Cookies.get('token')
 }
@@ -13,6 +14,15 @@ export const state = {
 // getters
 export const getters = {
   user: state => state.user,
+  companies: state => state.companies,
+  companies_obj: state => {
+    var result = {}
+    if(state.companies)
+    for(var i = 0; i < state.companies.length; i++){
+      result['company_'+state.companies[i].id] = state.companies[i]
+    }
+    return result
+  },
   expired_url: state => state.expired_url,
   token: state => state.token,
   check: state => state.user !== null
@@ -32,6 +42,10 @@ export const mutations = {
   [types.FETCH_USER_FAILURE] (state) {
     state.token = null
     Cookies.remove('token')
+  },
+
+  [types.FETCH_USER_COMPANIES_SUCCESS] (state, { companies }){
+    state.companies = companies
   },
 
   [types.LOGOUT] (state) {
@@ -80,6 +94,12 @@ export const actions = {
     } catch (e) {
       commit(types.FETCH_USER_FAILURE)
     }
+  },
+
+  async fetchManagedCompanies({ commit }){
+    const { data } = await axios.get('/api/user/fetch/companies/managed')
+
+    commit(types.FETCH_USER_COMPANIES_SUCCESS, { companies: data.companies })
   },
 
   updateUser ({ commit }, payload) {

@@ -56,39 +56,13 @@
         </tr>
       </tbody>
     </table>
-    
-    <sidebar-popup ref="modal">
-      <h6 class="p-15 border-bottom">
-        Your Application
-      </h6>
-      <template slot="options">
-        <button type="button" v-on:click="close" class="btn btn-light">
-          <i class="fa fa-close" aria-hidden="true"></i>
-        </button>
-      </template>
-      <div v-if="modalData">
-        <opening-card :noApply="true" class="m-auto" style="max-width: 300px;" :opening="modalData.opening"/>
-        <br>
-        <application-progress-line :application="application" ref="progress-line" />
-        <div style=" background: #f2f2f2; min-height: 300px; padding: 15px;">
-          <div v-if="modalData.expected_salary">
-            <b> Expected Salary </b>
-            <br>
-            <span v-html="modalData.expected_salary"></span>
-          </div>
-          <div>
-            <b> Application Letter </b>
-            <br>
-            <span v-html="modalData.application_letter"></span>
-          </div>
-        </div>
-      </div>
-    </sidebar-popup>
+    <application-modal ref="modal"/>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import ApplicationModal from './components/application-modal'
 import axios from 'axios'
 export default {
   middleware: 'auth',
@@ -96,18 +70,12 @@ export default {
     return { title: 'Hiring Applications' }
   },
   components:{
-    SidebarPopup
+    ApplicationModal
   },
   data : () =>({
     applications: [],
     public_path: location.origin,
-    modalData: null,
     user : {},
-    tableColumns : [
-      {text:'Job', function: function(){}}, 
-      {text:'Company', function: function(){}},
-      {text:'Date Submitted', function: function(){}}
-    ]
   }),
   methods: {
     async fetchApplications(){
@@ -119,23 +87,12 @@ export default {
       this.applications = data.hiringApplications;
     },
     showApplicationInfo(data){
-      this.modalData = data;
-      this.$refs.modal.show()
+      this.$refs.modal.show(data)
     },
-    close(){
-      this.$refs.modal.hide()
-    }
   },
   mounted(){
     this.user = this.$store.getters['auth/user'];
     this.fetchApplications();
   },
-  computed :{}
 }
 </script>
-
-<style>
-.settings-card .card-body {
-  padding: 0;
-}
-</style>

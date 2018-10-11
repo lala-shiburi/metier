@@ -36,7 +36,7 @@
       
       <div class="row">
         <div class="col-md-4">
-          <card class="m-tb-10" title="Basic Info">
+          <card class="m-b-10" title="Basic Info">
             <div v-if="authorizeEdit" style="position: absolute; top: 10px; left: 0px; text-align: right; right: 15px;">
               <i class="small-option-btn fa fa-edit" v-on:click="prepUpdateBasicInfo" data-toggle="modal" data-target="#user-basic-info-modal"></i>
             </div>
@@ -112,6 +112,9 @@ export default {
     openings: [],
     authorizeEdit: false,
   }),
+  metaInfo () {
+    return { title: this.company.name || 'Company' }
+  },
   methods: {
     fetch_company: async function(){
       const { data } = await axios({

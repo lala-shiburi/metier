@@ -40,6 +40,9 @@ ApplicationCountLine,
 import applicationCountMixin from '~/pages/mixins/application-count-mixin'
 export default {
   middleware: 'auth',
+  metaInfo () {
+    return { title: "Recruiter Dashboard" }
+  },
   mixins: [applicationCountMixin],
   components: {
     OpeningCount,

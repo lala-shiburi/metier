@@ -50,6 +50,9 @@ import ApplicationResults from './application-results'
 import ApplicationItem from './application-item'
 export default {
   name: "InProgressApplications",
+  metaInfo () {
+    return { title: 'In-progress Applications' }
+  },
   components: {
     ApplicationUpdate,
     ApplicationResults,

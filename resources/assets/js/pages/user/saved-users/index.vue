@@ -73,7 +73,7 @@ import swal from 'sweetalert2'
 export default {
   middleware: 'auth',
   metaInfo () {
-    return { title: 'Saved Openings' }
+    return { title: 'Saved Users' }
   },
   data : () =>({
     public_path: location.origin,
@@ -100,17 +100,13 @@ export default {
           confirmButtonText: 'Yes'
       }).then((result) => {
         if (result.value) {
+          this.removeUser(user)
           axios({
-            method: 'patch',
+            method: 'post',
             url: "/api/company/save/user",
             params: {user_id : user.id, company_id: company.id, save: 0}
           }).then(data => {
-            this.removeUser(opening)
-            swal(
-              'Un-saved!',
-              'Opening has been un-saved.',
-              'success'
-            )
+            // 
           })
         }
       })

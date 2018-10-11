@@ -45,7 +45,7 @@ class NotificationResource extends JsonResource
                 ];
             break;
             case 'App\Notifications\NewOpening':
-                $opening = Opening::find($data->opening_id);
+                $opening = Opening::withTrashed()->where('id',$data->opening_id)->first();
                 $company = $opening->company;
                 return [
                     "created_at"=>$this->created_at,

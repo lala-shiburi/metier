@@ -104,6 +104,9 @@ import swal from 'sweetalert2'
 
 export default {
   middleware: 'auth',
+  metaInfo () {
+    return { title: (this.processForm.id ? 'Edit '+this.processForm.name : 'Create Hiring Procedure') }
+  },
   computed: {
     tabs () {
       return [

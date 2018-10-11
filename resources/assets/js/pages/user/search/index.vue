@@ -24,6 +24,9 @@ export default {
     SearchBar,
     UserItem
   },
+  metaInfo () {
+    return { title: "Search User"}
+  },
   data : () =>({
     public_path: location.origin,
     users: [],

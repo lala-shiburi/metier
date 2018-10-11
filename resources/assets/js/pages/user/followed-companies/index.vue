@@ -63,7 +63,7 @@ import swal from 'sweetalert2'
 export default {
   middleware: 'auth',
   metaInfo () {
-    return { title: 'Company List' }
+    return { title: 'Followed Companies' }
   },
   data : () =>({
     public_path: location.origin,
@@ -90,17 +90,13 @@ export default {
           confirmButtonText: 'Yes'
       }).then((result) => {
         if (result.value) {
+          this.removeCompany(company)
           axios({
             method: 'post',
             url: '/api/userInfo/add/follow/company',
             params: { follow: 0, company_id: company.id }
           }).then(data => {
-            this.removeCompany(company)
-            swal(
-              'Unfollowed!',
-              'Company has been un-followed.',
-              'success'
-            )
+            // 
           })
         }
       })

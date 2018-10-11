@@ -10,8 +10,11 @@
       </div>
     </center>
     <div class="border-top mt-3 pt-3">
-      <router-link :to="{ name: 'user.profile' }" v-on:click.native="hide" class="btn btn-outline-secondary btn-sm pull-left">Profile</router-link>
-      <button class="btn btn-outline-secondary btn-sm" @click="logout">Logout</button>
+      <router-link :to="{ name: 'user.profile' }" v-on:click.native="hide" class="btn btn-outline-secondary btn-sm pull-left m-1">Profile</router-link>
+      <router-link :to="{ name: 'settings.profile' }" v-on:click.native="hide" class="btn btn-outline-secondary btn-sm pull-left m-1">
+        <i class="fa fa-cog" aria-hidden="true"></i>
+      </router-link>
+      <button class="btn btn-outline-secondary btn-sm m-1" @click="logout">Logout</button>
     </div>
   </div>
 </template>

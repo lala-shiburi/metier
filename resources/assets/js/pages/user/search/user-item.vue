@@ -1,6 +1,6 @@
 <template>
-  <div class="list-group-item list-group-item-action">
-    <button v-if="companies.length == 1" class="btn btn-light">
+  <div class="list-group-item">
+    <button @click="save(user, companies[0])" :class="user.companies_who_saved.length?'btn-outline-primary': 'btn-light'" v-if="companies.length == 1" class="btn pull-right">
       <i class="fa fa-bookmark-o" aria-hidden="true"></i> Save
     </button>
     <div class="dropdown pull-right" v-if="companies.length > 1">
@@ -23,12 +23,12 @@
             <template v-else>
               No work experience |
             </template>
-            <template>
-              <skill-icon v-for="(lang,index) in user.programming_languages" v-bind:key="index" size="x-small-icon" :icon="lang.tag_name"></skill-icon>
-            </template>
-            <template>
-              <skill-icon v-for="(lang,index) in user.user_technologies" v-bind:key="index" size="x-small-icon" :icon="lang.tag_name"></skill-icon>
-            </template>
+            <span>
+              <skill-icon v-for="(lang,index) in user.programming_languages" v-bind:key="'skill'+index" size="x-small-icon" :icon="lang.tag_name"></skill-icon>
+            </span>
+            <span>
+              <skill-icon v-for="(lang,index) in user.user_technologies" v-bind:key="'skill'+index" size="x-small-icon" :icon="lang.tag_name"></skill-icon>
+            </span>
           </small>
         </div>
       </span>

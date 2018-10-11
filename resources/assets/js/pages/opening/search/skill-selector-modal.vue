@@ -13,7 +13,7 @@
       <div class="modal-body">
         <skill-selector :selectOnly="true" ref="skill-selector" :form="form">
           <div class="border-top pt-3">
-            <button class="btn btn-primary" @click="filter">Filter</button>
+            <button class="btn btn-primary pull-right" @click="filter">Filter</button>
           </div>
         </skill-selector>
       </div>

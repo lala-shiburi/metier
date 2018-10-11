@@ -21,103 +21,46 @@
     </div>
     <div  class="basic-layout d-flex align-items-center justify-content-center m-0 bg-white">
       <div class="col-md-5">
-        <div class="search-box">
-          <i class="fa fa-search" aria-hidden="true" style="
-            font-size: 30px;
-            vertical-align: middle;
-        "></i> 
-            Find your dream Job
-        </div>
+        <search-box/>
         <br>
         <div class="title">
           Also, build your professional identity online and stay connected with opportunities.
-          <a href="#">Create Account</a>
+          <router-link :to="{ name: 'register' }">Create Account</router-link>
         </div>
       </div>
       <a href="/#openings" class="see-down">
         <i class="fa fa-angle-double-down icon" aria-hidden="true"></i>
       </a>
     </div>
-    <div class="container">
-      <h4 class="mb-5 mt-5"><a href="#openings" name="openings">#</a> Recent Openings</h4>
-      <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-6">
-          <div class="card  profile-card-2">
-            <div class="card-img-block">
-              <img class="img-fluid" :src="public_path + '/images/feat-welcome-card.jpg'" alt="Card image cap">
-            </div>
-            <div class="card-body">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5ESrIBaeH36xzs-kYsI4t9qGIkJ_j1hFuMz6CotRsramDblPFiw" alt="profile-image"
-                class="profile" />
-              <h5 class="card-title">Swift Developer</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <div class="icon-block text-left">
-                  <span>48 minutes ago</span>
-              </div>
-
-            </div>
-          </div>
-
+    <div class="bg-white">
+      <div class="container text-center">
+        <div>
+          <skill-icon @click.native="setSkillSearch('programming_languages', lang)" v-for="(lang,index) in programming_languages" v-bind:key="index" :icon="lang.tag_name"/>
         </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
-          <div class="card profile-card-2">
-            <div class="card-img-block">
-              <img class="img-fluid" :src="public_path + '/images/feat-welcome-card.jpg'" alt="Card image cap">
-            </div>
-            <div class="card-body">
-              <img src="https://ucarecdn.com/cc6abaa3-acab-4ce7-a0fd-a0ef563ef08c/" alt="profile-image" class="profile" />
-              <h5 class="card-title">Full Stack Web Developer</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <div class="icon-block text-left">
-                  <span>1 hour ago</span>
-              </div>
-            </div>
-          </div>
+        <div>
+          <skill-icon @click.native="setSkillSearch('technologies', lang)" v-for="(lang,index) in technologies" v-bind:key="index" :icon="lang.tag_name"/>
         </div>
       </div>
     </div>
     <div class="container">
-      <h4 class="mb-5 mt-5"><a href="#openings" name="openings">#</a> Companies</h4>
+      <h4 class="mt-5"><a href="#openings" name="openings">#</a> Recent Openings</h4>
+      <div class="mb-5">
+        <router-link :to="{ name: 'opening.search' }" class="badge badge-primary">See all</router-link>
+      </div>
       <div class="row">
-        <div class="col-lg-3 col-md-6">
-          <div class="card profile-card-4">
-            <div class="card-img-block">
-              <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/48.jpg" alt="Card image cap">
-            </div>
-            <div class="card-body pt-5">
-              <img src="https://obs.line-scdn.net/0hQeeW3D9hDkpYLiKnDRFxHXZ9CDE0QxlZMxYCcGNvEyQgWhtZekhBLX8sV3lxcB1JYkEVeSh7TH9xF0oAYU9JKGF-FXtzTE5LMRxI/f280x280"
-                alt="profile-image" class="profile" />
-              <h5 class="card-title text-center">Nexseed Inc .</h5>
-              <p class="card-text text-center">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <div class="text-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Learn more</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">View jobs</button>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="col-lg-3 col-md-6 col-sm-6" v-for="opening in openings" v-bind:key="opening.index">
+          <opening-card :opening="opening"/>
         </div>
-        <div class="col-lg-3 col-md-6">
-          <div class="card profile-card-4">
-            <div class="card-img-block">
-              <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/48.jpg" alt="Card image cap">
-            </div>
-            <div class="card-body pt-5">
-              <img src="https://obs.line-scdn.net/0hQeeW3D9hDkpYLiKnDRFxHXZ9CDE0QxlZMxYCcGNvEyQgWhtZekhBLX8sV3lxcB1JYkEVeSh7TH9xF0oAYU9JKGF-FXtzTE5LMRxI/f280x280"
-                alt="profile-image" class="profile" />
-              <h5 class="card-title text-center">Nexseed Inc .</h5>
-              <p class="card-text text-center">Language School</p>
-              <p class="card-text text-center">50-200 employees...</p>
-              <p class="card-text text-center">Cebu City, PH</p>
-              <div class="text-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Learn more</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">View jobs</button>
-                </div>
-              </div>
-            </div>
-          </div>
+      </div>
+    </div>
+    <div class="container">
+      <h4 class="mt-5"><a href="#openings" name="openings">#</a> Companies</h4>
+      <div class="mb-5">
+        <router-link :to="{ name: 'company.search' }" class="badge badge-primary">See all</router-link>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-lg-4" v-for="(company, index) in companies" v-bind:key="index">
+          <company-card :company="company"></company-card>
         </div>
       </div>
     </div>
@@ -126,10 +69,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
-
+import axios from 'axios'
+import SearchBox from './components/search-box'
 export default {
   layout: 'basic',
   middleware: 'guest',
+  components: {SearchBox},
 
   metaInfo () {
     return { title: this.$t('home') }
@@ -137,12 +82,41 @@ export default {
 
   data: () => ({
     title: window.config.appName,
-    public_path: location.origin
+    public_path: location.origin,
+    openings: [],
+    companies: [],
+    programming_languages: window.config.programming_languages,
+    technologies: window.config.technologies,
   }),
+  methods: {
+    async fetchRecentApplications(){
+      const {data} = await axios({
+        method: 'get',
+        url: '/api/opening/fetch/recent',
+      })
 
+      this.openings = data.openings
+    },
+    async fetchMostPopularCompany(){
+      const {data} = await axios({
+        method: 'get',
+        url: '/api/company/fetch/popular',
+      })
+
+      this.companies = data.companies
+      console.log(data)
+    },
+    setSkillSearch(skills, lang){
+      this.$router.push('/opening/search?'+skills+'='+lang.id)
+    }
+  },
   computed: mapGetters({
     authenticated: 'auth/check'
-  })
+  }),
+  mounted(){
+    this.fetchRecentApplications()
+    this.fetchMostPopularCompany()
+  }
 }
 </script>
 
@@ -169,13 +143,6 @@ export default {
   height: 100vh;
   font-weight: 100;
   position: relative;
-}
-.search-box{
-  padding: 10px;
-  border-bottom: 2px solid #e4e4e4;
-  background: white;
-  background: beige;
-  border-radius: 10px;
 }
 .see-down{
   position: absolute;

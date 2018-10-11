@@ -38,15 +38,19 @@
           </a>
           <div class="dropdown-menu dropdown-menu-right">
             <router-link :to="{ name: 'hiringApplication.applications' }" class="dropdown-item pl-3">
-              <fa icon="user" fixed-width/>
               Your Job Applications
             </router-link>
             <router-link :to="{ name: 'settings.profile' }" class="dropdown-item pl-3">
-              <fa icon="cog" fixed-width/>
               {{ $t('settings') }}
             </router-link>
-            <router-link :to="{ name: 'user.companies' }" class="dropdown-item pl-3">
-              <i class="fa fa-building" style="padding: 0 3px;"></i> Companies
+            <router-link :to="{ name: 'company.create' }" class="dropdown-item pl-3">
+              Create Your Company
+            </router-link>
+            <router-link :to="{ name: 'user.followed.companies' }" class="dropdown-item pl-3">
+              Companies You Followed
+            </router-link>
+            <router-link :to="{ name: 'user.saved.openings' }" class="dropdown-item pl-3">
+              Openings You Saved
             </router-link>
             <div class="dropdown-divider"/>
             <a href="#" class="dropdown-item pl-3" @click.prevent="logout">

@@ -9,7 +9,7 @@ use App\Opening;
 class Company extends Model
 {
     protected $fillable = ['name', 'owner_id', 'address', 'email', 'website_url', 'province'];
-    protected $appends = ['photo','current_user_followed'];
+    protected $appends = ['photo'];
 
     /**
      * Set user collaborator
@@ -20,6 +20,7 @@ class Company extends Model
      */
     public function addCollaborator($id,$privilege = 1){
         if($this->collaborators()->where("company_users.user_id",$id)->count() < 1){
+            User::where('id', $id)->update(['role'=>$privilege]);
             $this->collaborators()->attach($id,["privilege"=>$privilege]);
         }
         else{
@@ -43,7 +44,12 @@ class Company extends Model
     }
 
     public function removeCollaborator($id){
+        $user = User::findOrFail($id);
         $this->collaborators()->detach($id);
+        if($user->managedCompanies()->count() == 0){
+            $user->role = 0;
+            $user->save();
+        }
         return $this;
     }
 
@@ -207,7 +213,7 @@ class Company extends Model
      * @return String
      */
     public function getPhotoAttribute(){
-        if(!file_exists('storage/photos/'.$this->attributes['photo']) || str_replace(' ','',$this->attributes['photo']) == ''){
+        if(!isset($this->attributes['photo']) || !file_exists('storage/photos/'.$this->attributes['photo']) || str_replace(' ','',$this->attributes['photo']) == ''){
             return asset('images/company.png');
         }
 

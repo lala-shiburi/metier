@@ -247,6 +247,9 @@ import CoverPictureModal from '~/components/photo-editors/coverPictureModal'
 
 export default {
   middleware: 'auth',
+  metaInfo () {
+    return { title: this.user.name || 'User' }
+  },
   components:{
     userBasicInfoModal,
     userAddressInfoModal,

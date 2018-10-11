@@ -56,12 +56,17 @@ export default {
     opening: null,
     authorizeEdit: false
   }),
+  metaInfo () {
+    return { title: "Opening Details" }
+  },
   methods: {
     fetch_opening: async function(){
       const { data } = await axios({
           method: 'get',
           url: '/api/opening/fetch',
           params: { opening_id: this.$route.params.id }
+        }).catch(error => {
+            this.$router.push({name:'404'})
         })
       this.opening = data.data;
       this.authorizeEdit = data.meta.authorizeEdit;

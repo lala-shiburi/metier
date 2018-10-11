@@ -91,7 +91,7 @@ export default {
   },
   middleware: 'auth',
   metaInfo () {
-    return { title: 'Company List' }
+    return { title: 'User Companies' }
   },
   data : () =>({
     public_path: location.origin,
