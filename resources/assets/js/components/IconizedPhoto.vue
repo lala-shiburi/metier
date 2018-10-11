@@ -2,7 +2,7 @@
   <div :data-toggle="title?tooltip:''" data-html="true" :title="title ? '<b>'+title+'</b>' : ''" class="iconized-photo" :class="size? size: 'small-icon'">
     <div class="photo-preview-container" style="width:initial; height:100%;">
       <div class="scaffold-div" style="height:100%; background:white;">
-        <img src="http://localhost:8000/images/bg-img.png" class="bg-holder" style="width:initial; height:100%;"> 
+        <img :src="public_path+'/images/bg-img.png'" class="bg-holder" style="width:initial; height:100%;"> 
         <img :src="photo" class="absolute-center" style="width:initial; height:100%;">
       </div>
     </div>
@@ -20,7 +20,7 @@ export default {
   },
 
   data: () => ({
-    // 
+    public_path: location.origin
   }),
   mounted(){
     jQuery(this.$el).find('[data-toggle="tooltip"]').tooltip()

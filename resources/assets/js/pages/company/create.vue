@@ -4,7 +4,7 @@
       <alert-success :form="form" message="Registration Successful"/>
 
       <div class="text-center">
-        <img ref="company-logo" v-on:click="showPhotoEditor" :src="form.photo" class="rounded img-thumbnail" width="200px">
+        <img ref="company-logo" v-on:click="showPhotoEditor" :src="photo" class="rounded img-thumbnail" width="200px">
       </div>
       <br>
       <!-- Name -->
@@ -13,6 +13,18 @@
         <div class="col-md-7">
           <input v-model="form.name" :class="{ 'is-invalid': form.errors.has('name') }" class="form-control" name="name">
           <has-error :form="form" field="name"/>
+        </div>
+      </div>
+      
+      <!-- Province -->
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label text-md-right">Employee Count(Optional)</label>
+        <div class="col-md-7">
+          <select v-model="form.employee_count" :class="{ 'is-invalid': form.errors.has('employee_count') }" class="form-control" name="employee_count">
+            <option value="" selected>-select</option>
+            <option v-for="(employee_count, index) in employee_counts" v-bind:key="index" :value="employee_count"> {{employee_count}} </option>
+          </select>
+          <has-error :form="form" field="province"/>
         </div>
       </div>
 
@@ -82,14 +94,17 @@ export default {
   data: () => ({
     form: new Form({
       name: '',
-      photo: location.origin+'/images/photo.png',
+      photo: '',
       address: '',
       email: '',
       website_url: '',
-      province: ''
+      province: '',
+      employee_count: ''
     }),
+    photo: location.origin+'/images/photo.png',
     company_photo_added: false,
     provinces: window.config.provinces,
+    employee_counts: window.config.employee_counts
   }),
 
   methods: {
@@ -102,6 +117,7 @@ export default {
       this.$router.push("/company/profile/"+data.company_id);
     },
     updateLogo(photo_data){
+      this.photo = photo_data
       this.form.photo = photo_data;
       this.$refs['company-logo'].src = photo_data;
       this.form.photo = true

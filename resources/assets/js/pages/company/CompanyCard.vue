@@ -3,7 +3,7 @@
     <div class="col-md-4 col-sm-6 company-photo">
       <div class="photo-preview-container">
         <div class="scaffold-div">
-          <img src="http://localhost:8000/images/bg-img.png" class="bg-holder"> 
+          <img :src="public_path+'/images/bg-img.png'" class="bg-holder"> 
           <img :src="company.photo" class="absolute-center">
         </div>
       </div>
@@ -21,11 +21,14 @@
       <div class="text-justify company-description">
         {{company.description}}
       </div>
-      <div class="text-muted company-employees">
-        1-50 employees
+      <div v-if="company.employee_count" class="text-muted company-employees text-truncate">
+        {{company.employee_count}}
       </div>
-      <div class="text-muted company-openings">
-        3 openings
+      <div v-if="company.opening_count" class="text-muted company-openings">
+        {{company.opening_count}} openings
+      </div>
+      <div class="text-muted company-openings text-truncate">
+        Created : {{_company.created_at}}
       </div>
     </div>
   </div>
@@ -36,9 +39,16 @@ import axios from 'axios'
 import { mapGetters } from 'vuex'
 export default {
   name: 'CompanyCard',
-  computed: mapGetters({
-    user: 'auth/user'
-  }),
+  computed: {
+    ...mapGetters({
+    user: 'auth/user',
+    }),
+    _company(){
+      return {
+        created_at: moment(this.company.created_at.date, "YYYY-MM-DD HH:mm:ss").subtract().calendar()
+      }
+    }
+  },
   props: {
     company: {
       type: Object,

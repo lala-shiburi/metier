@@ -275,11 +275,10 @@ export default {
     async fetchOpening(){
       const { data } = await axios({
           method: 'get',
-          url: '/api/opening/fetch',
+          url: '/api/opening/fetch/raw',
           params: { opening_id: this.$route.params.id }
         })
-      this.opening = data.data;
-      console.log(this.opening)
+      this.opening = data.opening;
       this.form1.title = this.opening.title;
       this.form1.photo = this.opening.picture;
       this.form1.salary_range = this.opening.salary_range;

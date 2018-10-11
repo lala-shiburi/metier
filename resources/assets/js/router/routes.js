@@ -30,7 +30,7 @@ const FollowedCompanies = () => import('~/pages/user/followed-companies/index').
 const OpeningProfile = () => import('~/pages/opening/index').then(m => m.default || m)
 const UserCompanies = () => import('~/pages/user/companies/index').then(m => m.default || m)
 const OpeningApply = () => import('~/pages/opening/apply/index').then(m => m.default || m)
-const HiringApplications = () => import('~/pages/user/hiringApplications').then(m => m.default || m)
+const HiringApplications = () => import('~/pages/user/applications/index').then(m => m.default || m)
 const CompanyCreate = () => import('~/pages/company/create').then(m => m.default || m)
 const OpeningCreate = () => import('~/pages/opening/create').then(m => m.default || m)
 const OpeningEdit = () => import('~/pages/opening/edit').then(m => m.default || m)
@@ -97,7 +97,7 @@ export default [
 
   // opening routes
   { path: '/opening/profile/:id', name: 'opening.profile', component: OpeningProfile },
-  { path: '/opening/search', name: 'opening.search', component: SearchOpeningPage },
+  { path: '/opening/search/:keyword?', name: 'opening.search', component: SearchOpeningPage },
   { path: '/opening/:id/edit', name: 'opening.edit', component: OpeningEdit },
   { path: '/company/:company_id/opening/create', name: 'opening.create', component: OpeningCreate },
   
@@ -106,5 +106,6 @@ export default [
   { path: '/applications/:application_id', name: 'hiringApplication.application', component: ApplicationProgress },
   { path: '/opening/apply/:opening_id/:applicant_id?', name: 'hiringApplication.create', component: OpeningApply },
 
+  { path: '/404', name:'404', component: NotFound },
   { path: '*', component: NotFound }
 ]

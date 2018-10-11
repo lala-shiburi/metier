@@ -50,6 +50,9 @@ import ApplicationResults from './application-results'
 import ApplicationItem from './application-item'
 export default {
   name: "InactiveApplications",
+  metaInfo () {
+    return { title: 'Inactive Applications' }
+  },
   components: {
     ApplicationUpdate,
     ApplicationResults,

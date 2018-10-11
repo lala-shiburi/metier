@@ -55,6 +55,9 @@ export default {
     ApplicationResults,
     ApplicationItem
   },
+  metaInfo () {
+    return { title: 'Finished Applications' }
+  },
   data : () =>({
     public_path: location.origin,
     applications: [],

@@ -70,7 +70,7 @@ import swal from 'sweetalert2'
 export default {
   middleware: 'auth',
   metaInfo () {
-    return { title: 'Saved Openings' }
+    return { title: 'User Openings' }
   },
   data : () =>({
     public_path: location.origin,
@@ -98,17 +98,13 @@ export default {
           confirmButtonText: 'Yes, delete it!'
       }).then((result) => {
         if (result.value) {
+          this.removeOpening(opening)
           axios({
             method: 'delete',
             url: '/api/opening/delete/soft',
             params: {opening_id: opening.id},
           }).then(data => {
-            this.removeOpening(opening)
-            swal(
-              'Deleted!',
-              'Step has been deleted.',
-              'success'
-            )
+            // 
           })
         }
       })

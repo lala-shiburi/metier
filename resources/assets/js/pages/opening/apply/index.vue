@@ -63,7 +63,7 @@
           <!-- Submit Button -->
           <div class="form-group row">
             <div class="col-lg-12">
-              <div class="border-top pt-3">
+              <div class="border-top pt-3 text-right">
                 <a href="JavaScript:void(0)" class="btn btn-secondary" v-on:click="left">Back</a>
                 <v-button :loading="form1.busy" type="success">Submit</v-button>
               </div>

@@ -3,7 +3,7 @@
       <div class="col-md-6 p-0 overflow-hidden">
         <img :src="public_path+'/images/Group 244.png'" style="width:100%;" class="absolute-center">
       </div>
-      <div class="col-md-6 p-0 m-auto" style="height:100vh; background:white;">
+      <div class="col-md-6 p-0 m-auto" style="height:100vh; background:white; transform: translateY(-1px);">
         <form @submit.prevent="login" @keydown="form.onKeydown($event)">
           <div class="absolute-center w-100 p-3" style="max-width:400px;">
             <div class="text-center">

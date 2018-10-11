@@ -50,6 +50,9 @@ import ApplicationResults from './application-results'
 import ApplicationItem from './application-item'
 export default {
   name: "SubmittedApplications",
+  metaInfo () {
+    return { title: 'Pending Applications' }
+  },
   components: {
     ApplicationUpdate,
     ApplicationResults,

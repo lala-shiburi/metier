@@ -25,66 +25,83 @@
       </template>
       <template slot="panels">
         <form @submit.prevent="validateForm1" @keydown="form1.onKeydown($event)">
-
-          <div class="text-center">
-            <img ref="opening-picture" v-on:click="showPhotoEditor" :src="public_path+'/images/photo.png'" class="rounded img-thumbnail" width="200px">
-          </div>
-          <br>
-          <!-- Title -->
-          <div class="form-group row">
-            <label class="col-md-3 col-form-label text-md-right">Position / Title</label>
-            <div class="col-md-7">
-              <input v-model="form1.title" :class="{ 'is-invalid': form1.errors.has('title') }" class="form-control" name="title">
-              <has-error :form="form1" field="title"/>
+          <div v-if="companies['company_'+company_id]" class="alert alert-secondary" role="alert">
+            <img width="100px" :src="companies['company_'+company_id].photo" class="rounded">
+            <div class="d-inline-block align-top">
+              <div class="mb-0">
+                <router-link class="h5" :to="{ name: 'company.profile', params: { id: companies['company_'+company_id].id } }">
+                  {{companies['company_'+company_id].name}}
+                </router-link>
+                <p>
+                  Fill up requirements for your opening. After you submit the requirements, Job opening will be created.
+                </p>
+              </div>
             </div>
           </div>
-
-          <!-- Salary Range -->
-          <div class="form-group row">
-            <label class="col-md-3 col-form-label text-md-right">Salary Range</label>
-            <div class="col-md-7">
-              <select v-model="form1.salary_range" :class="{ 'is-invalid': form1.errors.has('salary_range') }" class="form-control" name="salary_range">
-                <option value="" selected>-select</option>
-                <option v-for="(range, index) in salary_ranges" v-bind:key="index" :value="index">
-                  {{range}}
-                </option>
-              </select>
-              <has-error :form="form1" field="salary_range"/>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="text-center">
+                <img ref="opening-picture" v-on:click="showPhotoEditor" :src="public_path+'/images/photo.png'" class="rounded img-thumbnail" width="200px">
+              </div>
             </div>
-          </div>
+            <div class="col-md-9">
+              <!-- Title -->
+              <div class="form-group">
+                <label>Position / Title</label>
+                <div>
+                  <input v-model="form1.title" :class="{ 'is-invalid': form1.errors.has('title') }" class="form-control" name="title">
+                  <has-error :form="form1" field="title"/>
+                </div>
+              </div>
 
-          <!-- Years of Experience -->
-          <div class="form-group row">
-            <label class="col-md-3 col-form-label text-md-right">Years of Experience</label>
-            <div class="col-md-7">
-              <select v-model="form1.professional_years" :class="{ 'is-invalid': form1.errors.has('professional_years') }" class="form-control" name="professional_years">
-                <option value="" selected>-select</option>
-                <option v-for="(range, index) in work_experiences" v-bind:key="index" :value="index">
-                  {{range}}
-                </option>
-              </select>
-              <has-error :form="form1" field="professional_years"/>
-            </div>
-          </div>
+              <!-- Salary Range -->
+              <div class="form-group">
+                <label>Salary Range</label>
+                <div>
+                  <select v-model="form1.salary_range" :class="{ 'is-invalid': form1.errors.has('salary_range') }" class="form-control" name="salary_range">
+                    <option value="" selected>-select</option>
+                    <option v-for="(range, index) in salary_ranges" v-bind:key="index" :value="index">
+                      {{range}}
+                    </option>
+                  </select>
+                  <has-error :form="form1" field="salary_range"/>
+                </div>
+              </div>
 
-          <!-- Hiring Processes/Procedures -->
-          <div class="form-group row">
-            <label class="col-md-3 col-form-label text-md-right">Hiring Procedure</label>
-            <div class="col-md-7">
-              <select v-model="form1.hiring_step_group_id" :class="{ 'is-invalid': form1.errors.has('hiring_step_group_id') }" class="form-control" name="hiring_step_group_id">
-                <option value="" selected>-select</option>
-                <option v-for="(procedure, index) in hiringProcesses" v-bind:key="index" :value="procedure.id">
-                  {{procedure.name}}
-                </option>
-              </select>
-              <has-error :form="form1" field="hiring_step_group_id"/>
-            </div>
-          </div>
+              <!-- Years of Experience -->
+              <div class="form-group">
+                <label>Years of Experience</label>
+                <div>
+                  <select v-model="form1.professional_years" :class="{ 'is-invalid': form1.errors.has('professional_years') }" class="form-control" name="professional_years">
+                    <option value="" selected>-select</option>
+                    <option v-for="(range, index) in work_experiences" v-bind:key="index" :value="index">
+                      {{range}}
+                    </option>
+                  </select>
+                  <has-error :form="form1" field="professional_years"/>
+                </div>
+              </div>
 
-          <!-- Submit Button -->
-          <div class="form-group row">
-            <div class="col-md-9 ml-md-auto">
-              <v-button :loading="form1.busy" type="success">Next</v-button>
+              <!-- Hiring Processes/Procedures -->
+              <div class="form-group">
+                <label>Hiring Procedure</label>
+                <div>
+                  <select v-model="form1.hiring_step_group_id" :class="{ 'is-invalid': form1.errors.has('hiring_step_group_id') }" class="form-control" name="hiring_step_group_id">
+                    <option value="" selected>-select</option>
+                    <option v-for="(procedure, index) in hiringProcesses" v-bind:key="index" :value="procedure.id">
+                      {{procedure.name}}
+                    </option>
+                  </select>
+                  <has-error :form="form1" field="hiring_step_group_id"/>
+                </div>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="form-group">
+                <div class="pull-right">
+                  <v-button :loading="form1.busy" type="success">Next</v-button>
+                </div>
+              </div>
             </div>
           </div>
         </form>
@@ -103,7 +120,7 @@
           </div>
 
           <!-- Submit Button -->
-          <div class="form-group row">
+          <div class="form-group">
             <div class="col-md-9 ml-md-auto">
               <a href="JavaScript:void(0)" class="btn btn-secondary" v-on:click="left">Back</a>
               <v-button :loading="form2.busy" type="success">Next</v-button>
@@ -150,6 +167,7 @@ import axios from 'axios'
 import ProfilePictureModal from '~/components/photo-editors/profilePictureModal'
 import SkillSelector from './../../components/SkillSelector'
 import VueQuillEditor from 'vue-quill-editor'
+import { mapGetters } from 'vuex'
 export default {
   middleware: 'auth',
   scrollToTop: false,
@@ -160,10 +178,17 @@ export default {
   },
 
   metaInfo () {
-    return { title: 'Create Company' }
+    return { title: 'Create Opening' }
+  },
+
+  computed: {
+    ...mapGetters({
+      companies: 'auth/companies_obj'
+    }),
   },
 
   data: () => ({
+    company_id: null,
     form1: new Form({
       photo: null,
       title: '',
@@ -235,7 +260,7 @@ export default {
     },
     async validateForm4 () {
       // 
-      this.form4.company_id = this.$route.params.company_id;
+      this.form4.company_id = this.company_id;
       this.form4.picture = this.form1.photo;
       this.form4.title = this.form1.title;
       this.form4.salary_range = this.form1.salary_range;
@@ -271,15 +296,25 @@ export default {
     },
     left(){
       this.$refs.wizard.previews();
+    },
+    async fetchHiringProcesses(){
+      const { data } = await axios({
+            method: 'get',
+            url: '/api/company/hiringprocess/fetch/processes',
+            params: { company_id: this.$route.params.company_id }
+          })
+      this.hiringProcesses = data.hiringProcesses;
     }
   },
   created: async function(){
-    const { data } = await axios({
-          method: 'get',
-          url: '/api/company/hiringprocess/fetch/processes',
-          params: { company_id: this.$route.params.company_id }
-        })
-    this.hiringProcesses = data.hiringProcesses;
+    this.company_id = this.$route.params.company_id
+    this.fetchHiringProcesses()
+  },
+  watch: {
+    $route(){
+      this.company_id = this.$route.params.company_id
+      this.fetchHiringProcesses()
+    }
   }
 }
 </script>

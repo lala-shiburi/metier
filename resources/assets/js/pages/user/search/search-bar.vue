@@ -12,10 +12,10 @@
         <div>
           <div class="mb-2" v-if="programming_languages.length || technologies.length">
             <span>
-              <skill-icon v-for="(lang,index) in programming_languages" v-bind:key="index" size="x-small-icon" :icon="lang.tag_name"/>
+              <skill-icon v-for="(lang,index) in programming_languages" v-bind:key="index" :icon="lang.tag_name"/>
             </span>
             <span>
-              <skill-icon v-for="(tech,index) in technologies" v-bind:key="index" size="x-small-icon" :icon="tech.tag_name"/>
+              <skill-icon v-for="(tech,index) in technologies" v-bind:key="index" :icon="tech.tag_name"/>
             </span>
           </div>
           <button @click="showSkillFilter" type="button" class="btn btn-light btn-sm">

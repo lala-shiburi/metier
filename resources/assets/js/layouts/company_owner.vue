@@ -32,7 +32,16 @@
               People
             </router-link>
           </div>
-          <div class="p-2 bg-light"><small>User Business</small></div>
+          <div class="p-2 bg-light border-bottom"><small @click="refresh">User Business</small></div>
+          <div class="p-3 text-center bg-light" v-if="companies">
+            <router-link v-if="companies.length == 1" :to="{ name: 'opening.create', params: { company_id: companies[0].id } }" class="btn btn-primary">Create Opening</router-link>
+            <div v-if="companies.length > 1" class="dropdown">
+              <button type="button" class="btn btn-primary" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Create Opening</button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                <router-link :to="{ name: 'opening.create', params: { company_id: company.id } }" class="dropdown-item" v-for="company in companies" v-bind:key="company.id">For {{company.name}}</router-link>
+              </div>
+            </div>
+          </div>
           <div class="list-group list-group-flush">
             <router-link :to="{ name: 'user.openings' }" class="list-group-item list-group-item-action sidebar-nav" active-class="active">
               User Openings
@@ -66,6 +75,7 @@
 <script>
 import Navbar from '~/components/navbar/admin'
 import Collapsible from '~/components/Collapsible'
+import { mapGetters } from 'vuex'
 export default {
   name: 'MainLayout',
   data: () => ({
@@ -75,6 +85,10 @@ export default {
     Navbar,
     Collapsible
   },
+  computed: mapGetters({
+    user: 'auth/user',
+    companies: 'auth/companies'
+  }),
   methods:{
     showSidebar(){
       if(!jQuery(this.$refs.sidebar).hasClass('visible')){
@@ -92,6 +106,13 @@ export default {
     hideUserOption(){
       this.$refs.navigation.hideUserOption()
     },
+    async refresh(){
+      await this.$store.dispatch('auth/fetchManagedCompanies')
+    }
+  },
+  async created(){
+    // fetch user companies
+    await this.$store.dispatch('auth/fetchManagedCompanies')
   },
   mounted(){
     if(jQuery(document).width() > 768){
