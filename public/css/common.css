@@ -65,6 +65,7 @@
   overflow: hidden;
   width: 100%;
   padding-left: 5px;
+  top: 0px;
 }
 
 .text-ellipsis{
