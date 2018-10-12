@@ -1,7 +1,7 @@
 <template>
   <div style="padding-bottom: 100px;">
     <div class="nav-head p-15">
-      <img :src="public_path+'/images/logo_brand.png'">
+      <logo/>
       <div class="links pull-right">
         <template v-if="authenticated">
           <router-link :to="{ name: 'home' }">
@@ -20,19 +20,23 @@
       </div>
     </div>
     <div  class="basic-layout d-flex align-items-center justify-content-center m-0 bg-white">
+      <div class="fullscreen-video-wrap">
+        <video ref="video" :src="public_path + '/videos/v-background-1.mp4'" muted class="absolute-center" autoplay="true" loop="true"></video>
+        <div class="header-overlay"></div>
+      </div>
       <div class="col-md-5">
         <search-box/>
         <br>
         <div class="title">
           Also, build your professional identity online and stay connected with opportunities.
-          <router-link :to="{ name: 'register' }">Create Account</router-link>
+          <router-link class="bg-white pl-2 pr-2 d-inline-block" :to="{ name: 'register' }">Create Account</router-link>
         </div>
       </div>
       <a href="/#openings" class="see-down">
         <i class="fa fa-angle-double-down icon" aria-hidden="true"></i>
       </a>
     </div>
-    <div class="bg-white">
+    <div class="bg-white p-3">
       <div class="container text-center">
         <div>
           <skill-icon @click.native="setSkillSearch('programming_languages', lang)" v-for="(lang,index) in programming_languages" v-bind:key="index" :icon="lang.tag_name"/>
@@ -116,6 +120,9 @@ export default {
   mounted(){
     this.fetchRecentApplications()
     this.fetchMostPopularCompany()
+    this.$refs.video.onload = function(){
+      this.play()
+    }
   }
 }
 </script>
@@ -127,7 +134,7 @@ export default {
   z-index: 1000;
 }
 .links > a {
-    color: #636b6f;
+    color: white;
     font-size: 12px;
     font-weight: 600;
     letter-spacing: .1rem;
@@ -135,9 +142,35 @@ export default {
     text-transform: uppercase;
 }
 
+.fullscreen-video-wrap{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	overflow: hidden;
+}
+
+.fullscreen-video-wrap video{
+	min-width: 100%;
+	min-height: 100%;
+}
+
+.header-overlay{
+	height: 100vh;
+	width: 100vw;
+	position: absolute;
+	top: 0;
+	left: 0;
+  background:linear-gradient(135deg, #5b247a 0%,#1bcedf 100%);
+	opacity: 0.80;
+}
+
 .title {
   font-size: 15px;
+  color: white;
 }
+
 .basic-layout {
   color: #636b6f;
   height: 100vh;
