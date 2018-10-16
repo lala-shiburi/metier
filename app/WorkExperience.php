@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use \Carbon\Carbon;
 
 class WorkExperience extends Model
 {
@@ -12,10 +13,14 @@ class WorkExperience extends Model
         $from = strtotime($this->attributes['from']);
         $to = $this->attributes['to'] ? strtotime($this->attributes['to']) : time();
 
-        $year = gmdate('Y', $to - $from);
-        $month = gmdate('m', $to - $from);
-        $days = gmdate('d', $to - $from);
+        Carbon::setLocale('en');
+        $translator = Carbon::getTranslator();
+        $translator->setMessages('en', array(
+            'day' => ':count day ago|:count days ago',
+        ));
+        $date1 = Carbon::createFromTimestamp($from);
+        $now = Carbon::createFromTimestamp($to);
 
-        return ($to - $from > 31557600 ? $year.' year(s) ' : '').($month > 0 ? (int)$month.' month(s) ':'');
+        return $date1->diffForHumans($now, true, false, 2);
     }
 }

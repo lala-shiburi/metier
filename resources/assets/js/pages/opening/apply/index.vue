@@ -25,7 +25,7 @@
       </template>
       <template slot="panels">
         <form @submit.prevent="apply">
-          <div class="col-lg-4 offset-md-4">
+          <div class="col-md-4 offset-md-4">
             <opening-card :noApply="true" v-if="opening.id" :opening="opening">
               <!-- Submit Button -->
               <br>

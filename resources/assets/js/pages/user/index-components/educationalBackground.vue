@@ -102,7 +102,7 @@
         </h6>
       </div>
       <template slot="options">
-        <button type="button" v-on:click="closeCreateModal" class="btn btn-light">
+        <button type="button" v-on:click="closeUpdateModal" class="btn btn-light">
           <i class="fa fa-close" aria-hidden="true"></i>
         </button>
       </template>
