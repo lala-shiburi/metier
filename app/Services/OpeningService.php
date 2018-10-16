@@ -22,7 +22,7 @@ class OpeningService
     ];
 
     function getSalaryRangeCorrespondingText($index){
-        return $this->salary_ranges[$index];
+        return array_key_exists($index,$this->salary_ranges) ? $this->salary_ranges[$index] : $index;
     }
 
     function handleOpeningResource( Collection $openings){
