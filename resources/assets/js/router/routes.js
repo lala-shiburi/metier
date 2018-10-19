@@ -4,6 +4,7 @@ const PasswordEmail = () => import('~/pages/auth/password/email').then(m => m.de
 const PasswordReset = () => import('~/pages/auth/password/reset').then(m => m.default || m)
 const NotFound = () => import('~/pages/errors/404').then(m => m.default || m)
 const PrivacyPolicy = () => import('~/pages/legal/privacy-policy').then(m => m.default || m)
+const TCoS = () => import('~/pages/legal/terms-conditions-of-service').then(m => m.default || m)
 
 const Home = () => import('~/pages/home').then(m => m.default || m)
 
@@ -109,6 +110,7 @@ export default [
 
   // legal pages
   { path: '/privacy-policy', name:'privacy-policy', component: PrivacyPolicy },
+  { path: '/terms-and-conditions-of-service', name:'terms-and-conditions-of-service', component: TCoS },
 
   { path: '/404', name:'404', component: NotFound },
   { path: '*', component: NotFound }

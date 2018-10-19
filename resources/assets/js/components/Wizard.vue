@@ -15,8 +15,6 @@
 
 <script>
 function wiz_actives(elms, index){
-
-
   for(var i = elms.length - 1; i >= 0; i--){
     if(i <= index)
     {
@@ -109,7 +107,7 @@ export default {
               left: ((length_unit * i) + ((length_unit / (steps.children.length - 1)) * (i) )),
             });
           }
-          $this.show(0);
+          $this.show($this.current_index);
         }
       });
     },
