@@ -25,7 +25,7 @@
           <div>
             <h5>Description</h5>
             <label class="text-muted" v-if="!user.description && authorizeEdit"> How do you describe yourself? </label>
-            <div v-if="userAddresses.length == 0 && !authorizeEdit" class="text-muted">
+            <div v-if="!user.description && !authorizeEdit" class="text-muted">
                 Information not available.
             </div>
             {{user.description}}

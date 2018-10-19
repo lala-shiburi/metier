@@ -28,8 +28,20 @@
       </div>
       <card class="m-tb-10">
         <div>
-          <h5>Description</h5>
-          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+          <h5>Introduction</h5>
+          <div v-html="company.introduction"></div>
+          <label class="text-muted" v-if="!company.introduction && authorizeEdit"> How do you describe {{company.name}}? </label>
+          <div v-if="!company.introduction && !authorizeEdit" class="text-muted">
+              Information not available.
+          </div>
+          <div v-if="authorizeEdit">
+            <icon-button @click.native="prepUpdateIntroduction" v-if="!company.introduction">
+              ADD INTRODUCTION
+            </icon-button>
+            <div v-else style="position: absolute; top: 15px; left: 0px; text-align: right; right: 15px;">
+              <i @click="prepUpdateIntroduction" class="small-option-btn fa fa-edit"></i>
+            </div>
+          </div>
         </div>
         <br>
       </card>
@@ -85,18 +97,20 @@
         </div>
       </div>
     </div>
-    <basic-info-modal ref="basic-info-modal-component" @update="updateCompany" :company="company"></basic-info-modal>
-    <website-info-modal ref="website-info-modal-component" @update="updateCompany" :company="company"></website-info-modal>
+    <basic-info-modal ref="basic-info-modal" @update="updateCompany" :company="company"/>
+    <website-info-modal ref="website-info-modal" @update="updateCompany" :company="company"/>
+    <introduction-modal  v-if="authorizeEdit" :company="company" ref="introduction-modal"/>
   </div>
 </template>
 
 <script>
-import BasicInfoModal from './basicInfoModal';
-import WebsiteInfoModal from './websiteInfoModal';
 import axios from 'axios'
 import Form from 'vform'
 import Logo from './logo'
 import Cover from './cover'
+import IntroductionModal from './index-components/introduction-modal'
+import BasicInfoModal from './index-components/basic-info-modal'
+import WebsiteInfoModal from './index-components/website-info-modal'
 
 export default {
   components: {
@@ -104,6 +118,8 @@ export default {
     WebsiteInfoModal,
     Logo,
     Cover,
+    IntroductionModal,
+    BasicInfoModal
   },
   data : () =>({
     public_path: location.origin,
@@ -137,10 +153,10 @@ export default {
       this.openings = data.openings;
     },
     prepUpdateBasicInfo(){
-      this.$refs['basic-info-modal-component'].prepUpdate(this.company);
+      this.$refs['basic-info-modal'].prepUpdate();
     },
     prepUpdateWebsiteInfo(){
-      this.$refs['website-info-modal-component'].prepUpdate(this.company);
+      this.$refs['website-info-modal'].prepUpdate(this.company);
     },
     removeOpening(data){
       for(var i = 0; i < this.openings.length; i++){
@@ -150,6 +166,9 @@ export default {
         }
       }
 
+    },
+    prepUpdateIntroduction(){
+      this.$refs["introduction-modal"].prepUpdate()
     }
   },
   created: function(){

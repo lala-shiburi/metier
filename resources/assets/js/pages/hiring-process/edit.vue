@@ -2,7 +2,10 @@
   <div class="simple-card">
     <div class="simple-card-header row">
       <div class="col-md-9">
-        <router-link :to="{ name: 'company.hiringprocceses', params: {id:company_id} }" class="btn btn-secondary"><i class="fa fa-arrow-left" aria-hidden="true"></i></router-link> CREATE HIRING PROCEDURE
+        <router-link :to="{ name: 'company.hiringprocceses', params: {id:company_id} }" class="btn btn-secondary">
+          <i class="fa fa-arrow-left" aria-hidden="true"></i>
+        </router-link> 
+        {{processForm.id ? 'EDIT' : 'CREATE'}} HIRING PROCEDURE
       </div>
     </div>
     <div class="unick-table">
@@ -22,7 +25,7 @@
             </div>
             <div style="padding: 10px 0px;">
               <v-button :loading="processForm.busy" type="success">SAVE</v-button>
-              <button v-on:click="prep_edit" type="button" class="btn btn-primary pull-right">
+              <button v-on:click="prep_create_step" type="button" class="btn btn-primary pull-right">
                 ADD STEP
               </button>
             </div>
@@ -46,7 +49,7 @@
                       </div>
                       {{ step.name }}
                       <div class="right-buttons">
-                        <i class="fa fa-edit" v-on:click="pre_edit(step, index)"></i>
+                        <i class="fa fa-edit" v-on:click="prep_edit_step(step, index)"></i>
                         <i class="fa fa-close" v-on:click="prep_delete(index)"></i>
                       </div>
                     </div>
@@ -58,42 +61,7 @@
         </div>
       </form>
     </div>
-
-    <div class="modal fade" ref="modal" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Basic Info</h5>
-            <a class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </a>
-          </div>
-          <form @submit.prevent="validateStep" @keydown="stepForm.onKeydown($event)">
-          <div class="modal-body">
-              <!-- Name -->
-              <div class="form-group row">
-                <label class="col-md-3 col-form-label text-md-right">Name</label>
-                <div class="col-md-7">
-                  <input v-model="stepForm.name" :class="{ 'is-invalid': stepForm.errors.has('name') }" class="form-control" name="name">
-                  <has-error :form="stepForm" field="name"/>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-md-3 col-form-label text-md-right">Description <span class="text-muted">(optional)</span></label>
-                <div class="col-md-7">
-                  <textarea v-model="stepForm.description" :class="{ 'is-invalid': stepForm.errors.has('description') }" class="form-control" name="description"/>
-                  <has-error :form="stepForm" field="description"/>
-                </div>
-              </div>
-          </div>
-          <div class="modal-footer">
-            <a class="btn btn-secondary" data-dismiss="modal" style="color: white;">Close</a>
-            <v-button :loading="stepForm.busy" type="success">Save</v-button>
-          </div>
-          </form>
-        </div>
-      </div>
-    </div>
+    <step-modal ref="step-modal" @update="updateProcessFormStep"/>
   </div>
 </template>
 
@@ -101,9 +69,13 @@
 import axios from 'axios'
 import Form from 'vform'
 import swal from 'sweetalert2'
+import StepModal from './components/step-modal'
 
 export default {
   middleware: 'auth',
+  components: {
+    StepModal
+  },
   metaInfo () {
     return { title: (this.processForm.id ? 'Edit '+this.processForm.name : 'Create Hiring Procedure') }
   },
@@ -145,10 +117,6 @@ export default {
     })
   }),
   methods: {
-    prep_edit: function(){
-      this.stepForm.reset();
-      jQuery(this.$refs.modal).modal('show');
-    },
     validateStep: async function(){
       const {data} = await this.stepForm.post('/api/company/hiringprocess/validate/process/step');
 
@@ -205,13 +173,6 @@ export default {
       }
 
     },
-    pre_edit: function(data,index){
-      this.stepForm.name = data.name;
-      this.stepForm.id = data.id;
-      this.stepForm.description = data.description;
-      this.stepForm.index = index;
-      jQuery(this.$refs.modal).modal('show');
-    },
     prep_delete: function(index){
       var $this = this;
       if(this.processForm.steps.length < 2){
@@ -240,6 +201,28 @@ export default {
             )
           }
         })
+      }
+    },
+    prep_create_step(){
+      this.$refs['step-modal'].prep_create()
+    },
+    prep_edit_step(data, index){
+      this.$refs['step-modal'].prep_edit(data, index)
+    },
+    updateProcessFormStep(data){
+      if(data.index > -1){
+        this.processForm.steps[data.index] = { 
+          id: data.index,
+          name : data.name, description: data.description
+        };
+
+        this.$forceUpdate();
+      }
+      else{
+        this.processForm.steps.push({
+          name : data.name,
+          description: data.description
+        });
       }
     }
   },
