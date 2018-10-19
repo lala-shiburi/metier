@@ -27,7 +27,8 @@ class CompanyResource extends JsonResource
             "email" => $this->email,
             "created_at" => $this->created_at,
             "opening_count" => $this->openings->count(),
-            "current_user_followed" => $this->current_user_followed
+            "current_user_followed" => $this->current_user_followed,
+            "introduction" => $this->introduction
         ];
     }
 

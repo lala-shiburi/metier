@@ -391,7 +391,7 @@ class User extends Authenticatable implements JWTSubject
             });
         }
         if(count($skills['technologies'])){
-            $query->whereHas('technologies', function ($query) use ($request){
+            $query->whereHas('userTechnologies', function ($query) use ($skills){
                 $query->whereIn('technologies.id', $skills['technologies']);
             });
         }

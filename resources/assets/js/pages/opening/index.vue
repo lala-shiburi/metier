@@ -40,7 +40,7 @@
       <card class="m-tb-10">
         <div>
           <h5>Description</h5>
-          {{opening.details}}
+          <p v-html="opening.details"></p>
         </div>
         <br>
       </card>

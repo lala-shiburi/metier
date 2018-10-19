@@ -50,6 +50,11 @@
             <v-line-input :form="form" field="password_confirmation" type="password">
               Confirm Password
             </v-line-input>
+            <p class="text-muted">
+              By creating an account, you agree to our 
+              <router-link :to="{ name: 'terms-and-conditions-of-service' }"> Terms and Conditions of Service</router-link> and 
+              <router-link :to="{ name: 'privacy-policy' }"> Privacy Policy</router-link>.
+            </p>
             <v-button :loading="form.busy">
               {{ $t('register') }}
             </v-button>
