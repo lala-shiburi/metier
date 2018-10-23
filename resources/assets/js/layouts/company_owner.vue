@@ -2,8 +2,9 @@
   <div>
     <div class="sidebar" ref="sidebar" @click="hideUserOption">
       <div class="text-center border-bottom pt-2 pb-2 position-relative">
-        <img :src="public_path+'/images/logo_brand.png'">
-        <div class="transparent-cover v-small" @click="showSidebar"></div>
+        <router-link @click.native="showSidebar" :to="{ name: 'home' }">
+          <img :src="public_path+'/images/logo_brand.png'">
+        </router-link>
       </div>
       <div class="sidebar-menu" ref="sidebar-menu">
         <div class="menu">

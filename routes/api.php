@@ -280,3 +280,9 @@ Route::group(['prefix'=>'application'], function(){
         Route::post('application', 'HiringApplicationController@createApplication');
     });
 });
+
+// support
+Route::group(['prefix' => 'support'], function(){
+    // contact us
+    Route::post('contact_us', 'SupportController@submitContactUs');
+});

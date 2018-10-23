@@ -6,7 +6,7 @@
         {{user.name}}
       </div>
       <div class="font-weight-normal">
-        <small>Web Developer</small>
+        <small>{{user.job_title}}</small>
       </div>
     </center>
     <div class="border-top mt-3 pt-3">

@@ -41,10 +41,10 @@
 
           <!-- Salary Range -->
           <div class="form-group row">
-            <label class="col-md-3 col-form-label text-md-right">Salary Range</label>
+            <label class="col-md-3 col-form-label text-md-right">Salary Range (Optional)</label>
             <div class="col-md-7">
               <select v-model="form1.salary_range" :class="{ 'is-invalid': form1.errors.has('salary_range') }" class="form-control" name="salary_range">
-                <option value="" selected>-select</option>
+                <option value=null selected>-select</option>
                 <option v-for="(range, index) in salary_ranges" v-bind:key="index" :value="index">
                   {{range}}
                 </option>
@@ -167,7 +167,7 @@ export default {
     form1: new Form({
       photo: null,
       title: '',
-      salary_range: '',
+      salary_range: null,
       professional_years: '',
       hiring_step_group_id:''
     }),

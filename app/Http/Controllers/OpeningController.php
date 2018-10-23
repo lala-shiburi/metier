@@ -54,7 +54,7 @@ class OpeningController extends Controller
     public function validateBasicInfo(Request $request){
         $this->validate($request, [
             'title' => 'required',
-            'salary_range' => 'required',
+            // 'salary_range' => 'required',
             'professional_years' => 'required',
             'hiring_step_group_id' => 'required',
         ],[
