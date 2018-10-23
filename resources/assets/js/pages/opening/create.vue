@@ -56,7 +56,7 @@
 
               <!-- Salary Range -->
               <div class="form-group">
-                <label>Salary Range</label>
+                <label>Salary Range (Optional)</label>
                 <div>
                   <select v-model="form1.salary_range" :class="{ 'is-invalid': form1.errors.has('salary_range') }" class="form-control" name="salary_range">
                     <option value="" selected>-select</option>

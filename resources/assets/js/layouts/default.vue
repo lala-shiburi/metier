@@ -2,7 +2,7 @@
   <div class="main-layout">
     <navbar/>
 
-    <div class="container mt-4">
+    <div class="container mt-4" style="min-height: 100vh;">
       <child/>
     </div>
     <!--footer starts from here-->
@@ -11,6 +11,9 @@
         <!--foote_bottom_ul_amrc ends here-->
         <p class="text-center">Copyright @ 2018
           <a href="https://nexseed.net/">Nexseed</a>
+          <router-link :to="{ name: 'contact-us' }">
+            Contact Us
+          </router-link>
         </p>
 
         <ul class="social_footer_ul">
