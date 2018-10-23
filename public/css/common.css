@@ -114,3 +114,7 @@
 .datepicker-dropdown{
   padding:15px;
 }
+
+.ql-editor {
+  min-height: 200px;
+}
