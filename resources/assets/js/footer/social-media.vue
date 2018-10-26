@@ -1,14 +1,13 @@
 <template>
   <div>
     <div class="sidebar" ref="sidebar" @click="hideUserOption">
-      <div class="text-center pt-2 pb-2 position-relative">
-        <router-link :to="{ name: 'home' }">
-          <img :src="public_path+'/images/logo_brand.png'" style="height: 40px;">
+      <div class="text-center border-bottom pt-2 pb-2 position-relative">
+        <router-link @click.native="showSidebar" :to="{ name: 'home' }">
+          <img :src="public_path+'/images/logo_brand.png'">
         </router-link>
-        <div class="transparent-cover v-small" @click="showSidebar"></div>
       </div>
-      <div class="sidebar-menu border-top" ref="sidebar-menu">
-        <div class="menu border-bottom">
+      <div class="sidebar-menu" ref="sidebar-menu">
+        <div class="menu">
           <div class="p-2 bg-light"><small>Main Navigation</small></div>
           <div class="list-group list-group-flush">
             <collapsible>
@@ -62,7 +61,6 @@
             </router-link>
           </div>
         </div>
-        <unick-footer class="bg-light pb-3"/>
       </div>
     </div>
     <div class="sidebar-backdrop" @click="showSidebar"></div>
@@ -76,9 +74,68 @@
 </template>
 
 <script>
-import mixin from './mixin'
+import Navbar from '~/components/navbar/admin'
+import Collapsible from '~/components/Collapsible'
+import { mapGetters } from 'vuex'
 export default {
-  mixins:[mixin]
+  name: 'MainLayout',
+  data: () => ({
+    public_path: location.origin,
+  }),
+  components: {
+    Navbar,
+    Collapsible
+  },
+  computed: mapGetters({
+    user: 'auth/user',
+    companies: 'auth/companies'
+  }),
+  methods:{
+    showSidebar(){
+      if(!jQuery(this.$refs.sidebar).hasClass('visible')){
+        jQuery(this.$refs.sidebar).addClass('visible')
+        jQuery(this.$refs['main-layout']).addClass('sidebar-visible')
+      }
+      else{
+        jQuery(this.$refs.sidebar).removeClass('visible')
+        jQuery(this.$refs['main-layout']).removeClass('sidebar-visible')
+      }
+      // trigger all events that should be triggered when sidebar is showed or hidden
+      // e.g application progress line
+      setTimeout(triggerLayoutEvents, 400)
+    },
+    hideUserOption(){
+      this.$refs.navigation.hideUserOption()
+    },
+    async refresh(){
+      await this.$store.dispatch('auth/fetchManagedCompanies')
+    }
+  },
+  async created(){
+    // fetch user companies
+    await this.$store.dispatch('auth/fetchManagedCompanies')
+  },
+  mounted(){
+    if(jQuery(document).width() > 768){
+      this.showSidebar();
+    }
+    var $this = this;
+    jQuery('.sidebar-nav').click(function(){
+      if(jQuery(document).width() <= 768){
+        $this.showSidebar();
+      }
+    })
+
+    jQuery(function() {
+        //The passed argument has to be at least a empty object or a object with your desired options
+        jQuery($this.$refs['sidebar-menu']).overlayScrollbars({ 
+          className       : "os-theme-dark",
+          scrollbars: {
+            autoHide : "leave"
+          }
+        });
+    });
+  }
 }
 
 function triggerLayoutEvents(){
@@ -89,4 +146,114 @@ function triggerLayoutEvents(){
   }
 }
 </script>
+<style lang="scss" scoped>
+$sidebar_width:300px;
+$transition:300ms ease all;
+.sidebar{
+  visibility: hidden;
+  position: fixed;
+  height: 100%;
+  background: white;
+  z-index: 10;
+  width: $sidebar_width;
+  left: -$sidebar_width;
+  box-shadow:  2px 0px 6px -4px rgba(150,150,150,1);
+  transition: $transition;
+  overflow: auto;
+  .sidebar-menu{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    top: 56px;
+  }
+  &.visible{
+    visibility: visible;
+    left: 0px;
+  }
+  .sub-links{
+    .sub-link{
+      display: block;
+      color: #c7ced4;
+      padding: 10px 15px;
+
+      &.active{
+        color: white;
+      }
+
+      &:hover{
+        text-decoration: none;
+        background: #767f88;
+      }
+    }
+  }
+}
+.main-layout{
+  position: fixed;
+  height: 100%;
+  overflow-y: scroll;
+  right: 0px;
+  left: 0px;
+  transition: $transition;
+  &.sidebar-visible{
+    left: $sidebar_width;
+  }
+}
+
+.transparent-cover{
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  height: 100%;
+  left: 0px;
+  width: 100%;
+}
+.sidebar-backdrop{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  background: black;
+  z-index: 1;
+  opacity: 0;
+  visibility: hidden;
+  transition: 300ms ease all;
+}
+.v-small{
+  display: none;
+}
+
+
+@media (max-width: 768px) {
+  .v-small{
+    display: block;
+  }
+  .sidebar{
+    width: 100%;
+    right: 100%;
+    left: initial!important;
+    padding-left: 25px;
+  }
+  .main-layout{
+    width: 100%;
+    right: initial!important;
+    left: 0px;
+  }
+  .sidebar.visible{
+    right: 25px;
+    .menu{
+      padding-left: 25px;
+    }
+    &+.sidebar-backdrop{
+      visibility: visible;
+      opacity: 0.75;
+    }
+  }
+  .main-layout.sidebar-visible{
+    left: 100%;
+    transform: translateX(-25px);
+  }
+}
+</style>
 

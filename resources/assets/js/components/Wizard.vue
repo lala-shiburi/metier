@@ -1,6 +1,6 @@
 <template>
   <div class="wizard" style="position:relative;">
-    <card title="Create Opening">
+    <card :title="title">
       <div style="padding: 25px; margin-bottom: 50px;">
         <div class="steps" ref="steps">
           <slot name="steps"/>
@@ -34,6 +34,10 @@ export default {
     currentPanel: {
       type: Number,
       required: true
+    },
+    title: {
+      type: String,
+      default: 'Create Opening'
     }
   },
   data: () => ({

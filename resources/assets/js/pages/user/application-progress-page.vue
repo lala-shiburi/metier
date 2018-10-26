@@ -6,30 +6,39 @@
         <opening-card :noApply="true" :opening="application.opening"/>
       </div>
       <div class="col-md-8 border-left-md">
-        <p><strong>Progress</strong></p>
-        <div class="progress-container">
-          <application-progress-line :application="application" @update="updateCurrent" />
-        </div>
-        <div v-if="current_step">
-          <div>
-            <strong>Current Step : </strong> {{current_step.name}}
+        <div v-if="application.opening.hiring_step_group_id">
+          <p><strong>Progress</strong></p>
+          <div class="progress-container">
+            <application-progress-line :application="application" @update="updateCurrent" />
           </div>
-          <div v-if="current_step.description">
-            <strong>Step Description : </strong>
-            {{current_step.description}}
+          <div v-if="current_step">
+            <div>
+              <strong>Current Step : </strong> {{current_step.name}}
+            </div>
+            <div v-if="current_step.description">
+              <strong>Step Description : </strong>
+              {{current_step.description}}
+            </div>
           </div>
+          <div v-else class="alert alert-secondary" role="alert">
+            Application procedure is finished.
+          </div>
+          <br>
         </div>
-        <div v-else class="alert alert-secondary" role="alert">
-          Application procedure is finished.
-        </div>
-        <br>
+        <p>
+          <strong>Applicant</strong>
+        </p>
         <div class="media">
-          <img class="mr-3" style="width: 50px;" :src="application.user.photo" alt="Generic placeholder image">
+          <img class="mr-3" style="width: 50px;" :src="application.user.photo">
           <div class="media-body">
             <h5 class="mt-0 mb-1">{{application.user.name}}</h5>
             <p v-html="application.application_letter"></p>
           </div>
         </div>
+        <p>
+          <strong>Application Letter</strong>
+        </p>
+        <p v-html="application.application_letter"></p>
       </div>
     </div>
   </card>

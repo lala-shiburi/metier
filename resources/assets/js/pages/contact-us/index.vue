@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1 class="display-4">Contact Us</h1>
-    <form @submit.prevent="submit" @keydown="form.onKeydown($event)">
+    <form v-if="!submitted" @submit.prevent="submit" @keydown="form.onKeydown($event)">
+      <h1 class="display-4">Contact Us</h1>
       <div class="form-group">
         <label for="name">Name</label>
         <input v-model="form.name" name="name" :class="{ 'is-invalid': form.errors.has('name') }" class="form-control" id="name" placeholder="Enter name">
@@ -25,6 +25,9 @@
       </div>
       <v-button :loading="form.busy" type="success">Submit</v-button>
     </form>
+    <p v-else class="text-center">
+      <i class="fa fa-check-circle" aria-hidden="true"></i> Message submitted.
+    </p>
     <br>
   </div>
 </template>
@@ -43,13 +46,13 @@ export default {
       email: '',
       subject: '',
       body: ''
-    })
+    }),
+    submitted: false
   }),
   methods: {
     async submit(){
       const { data } = await this.form.post('/api/support/contact_us')
-
-      console.log(data)
+      this.submitted = true
     }
   },
 }

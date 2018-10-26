@@ -44,7 +44,7 @@
             <label class="col-md-3 col-form-label text-md-right">Salary Range (Optional)</label>
             <div class="col-md-7">
               <select v-model="form1.salary_range" :class="{ 'is-invalid': form1.errors.has('salary_range') }" class="form-control" name="salary_range">
-                <option value=null selected>-select</option>
+                <option value="" selected>-select</option>
                 <option v-for="(range, index) in salary_ranges" v-bind:key="index" :value="index">
                   {{range}}
                 </option>
@@ -72,7 +72,7 @@
             <label class="col-md-3 col-form-label text-md-right">Hiring Procedure</label>
             <div class="col-md-7">
               <select v-model="form1.hiring_step_group_id" :class="{ 'is-invalid': form1.errors.has('hiring_step_group_id') }" class="form-control" name="hiring_step_group_id">
-                <option value="" selected>-select</option>
+                <option value=0 selected>-select</option>
                 <option v-for="(procedure, index) in hiringProcesses" v-bind:key="index" :value="procedure.id">
                   {{procedure.name}}
                 </option>
@@ -169,7 +169,7 @@ export default {
       title: '',
       salary_range: null,
       professional_years: '',
-      hiring_step_group_id:''
+      hiring_step_group_id: 0
     }),
     form2: new Form({
       details: ''

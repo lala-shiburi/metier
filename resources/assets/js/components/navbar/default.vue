@@ -4,7 +4,7 @@
       <div class="container">
         <router-link :to="{ name: user ? 'home' : 'welcome' }" class="navbar-brand">
           <!-- {{ appName }} -->
-          <img :src="public_path+'/images/logo_brand.png'">
+          <img :src="public_path+'/images/logo_brand.png'" style="height: 50px; margin-top: -10px; margin-bottom: -10px;">
         </router-link>
         <div class="hidden-md" style="flex-grow: 100">
           <ul class="navbar-nav">

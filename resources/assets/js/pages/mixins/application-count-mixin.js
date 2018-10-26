@@ -1,16 +1,29 @@
+import { mapGetters } from 'vuex'
 export default {
+  computed: mapGetters({
+    companies: 'auth/companies'
+  }),
   methods: {
     displayPending(){
-      this.$refs['application-modal'].fetch(0)
+      this.showModalOrRedirect(0)
     },
     displayInProgress(){
-      this.$refs['application-modal'].fetch(1)
+      this.showModalOrRedirect(1)
     },
     displayFinished(){
-      this.$refs['application-modal'].fetch(2)
+      this.showModalOrRedirect(2)
     },
     displayInactive(){
-      this.$refs['application-modal'].fetch(3)
+      this.showModalOrRedirect(3)
+    },
+    showModalOrRedirect(status){
+      if(this.companies.length > 1){
+        this.$refs['application-modal'].fetch(status)
+      }
+      else{
+        this.$refs['application-modal'].status = status
+        this.$refs['application-modal'].redirectToApplications(this.companies[0].id)
+      }
     }
   }
 }

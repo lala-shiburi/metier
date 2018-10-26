@@ -23,6 +23,10 @@ footer.footer p {
   margin-bottom: 8px;
 }
 
+footer.footer p a{
+  color: white;
+}
+
 .mb10 {
   padding-bottom: 15px;
 }
@@ -101,10 +105,11 @@ footer.footer p {
   display: table;
   margin: 15px auto 0 auto;
   list-style-type: none;
+  padding: 0px;
 }
 
 .social_footer_ul li {
-  padding-left: 20px;
+  padding: 5px;
   padding-top: 10px;
   float: left;
 }
@@ -114,6 +119,9 @@ footer.footer p {
   border: 1px solid #CCC;
   padding: 8px;
   border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: inline-block;
 }
 
 .social_footer_ul li i {

@@ -3,12 +3,12 @@
       <div class="col-md-6 p-0 overflow-hidden">
         <img :src="public_path+'/images/register-background.png'" style="width:100%;" class="absolute-center">
       </div>
-      <div class="col-md-6 p-0 m-auto" style="height:100vh; background:white; transform: translateY(-1px);">
+      <div class="col-md-6 p-0 m-auto" style="min-height:100vh; background:white; transform: translateY(-1px);">
         <form @submit.prevent="register" @keydown="form.onKeydown($event)">
-          <div class="absolute-center w-100 p-3" style="max-width:400px;">
+          <div class="w-100 p-3 m-auto" style="max-width:400px;">
             <div class="text-center">
               <router-link :to="{ name: 'welcome' }">
-                <img :src="public_path+'/images/logo_brand.png'">
+                <img :src="public_path+'/images/logo_brand.png'" style="max-width: 150px;">
               </router-link>
               <blockquote style="font-size:12px; margin-top:10px;">Please complete to create your account.</blockquote>
             </div>
