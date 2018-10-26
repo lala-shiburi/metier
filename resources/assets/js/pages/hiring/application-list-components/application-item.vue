@@ -20,11 +20,17 @@
         </div>
       </div>
     </div>
-    <div class="col-md-8 part progress-line-container">
+    <div class="col-md-8 part progress-line-container" v-if="application.opening.hiring_step_group_id">
       <application-progress-line :application="application" ref="progress-line" />
     </div>
+    <div class="col-md-8 pl-0 pt-2" v-else>
+      <b>No hiring procedure selected.</b>
+      <p>
+        You can <router-link :to="{name: 'opening.edit', params: {id : application.opening.id}}">update</router-link> the Job Opening that this application application was designated to proceed.
+      </p>
+    </div>
     <div class="col-md-12 part">
-      <div style="margin-bottom: 5px; display:inline-block;" v-if="application.status < 2">
+      <div style="margin-bottom: 5px; display:inline-block;" v-if="application.status < 2 && application.opening.hiring_step_group_id">
         <button v-if="application.status == 1" type="button" class="btn btn-primary btn-sm" v-on:click="prepUpdate">
           Proceed To Next Step
         </button>

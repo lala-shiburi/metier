@@ -1,6 +1,6 @@
 <template>
   <card title="Create Company">
-    <form @submit.prevent="create" @keydown="form.onKeydown($event)">
+    <form v-if="false" @submit.prevent="create" @keydown="form.onKeydown($event)">
       <alert-success :form="form" message="Registration Successful"/>
 
       <div class="text-center">
@@ -75,6 +75,17 @@
       </div>
     </form>
     <profile-picture-modal ref="photo-editor" @update="updateLogo"/>
+    <h6>Please Contact Us</h6>
+    <br>
+    <p>
+      Jobseed would like to verify your business. Please send us a brief description of your business.
+    </p>
+    <p>
+      Click <router-link :to="{ name: 'contact-us'}">here</router-link>.
+    </p>
+    <p>
+      After we verify you business, we will send you an email with a link to a company registration form.
+    </p>
   </card>
 </template>
 
