@@ -58,10 +58,11 @@ class OpeningResource extends JsonResource
             $authorizeEdit = ($managed_companies + $owned_companies) > 0;
         }
 
+
         return [
             'meta' => [
                 'version' => '0.001',
-                'author' => 'Uelmar Ortega <a href="https://www.facebook.com/uelmar.ortega">https://www.facebook.com/uelmar.ortega</a>',
+                'author' => 'Codetinerant',
                 'authorizeEdit' => $authorizeEdit
             ]
         ];

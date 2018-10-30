@@ -8,7 +8,7 @@
         <template slot="text">
           <div class="text-ellipsis">
             <router-link style="color: inherit; font-weight: bold;" :to="{ name: 'user.profile', params: { id: application.user.id} }">
-              Uelmar Ortega
+              Zedd, Hailey
             </router-link>
           </div>
           <div class="text-muted text-ellipsis">Applying for {{application.opening.title}}</div>
