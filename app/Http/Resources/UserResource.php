@@ -27,6 +27,7 @@ class UserResource extends JsonResource
             'programming_languages'=> $this->programmingLanguages,
             'user_technologies'=> $this->userTechnologies,
             'current_work_experience' => $this->currentWorkExperience,
+            'is_active' => $this->is_active
         ];
     }
 
