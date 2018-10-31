@@ -11,16 +11,16 @@
         <div class="menu border-bottom">
           <div class="p-2 bg-light"><small>Main Navigation</small></div>
           <div class="list-group list-group-flush">
-            <router-link :to="{ name: 'opening.search' }" class="list-group-item list-group-item-action sidebar-nav" active-class="active">
+            <router-link :to="{ name: 'admin.dashboard' }" class="list-group-item list-group-item-action sidebar-nav" active-class="active">
               Dashboard
             </router-link>
-            <router-link :to="{ name: 'opening.search' }" class="list-group-item list-group-item-action sidebar-nav" active-class="active">
+            <router-link :to="{ name: 'admin.users' }" class="list-group-item list-group-item-action sidebar-nav" active-class="active">
               Users
             </router-link>
-            <router-link :to="{ name: 'company.search' }" class="list-group-item list-group-item-action sidebar-nav" active-class="active">
+            <router-link :to="{ name: 'admin.company' }" class="list-group-item list-group-item-action sidebar-nav" active-class="active">
               Companies
             </router-link>
-            <router-link :to="{ name: 'user.search' }" class="list-group-item list-group-item-action sidebar-nav" active-class="active">
+            <router-link :to="{ name: 'admin.opening' }" class="list-group-item list-group-item-action sidebar-nav" active-class="active">
               Openings
             </router-link>
           </div>

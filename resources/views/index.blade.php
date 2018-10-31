@@ -23,7 +23,7 @@ $config = [
       'technologies' => \App\Technology::all(),
       
       'provinces' => \DB::table('provinces')->get(),
-      'author' => 'Codetinerant',
+      'author' => 'Hinimo ni nako. Umar ni.',
 ];
 
 $polyfills = [
