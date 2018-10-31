@@ -49,14 +49,24 @@ class LoginController extends Controller
     {
         $this->clearLoginAttempts($request);
 
-        $token = (string) $this->guard()->getToken();
-        $expiration = $this->guard()->getPayload()->get('exp');
+        // check if user is activated or deactivated
+        if($request->user()->is_active == 1){
+            $token = (string) $this->guard()->getToken();
+            $expiration = $this->guard()->getPayload()->get('exp');
 
-        return [
-            'token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => $expiration - time(),
-        ];
+            return [
+                'token' => $token,
+                'token_type' => 'bearer',
+                'expires_in' => $expiration - time(),
+            ];
+        }
+        else{
+            $this->guard()->logout();
+            return response()->json(['error'=>'Unauthorised', 
+                'message'=>"Your account was deactivated by our systems administrator due to a report
+                of misconduct. If you wish to restore your privileges, please <a href=".url('/contact-us').">contact us</a>"
+            ], 401);
+        }
     }
 
     /**

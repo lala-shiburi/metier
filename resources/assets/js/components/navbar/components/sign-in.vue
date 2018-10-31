@@ -37,6 +37,7 @@
 import SidebarPopup from '~/components/SidebarPopup'
 import axios from 'axios'
 import Form from 'vform'
+import swal from 'sweetalert2'
 export default {
   name: "SignIn",
   components: {
@@ -58,6 +59,14 @@ export default {
       .catch(error=>{
         if(error.response.data.error == "Already authenticated."){
           window.location.href = '/home';
+        }
+        else{
+          swal({
+            type: 'error',
+            title: 'Opps!',
+            html: "Your account was deactivated by our systems administrator due to a report"
+                +" of misconduct. If you wish to restore your account, please <a href='/contact-us'>contact us</a>.",
+          })
         }
       }).then(async function(data){
         if(data){

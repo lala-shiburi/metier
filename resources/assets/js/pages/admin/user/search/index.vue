@@ -1,17 +1,12 @@
 <template>
   <div class="row">
     <div class="col-lg-12">
-      <search-bar @update="updateOpenings"/>
+      <search-bar @update="update"/>
       <br>
     </div>
     <div class="col-lg-12">
-      <div class="row">
-        <div class="col-md-4 col-lg-3" v-for="(opening,index) in openings" v-bind:key="index">
-          <opening-card :opening="opening"></opening-card>
-        </div>
-      </div>
-      <div class="text-muted text-center" v-if="openings.length == 0">
-        Nothing to show.
+      <div class="list-group">
+        <user-item :user="user" :companies="companies" v-for="user in users" v-bind:key="user.id"/>
       </div>
     </div>
   </div>
@@ -21,28 +16,41 @@
 import axios from 'axios'
 import Form from 'vform'
 import SearchBar from './search-bar'
+import { mapGetters } from 'vuex'
+import UserItem from './user-item'
 
 export default {
   components: {
-    SearchBar
+    SearchBar,
+    UserItem
   },
   metaInfo () {
-    return { title: 'Manage Users' }
+    return { title: "Search User"}
   },
   data : () =>({
     public_path: location.origin,
-    openings: [],
+    users: [],
     provinces: window.config.provinces,
-    searchForm: new Form({
-      keyword: '',
-      province: '',
-      search_province: false
-    }),
+    companies: []
+  }),
+  computed: mapGetters({
+    user: 'auth/user'
   }),
   methods: {
-    updateOpenings: function(data){
-      this.openings = data;
-    }
+    update: function(data){
+      this.users = data;
+    },
+    async fetchCompanies(){
+      const {data} = await axios({
+        method: 'get',
+        url: "/api/user/fetch/companies/managed"
+      })
+
+      this.companies = data.companies
+    },
   },
+  mounted(){
+    this.fetchCompanies()
+  }
 }
 </script>

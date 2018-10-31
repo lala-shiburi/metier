@@ -38,7 +38,6 @@ export default {
   },
   data : () =>({
     public_path: location.origin,
-    openings: [],
     provinces: window.config.provinces,
     searchForm: new Form({
       keyword: '',
@@ -54,8 +53,8 @@ export default {
   }),
   methods: {
     search: async function(){
-      const { data } = await this.searchForm.post('/api/opening/fetch/search')
-      this.$emit('update', data.openings)
+      const { data } = await this.searchForm.post('/api/user/fetch/search')
+      this.$emit('update', data.users)
     },
     showSkillFilter(){
       this.$refs['skill-selector-modal'].show(this.technologies,this.programming_languages);
@@ -67,17 +66,6 @@ export default {
     }
   },
   mounted(){
-    // check url queries
-    if(getParameterByName('programming_languages')){
-      this.searchForm.skills.programming_languages = [getParameterByName('programming_languages')]
-      this.programming_languages = [getSkills('programming_languages',getParameterByName('programming_languages'))]
-    }
-    else if(getParameterByName('technologies')){
-      this.searchForm.skills.technologies = [getParameterByName('technologies')]
-      this.technologies = [getSkills('technologies',getParameterByName('technologies'))]
-    }
-
-    this.searchForm.keyword = this.$route.params.keyword
     this.search();
   }
 }
