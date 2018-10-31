@@ -224,6 +224,13 @@ Route::group(['middleware' => 'auth:api'], function () {
             Route::get('recent/applications', 'ReportController@fetchRecentApplications');
         });
     });
+
+    // admin routes
+    Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function(){
+        Route::group(['prefix' => 'user'], function(){
+            Route::patch('activate', 'AdminController@activateUser');
+        });
+    });
 });
 
 Route::group(['middleware' => 'guest:api'], function () {
