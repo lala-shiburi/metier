@@ -9,6 +9,7 @@ use \App\HiringStep;
 use \App\Company;
 use \App\HiringStepResult;
 use \App\HiringStepResultNote;
+use \App\Opening;
 
 class HiringProcessController extends Controller
 {
@@ -82,10 +83,15 @@ class HiringProcessController extends Controller
      * 
      */
     public function deleteProcess(Request $request){
-        $hiringStepGroup = HiringStepGroup::find($request->id);
-        $hiringStepGroup->delete();
-
-        return ['status'=>'success'];
+        $openingsUsingHiringGroup = Opening::where('hiring_step_group_id', $request->id);
+        if($openingsUsingHiringGroup->count() == 0){
+            $hiringStepGroup = HiringStepGroup::find($request->id);
+            $hiringStepGroup->delete();
+            return ['status'=>'success'];
+        }
+        else{
+            return ['status'=>'fail', 'message'=> 'This hiring procedure cannot be removed because it is already in use.'];
+        }
     }
 
     /**
