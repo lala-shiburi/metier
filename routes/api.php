@@ -224,6 +224,13 @@ Route::group(['middleware' => 'auth:api'], function () {
             Route::get('recent/applications', 'ReportController@fetchRecentApplications');
         });
     });
+
+    // admin routes
+    Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function(){
+        Route::group(['prefix' => 'user'], function(){
+            Route::patch('activate', 'AdminController@activateUser');
+        });
+    });
 });
 
 Route::group(['middleware' => 'guest:api'], function () {
@@ -279,4 +286,10 @@ Route::group(['prefix'=>'application'], function(){
     Route::group(['prefix' => 'create'], function(){
         Route::post('application', 'HiringApplicationController@createApplication');
     });
+});
+
+// support
+Route::group(['prefix' => 'support'], function(){
+    // contact us
+    Route::post('contact_us', 'SupportController@submitContactUs');
 });
