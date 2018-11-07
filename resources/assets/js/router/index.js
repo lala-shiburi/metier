@@ -2,6 +2,7 @@ import Vue from 'vue'
 import store from '~/store'
 import Meta from 'vue-meta'
 import routes from './routes'
+import admin_routes from './admin-routes'
 import Router from 'vue-router'
 import { sync } from 'vuex-router-sync'
 import jQuery from 'jquery'
@@ -32,7 +33,7 @@ function createRouter () {
   const router = new Router({
     scrollBehavior,
     mode: 'history',
-    routes
+    routes: routes.concat(admin_routes)
   })
 
   router.beforeEach(beforeEach)
@@ -72,9 +73,13 @@ async function beforeEach (to, from, next) {
     // remove tool tips
     jQuery('.tooltip').remove()
     
-    // Set the application layout to admin if current user role is equal to 1 which means current user is company owner
+    // Sets the application layout to company owner layout if current user role is equal to 1 which means current user is company owner
     if(store.getters['auth/user'] && store.getters['auth/user'].role == 1){
       router.app.setLayout('company_owner')
+    }
+    // Sets the application layout to admin if current user tole is equal 2 which means he is admin
+    else if(store.getters['auth/user'] && store.getters['auth/user'].role == 2){
+      router.app.setLayout('admin')
     }
     // Else set the application layout only if "next()" was called with no args.
     else if (args.length === 0) {

@@ -17,7 +17,7 @@
             </div>
             <div class="col-lg-10 col-md-9 col-7">
               <h3>{{user.name}}</h3>
-              <label>{{workExperiences.length > 0 ? (workExperiences[0].is_current == 1 ? workExperiences[0].position : '' ) :''}}</label>
+              <label>{{user.job_title}}</label>
             </div>
           </div>
         </div>
@@ -28,13 +28,13 @@
             <div v-if="!user.description && !authorizeEdit" class="text-muted">
                 Information not available.
             </div>
-            {{user.description}}
+            <div v-html="user.description"/>
             <div v-if="authorizeEdit">
-              <icon-button v-if="!user.description"  data-toggle="modal" data-target="#description-modal">
+              <icon-button v-if="!user.description" @click="prepUpdateProfileDescription">
                 ADD DESCRIPTION
               </icon-button>
               <div v-else style="position: absolute; top: 15px; left: 0px; text-align: right; right: 15px;">
-                <i class="small-option-btn fa fa-edit" data-toggle="modal" data-target="#description-modal"></i>
+                <i class="small-option-btn fa fa-edit" @click="prepUpdateProfileDescription"></i>
               </div>
             </div>
           </div>
@@ -187,45 +187,17 @@
         </div>
       </div>
     </div>
-    <div class="modal fade" id="description-modal" tabindex="-1" role="dialog">
-      <div  v-if="authorizeEdit" class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-          <form @submit.prevent="updateDescription" @keydown="userDescriptionForm.onKeydown($event)">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">About yourself</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
-                  <div class="form-group row">
-                    <label class="col-md-3 col-form-label text-md-right">Description</label>
-                    <div class="col-md-7">
-                      <textarea v-model="userDescriptionForm.description" :class="{ 'is-invalid': userDescriptionForm.errors.has('description') }" class="form-control" name="description" rows="10">
-                      </textarea>
-                      <has-error :form="userDescriptionForm" field="description"/>
-                    </div>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <v-button :loading="userDescriptionForm.busy" type="success">Save</v-button>
-                </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+
     <user-basic-info-modal v-if="authorizeEdit" ref="user-basic-info-modal" @update="updateUser" :user="user"/>
     <user-address-info-modal v-if="authorizeEdit" ref="userAddInfoModal" @update="updateAddresses" :user="userAddresses"/>
     <user-contact-info-modal v-if="authorizeEdit" ref="userContactInfoModal" @update="updateContactInfos" :user="userAddresses"/>
-    <work-experience-modal v-if="authorizeEdit" ref="work-experience-modal" @update="updateWorkExperience"/>
+    <work-experience-modal v-if="authorizeEdit" ref="work-experience-modal" @update="updateWorkExperience" @updateJobTitle="updateJobTitle"/>
     <educational-background-modal v-if="authorizeEdit" ref="educational-background-modal" @update="updateEducationalBackground"/>
     <vue-photo-editor title="Profile Photo" ref="photo-editor" @update="updateUserPhoto"/>
     <skills-modal @update="updateSkills" ref="skills-modal"/>
     <profile-picture-modal ref="profile-picture-modal" @update="updateUserPhoto"/>
     <cover-picture-modal ref="cover-modal" @update="updateCover"/>
+    <profile-description-modal ref="profile-description-modal" @update="updateDescription" :user="user"/>
   </div>
 </template>
 
@@ -240,6 +212,7 @@ import userBasicInfoModal from './index-components/basicInfoModal'
 import userAddressInfoModal from './index-components/addressInfoModal'
 import userContactInfoModal from './index-components/contactInfoModal'
 import workExperienceModal from './index-components/workExperience'
+import ProfileDescriptionModal from './index-components/profileDescriptionModal'
 import educationalBackgroundModal from './index-components/educationalBackground'
 import SkillsModal from './index-components/skillsModal'
 import ProfilePictureModal from '~/components/photo-editors/profilePictureModal'
@@ -259,7 +232,8 @@ export default {
     educationalBackgroundModal,
     SkillsModal,
     ProfilePictureModal,
-    CoverPictureModal
+    CoverPictureModal,
+    ProfileDescriptionModal
   },
   data : () =>({
     public_path: location.origin,
@@ -279,10 +253,6 @@ export default {
         programming_languages : [],
         technologies: []
       }
-    }),
-    userDescriptionForm: new Form({
-      user_id: '',
-      description: ''
     }),
     authorizeEdit: false
   }),
@@ -314,6 +284,16 @@ export default {
           this[fetch] = data.data;
         });
     },
+
+    // show profile description modal
+    prepUpdateProfileDescription(){
+      this.$refs['profile-description-modal'].prepUpdate()
+    },
+    // update reactive user variable
+    updateDescription(data){
+      this.user.description = data.description
+    },
+
     prepUpdatePhoto(){
       if(this.authorizeEdit){
         this.$refs['profile-picture-modal'].prepUpdate(this.user.photo)
@@ -328,16 +308,11 @@ export default {
       this.programmingLanguages = data.programmingLanguages
       this.userTechnologies = data.userTechnologies
     },
-    async updateDescription(){
-      const {data} = await this.userDescriptionForm.post('/api/userInfo/update/user_description');
-
-      await this.$store.dispatch('auth/fetchUser')
-      this.userDescriptionForm.description = this.description;
-      this.user = data.user;
-      jQuery('#description-modal').modal('hide');
-    },
     updateUser(data){
       this.user = data;
+    },
+    updateJobTitle(job_title){
+      this.user.job_title = job_title
     },
     prepUpdateBasicInfo(){
       this.$refs['user-basic-info-modal'].prepUpdate(this.user);
@@ -578,8 +553,6 @@ export default {
       var $this = this;
       this.user_id = this.$route.params.id ? this.$route.params.id : this.$store.getters['auth/user'].id;
       this.skillsForm.user_id = this.$store.getters['auth/user'].id;
-      this.userDescriptionForm.user_id = this.$store.getters['auth/user'].id;
-      this.userDescriptionForm.description = this.$store.getters['auth/user'].description;
       this.fetch('user');
       this.fetch('workExperiences');
       this.fetch('userAddresses');

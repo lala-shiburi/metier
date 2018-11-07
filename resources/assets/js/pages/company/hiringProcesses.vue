@@ -141,6 +141,13 @@ export default {
                 'success'
               )
             }
+            else{
+              swal(
+                'Delete not successful',
+                data.data.message,
+                'error'
+              )
+            }
           });
         }
       });

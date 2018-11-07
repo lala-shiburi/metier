@@ -27,6 +27,13 @@
           </div>
         </div>
         <div class="form-group row">
+          <label class="col-md-3 col-form-label text-md-right">Job Title</label>
+          <div class="col-md-7">
+            <input v-model="form.job_title" :class="{ 'is-invalid': form.errors.has('job_title') }" class="form-control" name="job_title" rows="10">
+            <has-error :form="form" field="job_title"/>
+          </div>
+        </div>
+        <div class="form-group row">
           <label class="col-md-3 col-form-label text-md-right">Email</label>
           <div class="col-md-7">
             <input disabled :value="user.email" class="form-control">
@@ -79,6 +86,7 @@ export default {
       user_id: '',
       first_name: '',
       last_name: '',
+      job_title: '',
       // email: '',
       birth_date: '',
       gender: '',
@@ -99,11 +107,12 @@ export default {
     },
     prepUpdate(user){
       this.$refs.modal.show()
-      this.form.user_id = user.id;
-      this.form.first_name = user.first_name;
-      this.form.last_name = user.last_name;
-      this.form.birth_date = user.birth_date;
-      this.form.gender = user.gender;
+      this.form.user_id = user.id
+      this.form.first_name = user.first_name
+      this.form.last_name = user.last_name
+      this.form.birth_date = user.birth_date
+      this.form.job_title = user.job_title
+      this.form.gender = user.gender
     }
   },
 }
