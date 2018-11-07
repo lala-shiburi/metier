@@ -309,11 +309,17 @@ class User extends Authenticatable implements JWTSubject
      * Update user current experience
      * 
      * @param \App\WorkExperience
+     * @param \App\User
      */
-    public function setCurrentExperience($experience){
-
+    public function setCurrentExperience($experience, $use_as_current_job_title = false){
+        if($use_as_current_job_title){
+            $this->job_title = $experience->position;
+            $this->save();
+        }
         $this->workExperiences()->where('is_current',1)->update(['is_current' => 0, 'to' => date('Y-m-d')]);
         $this->workExperiences()->where('work_experiences.id',$experience->id)->update(['is_current'=>1]);
+
+        return $this;
     }
 
     /**
