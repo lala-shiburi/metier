@@ -51,6 +51,7 @@ class ReportService
             $company->count = $count;
             $companies = $companies->concat([$company]);
         }
+
         return $companies;
     }
 
