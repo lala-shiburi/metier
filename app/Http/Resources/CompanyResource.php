@@ -50,8 +50,8 @@ class CompanyResource extends JsonResource
 
         return [
             "meta" => [
-                "version" => "0.04",
-                "author" => "gart",
+                "version" => "0.01",
+                "author" => "unick",
                 "edit_allowed" => $allow_edit,
             ]
         ];

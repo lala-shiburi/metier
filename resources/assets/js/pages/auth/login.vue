@@ -71,7 +71,7 @@ export default {
         if(error.response.data.error == "Already authenticated."){
           window.location.href = '/home';
         }
-        else{
+        else if(error.response.data.error == "Unauthorised"){
           swal({
             type: 'error',
             title: 'Opps!',

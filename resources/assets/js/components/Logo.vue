@@ -18,9 +18,9 @@ export default {
   display: inline-block;
   position: relative;
   padding-right: 20px;
-  height: 40px;
+  height: 35px;
   overflow:hidden;
-  width: 180px;
+  width: 150px;
   animation-name: nexseed-icon-animation;
   animation-duration: 1s;
   &::after{
