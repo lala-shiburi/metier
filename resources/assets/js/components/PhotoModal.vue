@@ -7,10 +7,10 @@
     <div class="modal-visible">
       <img class="absolute-center" :src="images[index]" height="90%">
     </div>
-    <div class="button-right" v-on:click="goRight">
+    <div class="button-right" :class="index == images.length - 1 ? 'text-white-50' : ''" v-on:click="goRight">
       <i class="fa fa-arrow-circle-right fa-2x"></i>
     </div>
-    <div class="button-left" v-on:click="goLeft">
+    <div class="button-left" :class="index == 0 ? 'text-white-50' : ''" v-on:click="goLeft">
       <i class="fa fa-arrow-circle-left fa-2x"></i>
     </div>
   </div>
@@ -41,6 +41,22 @@ export default {
   },
   created: function(){
     this.index = this.currentIndex
+  },
+  mounted(){
+    var $this = this
+
+    jQuery(document).keydown(function(ev){
+      console.log(ev.keyCode)
+      if(ev.keyCode == 37){
+        $this.goLeft()
+      }
+      else if(ev.keyCode == 39){
+        $this.goRight()
+      }
+      else if(ev.keyCode == 27){
+        $this.display = false
+      }
+    })
   }
 }
 </script>

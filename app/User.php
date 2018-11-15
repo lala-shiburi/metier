@@ -92,6 +92,15 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
+     * Get User Photos
+     * 
+     * @return \App\Photo
+     */
+    public function photos(){
+        return $this->morphMany('\App\Photo', 'photo_able');
+    }
+
+    /**
      * Make follow company
      * 
      * @param integer

@@ -7,7 +7,6 @@ import LineInput from './LineInput'
 import EllipsisText from './EllipsisText'
 import SkillIcon from './SkillIcon'
 import InfoPreview from './InfoPreview'
-import PhotoViewer from './PhotoViewer'
 import OpeningCard from './OpeningCard'
 import PhotoConverter from './PhotoConverter'
 import IconizedPhoto from './IconizedPhoto'
@@ -68,7 +67,6 @@ Vue.mixin(mixins);
   IconizedPhoto,
   InfoPreview,
   CompanyCard,
-  PhotoViewer,
   OpeningCard,
   PhotoConverter,
   Wizard,

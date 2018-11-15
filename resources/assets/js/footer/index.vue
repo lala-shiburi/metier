@@ -14,6 +14,11 @@
               Follow Us On Facebook
             </a>
           </li>
+          <li>
+            <a href="http://docs.jobseed.net/" target="technical-documentation">
+              Technical Documentation
+            </a>
+          </li>
         </ul>
       </p>
       <p>
