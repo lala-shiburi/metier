@@ -111,6 +111,7 @@ import Cover from './cover'
 import IntroductionModal from './index-components/introduction-modal'
 import BasicInfoModal from './index-components/basic-info-modal'
 import WebsiteInfoModal from './index-components/website-info-modal'
+import PhotoViewer from '~/components/PhotoViewer'
 
 export default {
   components: {
@@ -119,7 +120,8 @@ export default {
     Logo,
     Cover,
     IntroductionModal,
-    BasicInfoModal
+    BasicInfoModal,
+    PhotoViewer
   },
   data : () =>({
     public_path: location.origin,
