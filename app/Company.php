@@ -29,6 +29,15 @@ class Company extends Model
         return $this;
     }
 
+    /**
+     * Get Company Photos
+     * 
+     * @return \App\Photo
+     */
+    public function photos(){
+        return $this->morphMany('\App\Photo', 'photo_able');
+    }
+
 
     /**
      * Update user collaborator privilege

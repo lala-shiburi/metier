@@ -30,7 +30,7 @@
             </div>
             <div v-html="user.description"/>
             <div v-if="authorizeEdit">
-              <icon-button v-if="!user.description" @click="prepUpdateProfileDescription">
+              <icon-button v-if="!user.description" @click.native="prepUpdateProfileDescription">
                 ADD DESCRIPTION
               </icon-button>
               <div v-else style="position: absolute; top: 15px; left: 0px; text-align: right; right: 15px;">
