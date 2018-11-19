@@ -23,7 +23,6 @@ class PhotoModelTest extends TestCase
 
         $photo = new Photo;
         $photo->save();
-        $photo = Photo::create();
         $photo->savePhoto($testPhoto);
         
         $this->assertNotNull($photo->src);

@@ -45,16 +45,6 @@ Route::group(['middleware' => 'auth:api'], function () {
         });
     });
 
-    // photo routes
-    Route::group([ 'prefix' => 'photo'], function(){
-
-        Route::post('upload', 'PhotoController@upload');
-        Route::group(['prefix' => 'assign'], function(){
-            Route::post('company', 'PhotoController@assignCompanyPhotos');
-        });
-
-    });
-
     // user routes
     Route::group(['prefix' => 'userInfo'], function(){
         // fetch'
