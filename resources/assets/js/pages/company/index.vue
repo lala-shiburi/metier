@@ -66,7 +66,6 @@
             </ul>
           </card>
           <card class="m-tb-10" title="Photo">
-            <button @click="showPhotoUploader">EDIT</button>
             <photo-viewer>
               <img class="absolute-center" :src="public_path+'/images/Group 244.png'">
               <img class="absolute-center" :src="public_path+'/images/register-background.png'">
@@ -101,7 +100,6 @@
     <basic-info-modal ref="basic-info-modal" @update="updateCompany" :company="company"/>
     <website-info-modal ref="website-info-modal" @update="updateCompany" :company="company"/>
     <introduction-modal  v-if="authorizeEdit" :company="company" ref="introduction-modal"/>
-    <photo-uploader v-if="authorizeEdit" ref="photo-uploader"/>
   </div>
 </template>
 
@@ -114,7 +112,6 @@ import IntroductionModal from './index-components/introduction-modal'
 import BasicInfoModal from './index-components/basic-info-modal'
 import WebsiteInfoModal from './index-components/website-info-modal'
 import PhotoViewer from '~/components/PhotoViewer'
-import PhotoUploader from '~/components/PhotoUploader'
 
 export default {
   components: {
@@ -124,8 +121,7 @@ export default {
     Cover,
     IntroductionModal,
     BasicInfoModal,
-    PhotoViewer,
-    PhotoUploader
+    PhotoViewer
   },
   data : () =>({
     public_path: location.origin,
@@ -138,9 +134,6 @@ export default {
     return { title: this.company.name || 'Company' }
   },
   methods: {
-    showPhotoUploader(){
-      this.$refs['photo-uploader'].show()
-    },
     fetch_company: async function(){
       const { data } = await axios({
           method: 'get',
