@@ -29,7 +29,7 @@ trait FileManager
     }
 
     /**
-     * handles file upload for temporary file updload
+     * handles file upload for temporary file upload
      * 
      * @param \Illuminate\Http\Request $request
      * @return Illuminate\Http\Resources\JsonResource
@@ -41,7 +41,7 @@ trait FileManager
     }
 
     /**
-     * checks if a file is a valid document them saves it in temp folder/directory
+     * checks if a file is a valid document then saves it in temp folder/directory
      * 
      * @return String //returns a unique file names
      */
@@ -50,7 +50,7 @@ trait FileManager
             return $this->saveFileTempDir($file);
         }
 
-        exit('file invalid. file should be either for the following : '.implode(',',$this->$acceptableDocs));
+        exit('file invalid. file should be either of the following : '.implode(',',$this->$acceptableDocs));
     }
     
     /**
@@ -67,6 +67,29 @@ trait FileManager
         $file->move(public_path('/storage'.$this->temp_folder), $filename);
 
         return $filename;
+    }
+
+    /**
+     * saves base64 file in temp folder
+     * 
+     * @param String //base64 of file
+     * @return String //returns a hashed file name
+     */
+    private function saveBase64FileTempDir($base64){
+
+        $name = generateFileName(md5(time()),'temp','.png');
+
+        $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base64));
+
+        findOrCreatePublicStorageFolder();
+        
+        if (!file_exists(public_path('/storage/temp/'))){
+            mkdir(public_path('/storage/temp'));
+        }
+        
+        file_put_contents(public_path('/storage/temp/').$name, $data);
+
+        return $name;
     }
 
     /**

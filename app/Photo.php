@@ -7,6 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 class Photo extends Model
 {
     /**
+     * The attributes that are mutated or appended
+     * 
+     * @var Array
+     */
+    protected $appends = ['src'];
+
+    /**
+     * The attributes that are mass assignable
+     * 
+     * @var Array
+     */
+    protected $fillable = ['src', 'author_id', 'permanent'];
+
+    /**
      * Get related model that owns this photo model
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -28,5 +42,28 @@ class Photo extends Model
         $this->save();
 
         return $this;
+    }
+
+    /**
+     * Get mutated src attribute
+     * 
+     * @return String
+     */
+    public function getSrcAttribute(){
+        if(!isset($this->attributes['permanent']))
+            return null;
+
+        if($this->attributes['permanent'] == 0){
+            if(isset($this->attributes['src']) && file_exists('storage/temp/'.$this->attributes['src']) && str_replace(' ','',$this->attributes['src'])){
+                return asset('storage/temp').'/'.$this->attributes['src'];
+            }
+        }
+        else{
+            if(isset($this->attributes['src']) && file_exists('storage/photos/'.$this->attributes['src']) && str_replace(' ','',$this->attributes['src'])){
+                return asset('storage/photos').'/'.$this->attributes['src'];
+            }
+        }
+
+        return null;
     }
 }
