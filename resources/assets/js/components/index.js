@@ -17,6 +17,7 @@ import UnickTable from './UnickTable'
 import EntityHeader from './EntityHeader'
 import UnickLoader from './loaders/roller'
 import DocumentUploadInput from './input/document-upload'
+import PhotoFrame from  './photo/frame'
 import Logo from './Logo'
 import { HasError, AlertError, AlertSuccess } from 'vform'
 
@@ -73,7 +74,8 @@ Vue.mixin(mixins);
   AlertSuccess,
   UnickLoader,
   DocumentUploadInput,
-  Logo
+  Logo,
+  PhotoFrame
 ].forEach(Component => {
   Vue.component(Component.name, Component)
 })

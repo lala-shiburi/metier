@@ -40,6 +40,7 @@ class OpeningResource extends JsonResource
             "details" => $this->details,
             "salary_range" => $openingService->getSalaryRangeCorrespondingText($this->salary_range),
             "professional_years" => $this->professional_years,
+            "experience" => $openingService->getExperienceCorrespondingText($this->professional_years),
             "created_at" => $this->created_at,
             "user_application" => $application,
             "authorize_edit" => $authorizeEdit,

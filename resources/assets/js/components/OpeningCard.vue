@@ -51,6 +51,14 @@
             </template>
             {{opening.salary_range}}
           </ellipsis-text>
+          <ellipsis-text class="job-des" v-if="opening.experience">
+            <template slot="icon">
+              <div class="prop-icon bg-info">
+                <i class="fa fa-usd" aria-hidden="true"></i>
+              </div>
+            </template>
+            {{opening.experience}}
+          </ellipsis-text>
           <ellipsis-text class="job-des" v-if="opening.programming_languages.length > 0 || opening.technologies.length > 0">
             <template slot="icon">
               <div class="prop-icon bg-info">

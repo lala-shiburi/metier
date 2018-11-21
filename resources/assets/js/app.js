@@ -34,6 +34,12 @@ require("bootstrap-datepicker")
 
 import '~/plugins'
 import '~/components'
+import AsyncComputed from 'vue-async-computed'
+
+// use vue-async-computed
+// this is used to implement computed async properties
+Vue.use(AsyncComputed)
+
 
 Vue.config.productionTip = false
 

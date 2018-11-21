@@ -27,6 +27,7 @@ export default {
       jQuery(this.$refs['modal-content']).scrollTop(0)
     },
     hide(){
+      this.$emit('hide')
       jQuery(this.$refs.popup).addClass('hidden');
       jQuery('.sidebar-scroll-cancelled, body').css({overflow:'auto'});
     }
