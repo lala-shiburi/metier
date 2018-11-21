@@ -15994,6 +15994,20 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-right {
   background: #007acc;
 }
 
+.round-icon {
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.round-md {
+  height: 30px;
+  width: 30px;
+}
+
+.round-white {
+  color: white;
+}
+
 .info-preview {
   position: relative;
   margin-bottom: 10px;
