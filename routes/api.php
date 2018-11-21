@@ -45,6 +45,21 @@ Route::group(['middleware' => 'auth:api'], function () {
         });
     });
 
+    // photo routes
+    Route::group([ 'prefix' => 'photo'], function(){
+
+        Route::group([ 'prefix' => 'upload' ], function(){
+            Route::post('temp', 'PhotoController@upload');
+            Route::post('company', 'PhotoController@uploadToCompany');
+        });
+        Route::group(['prefix' => 'assign'], function(){
+            Route::post('company', 'PhotoController@assignCompanyPhotos');
+        });
+        Route::group(['prefix' => 'remove'], function(){
+            Route::delete('/', 'PhotoController@deletePhoto');
+        });
+    });
+
     // user routes
     Route::group(['prefix' => 'userInfo'], function(){
         // fetch'
@@ -285,6 +300,12 @@ Route::group(['prefix'=>'application'], function(){
     // create
     Route::group(['prefix' => 'create'], function(){
         Route::post('application', 'HiringApplicationController@createApplication');
+    });
+});
+// photos
+Route::group(['prefix' => 'photo'], function(){
+    Route::group(['prefix' => 'fetch'], function(){
+        Route::get('company', 'PhotoController@fetchCompanyPhotos');
     });
 });
 
