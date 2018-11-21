@@ -66,14 +66,10 @@
             </ul>
           </card>
           <card class="m-tb-10" title="Photo">
-            <photo-viewer>
-              <img class="absolute-center" :src="public_path+'/images/Group 244.png'">
-              <img class="absolute-center" :src="public_path+'/images/register-background.png'">
-              <img class="absolute-center" :src="public_path+'/images/bg-img.png'">
-              <img class="absolute-center" :src="public_path+'/images/angular.png'">
-              <img class="absolute-center" :src="public_path+'/images/register-background.png'">
-              <img class="absolute-center" :src="public_path+'/images/register-background.png'">
-            </photo-viewer>
+            <div v-if="authorizeEdit" style="position: absolute; top: 10px; left: 0px; text-align: right; right: 15px;">
+              <i class="small-option-btn fa fa-edit" @click="showPhotoUploader"></i>
+            </div>
+            <photo-viewer :images="company_photos"/>
           </card>
           <card class="m-tb-10" title="Website">
             <div v-if="authorizeEdit" style="position: absolute; top: 10px; left: 0px; text-align: right; right: 15px;">
@@ -100,6 +96,7 @@
     <basic-info-modal ref="basic-info-modal" @update="updateCompany" :company="company"/>
     <website-info-modal ref="website-info-modal" @update="updateCompany" :company="company"/>
     <introduction-modal  v-if="authorizeEdit" :company="company" ref="introduction-modal"/>
+    <photo-uploader v-if="authorizeEdit" ref="photo-uploader" @update="updatePhotoGallery"/>
   </div>
 </template>
 
@@ -112,6 +109,7 @@ import IntroductionModal from './index-components/introduction-modal'
 import BasicInfoModal from './index-components/basic-info-modal'
 import WebsiteInfoModal from './index-components/website-info-modal'
 import PhotoViewer from '~/components/PhotoViewer'
+import PhotoUploader from './photo-management/index'
 
 export default {
   components: {
@@ -121,7 +119,8 @@ export default {
     Cover,
     IntroductionModal,
     BasicInfoModal,
-    PhotoViewer
+    PhotoViewer,
+    PhotoUploader
   },
   data : () =>({
     public_path: location.origin,
@@ -129,11 +128,15 @@ export default {
     company: {},
     openings: [],
     authorizeEdit: false,
+    company_photos: [],
   }),
   metaInfo () {
     return { title: this.company.name || 'Company' }
   },
   methods: {
+    showPhotoUploader(){
+      this.$refs['photo-uploader'].show()
+    },
     fetch_company: async function(){
       const { data } = await axios({
           method: 'get',
@@ -163,7 +166,6 @@ export default {
     removeOpening(data){
       for(var i = 0; i < this.openings.length; i++){
         if(this.openings[i].id == data.id){
-          console.log(i)
           this.openings.splice(i, 1);
         }
       }
@@ -171,14 +173,26 @@ export default {
     },
     prepUpdateIntroduction(){
       this.$refs["introduction-modal"].prepUpdate()
+    },
+    updatePhotoGallery(){
+      this.fetchCompanyPhotos()
+    },
+    async fetchCompanyPhotos(){
+      const { data } = await axios({
+        url: '/api/photo/fetch/company',
+        method: 'get',
+        params: {company_id: this.$route.params.id}
+      })
+      this.company_photos = data.photos
     }
   },
   created: function(){
     this.company_id = this.$route.params.id;
   },
   mounted(){
-    this.fetch_company();
-    this.fetch_openings();
+    this.fetch_company()
+    this.fetch_openings()
+    this.fetchCompanyPhotos()
   }
 }
 </script>

@@ -21,8 +21,7 @@ class PhotoModelTest extends TestCase
 
         $user = factory(User::class)->create();
 
-        $photo = new Photo;
-        $photo->save();
+        $photo = Photo::create();
         $photo->savePhoto($testPhoto);
         
         $this->assertNotNull($photo->src);
