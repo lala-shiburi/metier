@@ -46,30 +46,59 @@ $polyfills = [
 
   <title>{{ config('app.name') }}</title>
   <meta name="auth_id" content="{{Auth::check() ?? Auth::user()->id}}">
+  <link rel="shortcut icon" href="{{asset('images/logo.ico')}}" type="image/x-icon" />
   
   <link rel="stylesheet" href="{{ mix('css/app.css') }}">
   <link rel="stylesheet" href="{{ asset('css/common.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 </head>
 <body>
+  <div>
+    <span class="badge badge-info shadow-sm" data-toggle="modal" data-target="#beta-modal" style="position: fixed; z-index: 1231;">Beta version</span>
+  <div>
+  <div class="modal fade" id="beta-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Notice</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>
+            This software is still in beta version. So it is expected that you will encounter some issues.
+            And when you encounter one, please do us the courtesy by informing us. We do apologies for the inconvenience.
+            We will surely continue to enhance your user experience.
+          </p>
+          <p>
+            And if you have any concerns or suggestions, please do not hesitate to <a href="/contact-us">contact us</a> or to send a message to our <a href="https://www.facebook.com/Jobseed-473898096451976/" target="jobseed-on-facebook">facebook page</a>.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div id="app"></div>
 
   <!-- Load Facebook SDK for JavaScript -->
-  <div id="fb-root"></div>
+  <!-- <div id="fb-root"></div>
   <script>(function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) return;
     js = d.createElement(s); js.id = id;
     js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js#xfbml=1&version=v2.12&autoLogAppEvents=1';
     fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));</script>
+  }(document, 'script', 'facebook-jssdk'));</script> -->
 
   <!-- Your customer chat code -->
-  <div class="fb-customerchat"
+  <!-- <div class="fb-customerchat"
     attribution=setup_tool
     page_id="1616078145371975"
     theme_color="#ffc300">
-  </div>
+  </div> -->
   <!--  -->
   {{-- Global configuration object --}}
   <script>window.config = @json($config);</script>

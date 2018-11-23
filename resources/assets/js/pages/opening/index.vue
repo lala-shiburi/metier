@@ -20,10 +20,14 @@
               <div class="text-truncate" v-if="parseInt(opening.salary_range)">
                 <span class="badge badge-secondary prop-w"><i class="fa fa-usd" aria-hidden="true"></i></span> {{opening.salary_range}}
               </div>
-              <div class="text-truncate" v-if="opening.salary_range">
+              <div class="text-truncate" v-if="opening.programming_languages && opening.technologies">
                 <span class="badge badge-secondary"><i class="fa fa-code" aria-hidden="true"></i></span>
-                <skill-icon v-for="(lang,index) in opening.programming_languages" v-bind:key="index" size="x-small-icon" :icon="lang.tag_name"/>
-                <skill-icon v-for="(tech,index) in opening.technologies" v-bind:key="index" size="x-small-icon" :icon="tech.tag_name"/>
+                <span>
+                  <skill-icon v-for="(lang,index) in opening.programming_languages" v-bind:key="index" size="x-small-icon" :icon="lang.tag_name"/>
+                </span>
+                <span>
+                  <skill-icon v-for="(tech,index) in opening.technologies" v-bind:key="index" size="x-small-icon" :icon="tech.tag_name"/>
+                </span>
               </div>
             </div>
             <div>
@@ -40,7 +44,7 @@
       <card class="m-tb-10">
         <div>
           <h5>Description</h5>
-          {{opening.details}}
+          <p v-html="opening.details"></p>
         </div>
         <br>
       </card>
@@ -69,6 +73,7 @@ export default {
             this.$router.push({name:'404'})
         })
       this.opening = data.data;
+      console.log(this.opening)
       this.authorizeEdit = data.meta.authorizeEdit;
     }
   },

@@ -3,6 +3,9 @@ const Register = () => import('~/pages/auth/register').then(m => m.default || m)
 const PasswordEmail = () => import('~/pages/auth/password/email').then(m => m.default || m)
 const PasswordReset = () => import('~/pages/auth/password/reset').then(m => m.default || m)
 const NotFound = () => import('~/pages/errors/404').then(m => m.default || m)
+const PrivacyPolicy = () => import('~/pages/legal/privacy-policy').then(m => m.default || m)
+const TCoS = () => import('~/pages/legal/terms-conditions-of-service').then(m => m.default || m)
+const ContactUs = () => import('~/pages/contact-us/index').then(m => m.default || m)
 
 const Home = () => import('~/pages/home').then(m => m.default || m)
 
@@ -105,6 +108,11 @@ export default [
   { path: '/applications', name: 'hiringApplication.applications', component: HiringApplications },
   { path: '/applications/:application_id', name: 'hiringApplication.application', component: ApplicationProgress },
   { path: '/opening/apply/:opening_id/:applicant_id?', name: 'hiringApplication.create', component: OpeningApply },
+
+  // legal pages
+  { path: '/privacy-policy', name:'privacy-policy', component: PrivacyPolicy },
+  { path: '/terms-and-conditions-of-service', name:'terms-and-conditions-of-service', component: TCoS },
+  { path: '/contact-us', name:'contact-us', component: ContactUs },
 
   { path: '/404', name:'404', component: NotFound },
   { path: '*', component: NotFound }

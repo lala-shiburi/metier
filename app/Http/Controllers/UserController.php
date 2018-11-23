@@ -197,7 +197,7 @@ class UserController extends Controller
         ], $request->id);
 
         if($request->current == 1){
-            $user->setCurrentExperience($experience);
+            $user->setCurrentExperience($experience, $request->use_position);
         }
 
         return [ 'workExperiences' => $user->workExperiences()->where('is_current',1)->get()->merge($user->workExperiences()->where('is_current',0)->get()) ];
@@ -293,7 +293,8 @@ class UserController extends Controller
             'last_name' => 'required',
             // 'email' => 'required|email',
             'birth_date' => 'required|date',
-            'gender' => 'required'
+            'gender' => 'required',
+            'job_title' => 'required'
         ]);
         $fields = $request->all();
         unset($fields['user_id']);

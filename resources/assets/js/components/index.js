@@ -7,7 +7,6 @@ import LineInput from './LineInput'
 import EllipsisText from './EllipsisText'
 import SkillIcon from './SkillIcon'
 import InfoPreview from './InfoPreview'
-import PhotoViewer from './PhotoViewer'
 import OpeningCard from './OpeningCard'
 import PhotoConverter from './PhotoConverter'
 import IconizedPhoto from './IconizedPhoto'
@@ -18,6 +17,7 @@ import UnickTable from './UnickTable'
 import EntityHeader from './EntityHeader'
 import UnickLoader from './loaders/roller'
 import DocumentUploadInput from './input/document-upload'
+import PhotoFrame from  './photo/frame'
 import Logo from './Logo'
 import { HasError, AlertError, AlertSuccess } from 'vform'
 
@@ -68,14 +68,14 @@ Vue.mixin(mixins);
   IconizedPhoto,
   InfoPreview,
   CompanyCard,
-  PhotoViewer,
   OpeningCard,
   PhotoConverter,
   Wizard,
   AlertSuccess,
   UnickLoader,
   DocumentUploadInput,
-  Logo
+  Logo,
+  PhotoFrame
 ].forEach(Component => {
   Vue.component(Component.name, Component)
 })

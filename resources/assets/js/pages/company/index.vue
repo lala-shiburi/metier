@@ -28,8 +28,20 @@
       </div>
       <card class="m-tb-10">
         <div>
-          <h5>Description</h5>
-          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+          <h5>Introduction</h5>
+          <div v-html="company.introduction"></div>
+          <label class="text-muted" v-if="!company.introduction && authorizeEdit"> How do you describe {{company.name}}? </label>
+          <div v-if="!company.introduction && !authorizeEdit" class="text-muted">
+              Information not available.
+          </div>
+          <div v-if="authorizeEdit">
+            <icon-button @click.native="prepUpdateIntroduction" v-if="!company.introduction">
+              ADD INTRODUCTION
+            </icon-button>
+            <div v-else style="position: absolute; top: 15px; left: 0px; text-align: right; right: 15px;">
+              <i @click="prepUpdateIntroduction" class="small-option-btn fa fa-edit"></i>
+            </div>
+          </div>
         </div>
         <br>
       </card>
@@ -54,14 +66,10 @@
             </ul>
           </card>
           <card class="m-tb-10" title="Photo">
-            <photo-viewer>
-              <img class="absolute-center" :src="public_path+'/images/Group 244.png'">
-              <img class="absolute-center" :src="public_path+'/images/register-background.png'">
-              <img class="absolute-center" :src="public_path+'/images/bg-img.png'">
-              <img class="absolute-center" :src="public_path+'/images/angular.png'">
-              <img class="absolute-center" :src="public_path+'/images/register-background.png'">
-              <img class="absolute-center" :src="public_path+'/images/register-background.png'">
-            </photo-viewer>
+            <div v-if="authorizeEdit" style="position: absolute; top: 10px; left: 0px; text-align: right; right: 15px;">
+              <i class="small-option-btn fa fa-edit" @click="showPhotoUploader"></i>
+            </div>
+            <photo-viewer :images="company_photos"/>
           </card>
           <card class="m-tb-10" title="Website">
             <div v-if="authorizeEdit" style="position: absolute; top: 10px; left: 0px; text-align: right; right: 15px;">
@@ -85,18 +93,23 @@
         </div>
       </div>
     </div>
-    <basic-info-modal ref="basic-info-modal-component" @update="updateCompany" :company="company"></basic-info-modal>
-    <website-info-modal ref="website-info-modal-component" @update="updateCompany" :company="company"></website-info-modal>
+    <basic-info-modal ref="basic-info-modal" @update="updateCompany" :company="company"/>
+    <website-info-modal ref="website-info-modal" @update="updateCompany" :company="company"/>
+    <introduction-modal  v-if="authorizeEdit" :company="company" ref="introduction-modal"/>
+    <photo-uploader v-if="authorizeEdit" ref="photo-uploader" @update="updatePhotoGallery"/>
   </div>
 </template>
 
 <script>
-import BasicInfoModal from './basicInfoModal';
-import WebsiteInfoModal from './websiteInfoModal';
 import axios from 'axios'
 import Form from 'vform'
 import Logo from './logo'
 import Cover from './cover'
+import IntroductionModal from './index-components/introduction-modal'
+import BasicInfoModal from './index-components/basic-info-modal'
+import WebsiteInfoModal from './index-components/website-info-modal'
+import PhotoViewer from '~/components/PhotoViewer'
+import PhotoUploader from './photo-management/index'
 
 export default {
   components: {
@@ -104,6 +117,10 @@ export default {
     WebsiteInfoModal,
     Logo,
     Cover,
+    IntroductionModal,
+    BasicInfoModal,
+    PhotoViewer,
+    PhotoUploader
   },
   data : () =>({
     public_path: location.origin,
@@ -111,11 +128,15 @@ export default {
     company: {},
     openings: [],
     authorizeEdit: false,
+    company_photos: [],
   }),
   metaInfo () {
     return { title: this.company.name || 'Company' }
   },
   methods: {
+    showPhotoUploader(){
+      this.$refs['photo-uploader'].show()
+    },
     fetch_company: async function(){
       const { data } = await axios({
           method: 'get',
@@ -137,27 +158,41 @@ export default {
       this.openings = data.openings;
     },
     prepUpdateBasicInfo(){
-      this.$refs['basic-info-modal-component'].prepUpdate(this.company);
+      this.$refs['basic-info-modal'].prepUpdate();
     },
     prepUpdateWebsiteInfo(){
-      this.$refs['website-info-modal-component'].prepUpdate(this.company);
+      this.$refs['website-info-modal'].prepUpdate(this.company);
     },
     removeOpening(data){
       for(var i = 0; i < this.openings.length; i++){
         if(this.openings[i].id == data.id){
-          console.log(i)
           this.openings.splice(i, 1);
         }
       }
 
+    },
+    prepUpdateIntroduction(){
+      this.$refs["introduction-modal"].prepUpdate()
+    },
+    updatePhotoGallery(){
+      this.fetchCompanyPhotos()
+    },
+    async fetchCompanyPhotos(){
+      const { data } = await axios({
+        url: '/api/photo/fetch/company',
+        method: 'get',
+        params: {company_id: this.$route.params.id}
+      })
+      this.company_photos = data.photos
     }
   },
   created: function(){
     this.company_id = this.$route.params.id;
   },
   mounted(){
-    this.fetch_company();
-    this.fetch_openings();
+    this.fetch_company()
+    this.fetch_openings()
+    this.fetchCompanyPhotos()
   }
 }
 </script>

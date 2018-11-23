@@ -92,6 +92,15 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
+     * Get User Photos
+     * 
+     * @return \App\Photo
+     */
+    public function photos(){
+        return $this->morphMany('\App\Photo', 'photo_able');
+    }
+
+    /**
      * Make follow company
      * 
      * @param integer
@@ -309,11 +318,17 @@ class User extends Authenticatable implements JWTSubject
      * Update user current experience
      * 
      * @param \App\WorkExperience
+     * @param \App\User
      */
-    public function setCurrentExperience($experience){
-
+    public function setCurrentExperience($experience, $use_as_current_job_title = false){
+        if($use_as_current_job_title){
+            $this->job_title = $experience->position;
+            $this->save();
+        }
         $this->workExperiences()->where('is_current',1)->update(['is_current' => 0, 'to' => date('Y-m-d')]);
         $this->workExperiences()->where('work_experiences.id',$experience->id)->update(['is_current'=>1]);
+
+        return $this;
     }
 
     /**
@@ -391,7 +406,7 @@ class User extends Authenticatable implements JWTSubject
             });
         }
         if(count($skills['technologies'])){
-            $query->whereHas('technologies', function ($query) use ($request){
+            $query->whereHas('userTechnologies', function ($query) use ($skills){
                 $query->whereIn('technologies.id', $skills['technologies']);
             });
         }

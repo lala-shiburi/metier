@@ -56,7 +56,7 @@
 
               <!-- Salary Range -->
               <div class="form-group">
-                <label>Salary Range</label>
+                <label>Salary Range (Optional)</label>
                 <div>
                   <select v-model="form1.salary_range" :class="{ 'is-invalid': form1.errors.has('salary_range') }" class="form-control" name="salary_range">
                     <option value="" selected>-select</option>
@@ -84,16 +84,21 @@
 
               <!-- Hiring Processes/Procedures -->
               <div class="form-group">
-                <label>Hiring Procedure</label>
+                <label>Hiring Procedure (Optional)</label>
                 <div>
                   <select v-model="form1.hiring_step_group_id" :class="{ 'is-invalid': form1.errors.has('hiring_step_group_id') }" class="form-control" name="hiring_step_group_id">
-                    <option value="" selected>-select</option>
+                    <option value="0" selected>-select</option>
                     <option v-for="(procedure, index) in hiringProcesses" v-bind:key="index" :value="procedure.id">
                       {{procedure.name}}
                     </option>
                   </select>
                   <has-error :form="form1" field="hiring_step_group_id"/>
                 </div>
+                <small class="form-text text-muted">
+                  Hiring Procedure is your application <mark>Screening Process</mark>. You can create a new Hiring Procedure
+                  <router-link :to="{name: 'company.hiringprocceses.create', params: {company_id: companies['company_'+company_id].id}}">here</router-link>.
+                  If you don't need Hiring Procedure for this Opening Post, just leave the select input as is.
+                </small>
               </div>
 
               <!-- Submit Button -->
@@ -194,7 +199,7 @@ export default {
       title: '',
       salary_range: '',
       professional_years: '',
-      hiring_step_group_id:''
+      hiring_step_group_id: 0
     }),
     form2: new Form({
       details: ''
@@ -228,6 +233,7 @@ export default {
           [{ 'direction': 'rtl' }],
           [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
           [{ 'font': [] }],
+          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
         ],
       }
     },

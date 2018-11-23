@@ -175,6 +175,25 @@ class CompanyController extends Controller
     }
 
     /**
+     * Update Company Introduction
+     * 
+     * @param \Illuminate\Http\Request
+     * @return \Illuminate\Http\Resources\JsonResource
+     */
+    public function updateIntroduction(Request $request){
+
+        $this->validate($request, [
+            "introduction" => "required"
+        ]);
+
+        $company = Company::find($request->company_id);
+        $company->introduction = $request->introduction;
+        $company->save();
+
+        return ['status'=>'success'];
+    }
+
+    /**
      * Save user
      * 
      * @param \Illuminate\Http\Request

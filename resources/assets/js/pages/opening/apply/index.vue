@@ -1,6 +1,6 @@
 <template>
   <div style="padding-bottom: 100px;">
-    <wizard v-if="!existing_application && opening" ref="wizard" :currentPanel="0">
+    <wizard v-if="!existing_application && opening" title="Application" ref="wizard" :currentPanel="0">
       <template slot="steps">
         <div class="step-container" name="Opening">
           <div class="step">

@@ -21,8 +21,19 @@ class OpeningService
         "Php 100,000 and above",
     ];
 
+    public $experiences = [
+        "No Experience",
+        "Less or 1 yr. Experience",
+        "2 to 4 yrs. Experience",
+        "5+ yrs. Experience"
+    ];
+
+    function getExperienceCorrespondingText($index){
+        return array_key_exists($index, $this->experiences) ? $this->experiences[$index] : $index;
+    }
+
     function getSalaryRangeCorrespondingText($index){
-        return $this->salary_ranges[$index];
+        return array_key_exists($index,$this->salary_ranges) ? $this->salary_ranges[$index] : $index;
     }
 
     function handleOpeningResource( Collection $openings){

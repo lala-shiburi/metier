@@ -27,7 +27,7 @@
         <form @submit.prevent="validateForm1" @keydown="form1.onKeydown($event)">
 
           <div class="text-center">
-            <img ref="opening-picture" v-on:click="showPhotoEditor" :src="form1.photo" class="rounded img-thumbnail" width="200px">
+            <img ref="opening-picture" :src="public_path+'/images/photo.png'" v-on:click="showPhotoEditor" class="rounded img-thumbnail" width="200px">
           </div>
           <br>
           <!-- Title -->
@@ -41,7 +41,7 @@
 
           <!-- Salary Range -->
           <div class="form-group row">
-            <label class="col-md-3 col-form-label text-md-right">Salary Range</label>
+            <label class="col-md-3 col-form-label text-md-right">Salary Range (Optional)</label>
             <div class="col-md-7">
               <select v-model="form1.salary_range" :class="{ 'is-invalid': form1.errors.has('salary_range') }" class="form-control" name="salary_range">
                 <option value="" selected>-select</option>
@@ -72,7 +72,7 @@
             <label class="col-md-3 col-form-label text-md-right">Hiring Procedure</label>
             <div class="col-md-7">
               <select v-model="form1.hiring_step_group_id" :class="{ 'is-invalid': form1.errors.has('hiring_step_group_id') }" class="form-control" name="hiring_step_group_id">
-                <option value="" selected>-select</option>
+                <option value=0 selected>-select</option>
                 <option v-for="(procedure, index) in hiringProcesses" v-bind:key="index" :value="procedure.id">
                   {{procedure.name}}
                 </option>
@@ -165,11 +165,11 @@ export default {
   data: () => ({
     opening:{},
     form1: new Form({
-      photo: location.origin+'/images/photo.png',
+      photo: null,
       title: '',
-      salary_range: '',
+      salary_range: null,
       professional_years: '',
-      hiring_step_group_id:''
+      hiring_step_group_id: 0
     }),
     form2: new Form({
       details: ''
@@ -204,6 +204,7 @@ export default {
           [{ 'direction': 'rtl' }],
           [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
           [{ 'font': [] }],
+          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
         ],
       }
     },
@@ -215,7 +216,7 @@ export default {
       this.$refs['opening-picture'].src = photo_data;
     },
     showPhotoEditor(){
-      this.$refs['photo-editor'].prepUpdate(this.form1.photo);
+      this.$refs['photo-editor'].prepUpdate(this.$refs['opening-picture'].src);
     },
     async validateForm1 () {
       const {data} = await this.form1.post('/api/opening/validate/basicInfo')
@@ -278,15 +279,15 @@ export default {
           url: '/api/opening/fetch/raw',
           params: { opening_id: this.$route.params.id }
         })
-      this.opening = data.opening;
-      this.form1.title = this.opening.title;
-      this.form1.photo = this.opening.picture;
-      this.form1.salary_range = this.opening.salary_range;
-      this.form1.hiring_step_group_id = this.opening.hiring_step_group_id;
-      this.form1.professional_years = this.opening.professional_years;
+      this.opening = data.opening
+      this.form1.title = this.opening.title
+      this.$refs['opening-picture'].src = this.opening.picture
+      this.form1.salary_range = this.opening.salary_range
+      this.form1.hiring_step_group_id = this.opening.hiring_step_group_id
+      this.form1.professional_years = this.opening.professional_years
       
-      this.form2.details = this.opening.details;
-      this.form4.opening_id = this.opening.id;
+      this.form2.details = this.opening.details
+      this.form4.opening_id = this.opening.id
       
       var $this = this;
       this.opening.programming_languages.map(item=>{

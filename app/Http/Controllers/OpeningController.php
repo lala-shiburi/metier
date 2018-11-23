@@ -54,12 +54,17 @@ class OpeningController extends Controller
     public function validateBasicInfo(Request $request){
         $this->validate($request, [
             'title' => 'required',
-            'salary_range' => 'required',
+            // 'salary_range' => 'required',
             'professional_years' => 'required',
-            'hiring_step_group_id' => 'required',
-        ],[
-            'hiring_step_group_id.required' => 'Hiring Procedure field required.'
-        ]);
+            // 'hiring_step_group_id' => 'required',
+        ]
+        // hiring step group made optional
+        // Oct. 23, 2018
+        // github issue https://github.com/NexSeed/jobseed/issues/70
+        // ,[
+        //     'hiring_step_group_id.required' => 'Hiring Procedure field required.'
+        // ]
+        );
 
         return ["status" => "validated"];
     }

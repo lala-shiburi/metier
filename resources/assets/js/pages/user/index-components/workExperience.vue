@@ -77,6 +77,17 @@
             </div>
           </div>
 
+          <div class="form-group row" v-if="createForm.current == 1">
+            <div class="col-md-7 offset-md-3">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" v-model="createForm.use_position" id="gridCheck">
+                <label class="form-check-label" for="gridCheck">
+                  Use Position as your current Job Title
+                </label>
+              </div>
+            </div>
+          </div>
+
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" @click="closeCreateModal">Close</button>
             <v-button :loading="createForm.busy" type="success">Save</v-button>
@@ -91,7 +102,7 @@
         </h6>
       </div>
       <template slot="options">
-        <button type="button" v-on:click="closeCreateModal" class="btn btn-light">
+        <button type="button" v-on:click="closeUpdateModal" class="btn btn-light">
           <i class="fa fa-close" aria-hidden="true"></i>
         </button>
       </template>
@@ -160,6 +171,16 @@
               <has-error :form="updateForm" field="to"/>
             </div>
           </div>
+          <div class="form-group row" v-if="updateForm.current == 1">
+            <div class="col-md-7 offset-md-3">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" v-model="updateForm.use_position" id="gridCheck2">
+                <label class="form-check-label" for="gridCheck2">
+                  Use Position as your current Job Title
+                </label>
+              </div>
+            </div>
+          </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" @click="closeUpdateModal">Close</button>
             <v-button :loading="updateForm.busy" type="success">Save</v-button>
@@ -192,7 +213,8 @@ export default {
       position: '',
       from: '',
       to: '',
-      current:0
+      current:0,
+      use_position: true,
     }),
     updateForm: new Form({
       id: 0,
@@ -201,7 +223,8 @@ export default {
       position: '',
       from: '',
       to: '',
-      current:0
+      current:0,
+      use_position: true
     }),
   }),
   methods: {
@@ -209,12 +232,20 @@ export default {
       const {data} = await this.createForm.post('/api/userInfo/add/work_experience');
       this.$emit('update', data.workExperiences);
       this.closeCreateModal()
+      if(this.createForm.use_position && this.createForm.current){
+        await this.$store.dispatch('auth/fetchUser')
+        this.$emit('updateJobTitle',this.createForm.position)
+      }
     },
     async update(){
       const {data} = await this.updateForm.post('/api/userInfo/update/work_experience');
       this.workExperiences = data.workExperiences;
       this.$emit('update', data.workExperiences);
       this.closeUpdateModal()
+      if(this.updateForm.use_position && this.updateForm.current){
+        await this.$store.dispatch('auth/fetchUser')
+        this.$emit('updateJobTitle',this.updateForm.position)
+      }
     },
     prepUpdate(data){
       this.$refs['update-modal'].show()

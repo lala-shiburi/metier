@@ -1,6 +1,6 @@
 <template>
   <div class="nexseed-icon bg-white">
-    <img class="pl-2 pr-2" :class="showImage ? 'animate-opacity':''" @load="showImage = true" :src="public_path+'/images/logo_brand.png'">
+    <img style="width: 100%" class="pl-2 pr-2" :class="showImage ? 'animate-opacity':''" @load="showImage = true" :src="public_path+'/images/logo_brand.png'">
   </div>
 </template>
 
@@ -18,9 +18,9 @@ export default {
   display: inline-block;
   position: relative;
   padding-right: 20px;
-  height: 40px;
+  height: 35px;
   overflow:hidden;
-  width: 200px;
+  width: 150px;
   animation-name: nexseed-icon-animation;
   animation-duration: 1s;
   &::after{
@@ -62,10 +62,10 @@ export default {
     width: 0px;
   }
   50%  {
-    width: 220px;
+    width: 170px;
   }
   100% {
-    width: 200px;
+    width: 150px;
   }
 }
 </style>
