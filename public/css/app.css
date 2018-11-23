@@ -2324,13 +2324,13 @@
  * OverlayScrollbars
  * https://github.com/KingSora/OverlayScrollbars
  *
- * Version: 1.5.2
+ * Version: 1.5.3
  *
  * Copyright KingSora.
  * https://github.com/KingSora
  *
  * Released under the MIT license.
- * Date: 09.09.2018
+ * Date: 07.11.2018
  */
 
 /*
@@ -5148,11 +5148,6 @@ pre code {
 }
 
 .form-control::-webkit-input-placeholder {
-  color: #6c757d;
-  opacity: 1;
-}
-
-.form-control:-ms-input-placeholder {
   color: #6c757d;
   opacity: 1;
 }
@@ -14755,12 +14750,6 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-right {
   color: #cccccc;
 }
 
-.swal2-popup .swal2-input:-ms-input-placeholder,
-.swal2-popup .swal2-file:-ms-input-placeholder,
-.swal2-popup .swal2-textarea:-ms-input-placeholder {
-  color: #cccccc;
-}
-
 .swal2-popup .swal2-input::-ms-input-placeholder,
 .swal2-popup .swal2-file::-ms-input-placeholder,
 .swal2-popup .swal2-textarea::-ms-input-placeholder {
@@ -15129,7 +15118,7 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-right {
           animation: none;
 }
 
-[dir='rtl'] .swal2-close {
+.swal2-rtl .swal2-close {
   right: auto;
   left: 0;
 }
