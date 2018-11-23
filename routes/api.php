@@ -45,6 +45,21 @@ Route::group(['middleware' => 'auth:api'], function () {
         });
     });
 
+    // photo routes
+    Route::group([ 'prefix' => 'photo'], function(){
+
+        Route::group([ 'prefix' => 'upload' ], function(){
+            Route::post('temp', 'PhotoController@upload');
+            Route::post('company', 'PhotoController@uploadToCompany');
+        });
+        Route::group(['prefix' => 'assign'], function(){
+            Route::post('company', 'PhotoController@assignCompanyPhotos');
+        });
+        Route::group(['prefix' => 'remove'], function(){
+            Route::delete('/', 'PhotoController@deletePhoto');
+        });
+    });
+
     // user routes
     Route::group(['prefix' => 'userInfo'], function(){
         // fetch'
@@ -127,6 +142,7 @@ Route::group(['middleware' => 'auth:api'], function () {
             Route::patch('website/info', 'CompanyController@updateWebsiteInfo');
             Route::patch('photo', 'CompanyController@updatePhoto');
             Route::patch('cover', 'CompanyController@updateCover');
+            Route::patch('introduction', 'CompanyController@updateIntroduction');
         });
         
         Route::group(['prefix' => 'hiringprocess'], function(){
@@ -223,6 +239,13 @@ Route::group(['middleware' => 'auth:api'], function () {
             Route::get('recent/applications', 'ReportController@fetchRecentApplications');
         });
     });
+
+    // admin routes
+    Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function(){
+        Route::group(['prefix' => 'user'], function(){
+            Route::patch('activate', 'AdminController@activateUser');
+        });
+    });
 });
 
 Route::group(['middleware' => 'guest:api'], function () {
@@ -278,4 +301,16 @@ Route::group(['prefix'=>'application'], function(){
     Route::group(['prefix' => 'create'], function(){
         Route::post('application', 'HiringApplicationController@createApplication');
     });
+});
+// photos
+Route::group(['prefix' => 'photo'], function(){
+    Route::group(['prefix' => 'fetch'], function(){
+        Route::get('company', 'PhotoController@fetchCompanyPhotos');
+    });
+});
+
+// support
+Route::group(['prefix' => 'support'], function(){
+    // contact us
+    Route::post('contact_us', 'SupportController@submitContactUs');
 });
