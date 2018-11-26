@@ -19,11 +19,9 @@ $config = [
       ],
 
       'programming_languages' => \App\ProgrammingLanguage::all(),
-
       'technologies' => \App\Technology::all(),
-      
       'provinces' => \DB::table('provinces')->get(),
-      'author' => 'Hinimo ni nako. Umar ni.',
+      'author' => 'Gart',
 ];
 
 $polyfills = [
