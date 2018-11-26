@@ -40,7 +40,7 @@ class AuthMiddleware
     {
         $this->authenticate($guards);
 
-        // uelmar's code
+
         // disallow auth if user's account is deactivated
         if($request->user()->is_active == 0){
             return false;

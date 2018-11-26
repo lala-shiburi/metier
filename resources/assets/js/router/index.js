@@ -195,7 +195,6 @@ function scrollBehavior (to, from, savedPosition) {
     return {}
   }
   
-  // uelmar's custom code for admin layout
   jQuery('[data-addScrollTopBehavior]').scrollTop(0)
 
   return { x: 0, y: 0 }
