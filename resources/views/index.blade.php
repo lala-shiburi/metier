@@ -64,12 +64,6 @@ $polyfills = [
   }(document, 'script', 'facebook-jssdk'));</script> -->
 
   <!-- Your customer chat code -->
-  <!-- <div class="fb-customerchat"
-    attribution=setup_tool
-    page_id="1616078145371975"
-    theme_color="#ffc300">
-  </div> -->
-  <!--  -->
   {{-- Global configuration object --}}
   <script>window.config = @json($config);</script>
 
