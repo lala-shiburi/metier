@@ -44,7 +44,7 @@
       <card class="m-tb-10">
         <div>
           <h5>Description</h5>
-          <p v-html="opening.details"></p>
+          <text-truncate v-if="opening.details" :text="opening.details"/>
         </div>
         <br>
       </card>

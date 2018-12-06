@@ -21,7 +21,7 @@
     </div>
     <div  class="basic-layout d-flex align-items-center justify-content-center m-0 bg-white">
       <div class="fullscreen-video-wrap">
-        <video ref="video" :src="public_path + '/videos/v-background-1.mp4'" muted class="absolute-center" autoplay="true" loop="true"></video>
+        <video ref="video" :src="public_path + '/videos/fitradio.mp4'" muted class="absolute-center" autoplay="true" loop="true"></video>
         <div class="header-overlay"></div>
       </div>
       <div class="col-md-5">

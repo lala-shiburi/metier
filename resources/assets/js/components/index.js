@@ -20,6 +20,7 @@ import DocumentUploadInput from './input/document-upload'
 import PhotoFrame from  './photo/frame'
 import Logo from './Logo'
 import { HasError, AlertError, AlertSuccess } from 'vform'
+import TextTruncate from './TextTruncate'
 
 var mixins = {
   methods: {
@@ -75,7 +76,8 @@ Vue.mixin(mixins);
   UnickLoader,
   DocumentUploadInput,
   Logo,
-  PhotoFrame
+  PhotoFrame,
+  TextTruncate
 ].forEach(Component => {
   Vue.component(Component.name, Component)
 })

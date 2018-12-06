@@ -86,6 +86,7 @@ class Company extends Model
         $this->savedApplicants()->detach($user_id);
 
         return $this;
+        
     }
 
     /**

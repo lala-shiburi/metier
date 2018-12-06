@@ -29,7 +29,7 @@
       <card class="m-tb-10">
         <div>
           <h5>Introduction</h5>
-          <div v-html="company.introduction"></div>
+          <text-truncate v-if="company.introduction" :text="company.introduction"/>
           <label class="text-muted" v-if="!company.introduction && authorizeEdit"> How do you describe {{company.name}}? </label>
           <div v-if="!company.introduction && !authorizeEdit" class="text-muted">
               Information not available.

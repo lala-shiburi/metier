@@ -28,7 +28,7 @@
             <div v-if="!user.description && !authorizeEdit" class="text-muted">
                 Information not available.
             </div>
-            <div v-html="user.description"/>
+            <text-truncate v-if="user.description" :text="user.description"/>
             <div v-if="authorizeEdit">
               <icon-button v-if="!user.description" @click.native="prepUpdateProfileDescription">
                 ADD DESCRIPTION

@@ -11,7 +11,7 @@ class SupportService
 {
     protected $auth;
     protected $recipients = [
-        "uelmarortega@gmail.com"
+        "codetinerant@gmail.com"
     ];
 
     function __construct(){
