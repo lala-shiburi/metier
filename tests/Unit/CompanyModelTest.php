@@ -20,7 +20,7 @@ class CompanyModelTest extends TestCase
     {
         $faker = Faker::create('en_US');
 
-        print('Testing Add functions... || ');
+        print('Testing Addding functions... || ');
         //factory random user Basic Info
         $company = factory(Company::class)->create();
         print('Basic Info success || ');

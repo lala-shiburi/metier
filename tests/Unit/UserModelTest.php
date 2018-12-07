@@ -91,7 +91,7 @@ class UserModelTest extends TestCase
             "middle_name"=>$faker->lastName,
             "last_name"=>$faker->lastName,
             "birth_date"=>$faker->dateTimeThisCentury->format('Y-m-d'),
-            "citizenship"=>"Filipino",
+            "citizenship"=>"Czech Republic",
             "password"=>'$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm',
         ]);
         print("Basic info success || ");
@@ -130,7 +130,6 @@ class UserModelTest extends TestCase
         print('educational background success || ');
 
         $this->assertTrue(true);
-
     }
 
     public function testDeleteFunctions(){
