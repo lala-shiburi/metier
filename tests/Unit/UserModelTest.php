@@ -130,7 +130,6 @@ class UserModelTest extends TestCase
         print('educational background success || ');
 
         $this->assertTrue(true);
-
     }
 
     public function testDeleteFunctions(){
